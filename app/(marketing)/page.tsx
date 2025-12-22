@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { getPosts, getVideos, getGallery } from "~/lib/sanity.client"; 
 import ScrollAnimationWrapper from "~/components/ScrollAnimationWrapper";
 import Counter from "~/components/Counter";
+import PricingSlider from "~/components/PricingSlider";
 
 import { 
   FaLaptopCode, FaStopwatch, FaUserTie, FaChevronDown, 
@@ -68,7 +69,7 @@ export default async function Home() {
       
       {/* HEADER & FOOTER dipanggil otomatis dari app/layout.tsx */}
 
-      {/* HERO SECTION (Animasi Langsung) */}
+      {/* HERO SECTION */}
       <section className="relative h-[600px] lg:h-[700px] flex items-center overflow-hidden bg-gray-900">
         <div className="absolute inset-0 z-0">
            <Image src="/neo.webp" alt="Hero Background" fill className="object-cover object-right" priority />
@@ -87,7 +88,7 @@ export default async function Home() {
         </div>
       </section>
       
-      {/* FEATURES SECTION (Animasi On Scroll) */}
+      {/* FEATURES SECTION */}
       <section className="bg-gray-100 py-20 px-6 font-sans overflow-hidden">
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12">
           <div className="flex flex-col gap-10">
@@ -125,7 +126,7 @@ export default async function Home() {
         </div>
       </section>      
 
-      {/* STATISTIK - (FONT BESAR & AKSEN MERAH) */}
+      {/* STATISTIK */}
       <section className="relative h-[650px] flex items-center bg-gray-900 overflow-hidden font-sans">
         <div className="absolute inset-0 z-0">
           <Image src="/neo.webp" alt="Stats Background" fill className="object-cover" />
@@ -140,33 +141,22 @@ export default async function Home() {
                 </div>
             </ScrollAnimationWrapper>
             
-            {/* ANGKA ANIMASI MENGGUNAKAN COUNTER */}
             <div className="grid grid-cols-3 gap-8 border-t border-white/20 pt-8">
-              {/* ITEM 1 */}
               <div>
-                  {/* Ukuran Font Diperbesar Jauh & Flex untuk sejajarkan titik merah */}
                   <div className="text-6xl md:text-7xl lg:text-8xl font-extrabold text-white flex items-baseline">
-                      {/* Titik Merah */}
-                      <span className="text-red-500 mr-1">.</span>
-                      <Counter end={30} />
-                      {/* Plus Merah */}
-                      <span className="text-red-500 ml-1">+</span>
+                      <span className="text-red-500 mr-1">.</span><Counter end={30} /><span className="text-red-500 ml-1">+</span>
                   </div>
                   <p className="mt-4 text-lg md:text-xl font-bold opacity-90 capitalize">layanan</p>
               </div>
-              {/* ITEM 2 */}
               <div>
                   <div className="text-6xl md:text-7xl lg:text-8xl font-extrabold text-white flex items-baseline">
                       <Counter end={822} />
                   </div>
                   <p className="mt-4 text-lg md:text-xl font-bold opacity-90 capitalize">project selesai</p>
               </div>
-              {/* ITEM 3 */}
               <div>
                   <div className="text-6xl md:text-7xl lg:text-8xl font-extrabold text-white flex items-baseline">
-                      <Counter end={428} />
-                      {/* Plus Merah */}
-                      <span className="text-red-500 ml-1">+</span>
+                      <Counter end={428} /><span className="text-red-500 ml-1">+</span>
                   </div>
                   <p className="mt-4 text-lg md:text-xl font-bold opacity-90 capitalize">klien yang puas</p>
               </div>
@@ -182,52 +172,49 @@ export default async function Home() {
              <h2 className="text-3xl md:text-4xl font-extrabold text-gray-800 mb-4">Pilihan Paket Terbaik</h2>
              <p className="text-gray-500 max-w-2xl mx-auto text-base">Sesuaikan kebutuhan legalitas perusahaan Anda dengan paket hemat yang kami tawarkan.</p>
           </div>
-          <div className="flex overflow-x-auto pb-8 space-x-6 snap-x snap-mandatory scrollbar-hide">
-            {pricingData.map((item, index) => (
-              <div key={index} className={`min-w-[300px] md:min-w-[320px] bg-white rounded-3xl p-6 flex-shrink-0 snap-center transition-all duration-300 border ${index === 0 ? 'border-red-400 shadow-xl scale-100' : 'border-gray-200 hover:border-blue-300 hover:shadow-lg'}`}>
-                <div className="mb-4">
-                    <h3 className="text-gray-600 font-bold text-base mb-1">{item.title}</h3>
-                    <div className="flex items-start">
-                        <span className="text-xs bg-black text-white rounded-full px-1 mr-1 mt-1">Rp</span>
-                        <span className="text-4xl font-extrabold text-gray-900">{item.price.replace('Rp ','').replace('jt','')}</span>
-                        <span className="text-2xl font-bold text-gray-900 mt-2">jt</span>
-                    </div>
-                    <div className="text-gray-400 text-xs italic">basic price</div>
-                </div>
-                <div className="relative h-40 w-full bg-gray-100 rounded-lg mb-6 overflow-hidden flex items-center justify-center border border-gray-200">
-                   <div className="absolute inset-0 bg-gradient-to-br from-blue-100 to-white opacity-50"></div>
-                   <span className="text-gray-400 text-xs z-10">Gambar {item.title}</span>
-                </div>
-                <button className={`block w-full py-2.5 rounded-lg font-bold text-sm text-center transition mb-6 ${index === 0 ? 'bg-red-500 text-white hover:bg-red-600 shadow-lg shadow-red-200' : 'bg-white border border-gray-800 text-gray-800 hover:bg-gray-800 hover:text-white'}`}>Contact Us</button>
-                <div className="space-y-3 border-t pt-4">
-                  <p className="text-xs text-gray-500 mb-2 font-bold uppercase">Detail paket</p>
-                  {item.features.map((feature, i) => (
-                    <div key={i} className="flex items-start text-sm text-gray-600"><span className="mr-2 text-orange-400 font-bold">›</span>{feature}</div>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
+          
+          {/* PEMANGGILAN SLIDER DI SINI */}
+          <PricingSlider />
+
         </div>
       </section>
 
-      {/* FAQ */}
-      <section className="py-20 bg-[#1e2338] text-white font-sans">
+      {/* FAQ - (BAGIAN INI YANG DIUBAH TOTAL) */}
+      <section className="py-20 bg-[#1e2338] text-white font-sans overflow-hidden">
         <div className="max-w-7xl mx-auto px-6">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                {/* KOLOM KIRI: HANYA LIST PERTANYAAN (Accordion) */}
                 <div>
-                    <div className="mb-10"><div className="flex -space-x-1 mb-4"><div className="w-3 h-3 rounded-full bg-slate-500"></div><div className="w-3 h-3 rounded-full bg-slate-400 opacity-50"></div></div><span className="text-gray-300 font-medium text-sm block mb-2">Seputar Layanan</span><h2 className="text-3xl md:text-4xl font-bold leading-tight">Frequently Asked<br/>Questions</h2></div>
-                    <div className="space-y-4">
-                        {faqData.map((item, index) => (
-                            <details key={index} className="group bg-transparent border-b border-gray-700 pb-4">
-                                <summary className="flex justify-between items-center cursor-pointer list-none font-bold text-lg select-none hover:text-gray-300 transition"><span>{item.question}</span><span className="transition-transform duration-300 group-open:rotate-180 border rounded-full p-1 border-gray-500"><FaChevronDown className="text-xs"/></span></summary>
-                                <div className="text-gray-400 leading-relaxed pt-4 mt-2 text-base">{item.answer}</div>
-                            </details>
-                        ))}
-                    </div>
+                    <ScrollAnimationWrapper className="animate-fade-in-left">
+                      <div className="space-y-4">
+                          {faqData.map((item, index) => (
+                              <details key={index} className="group bg-transparent border-b border-gray-700 pb-4">
+                                  <summary className="flex justify-between items-center cursor-pointer list-none font-bold text-lg select-none hover:text-gray-300 transition"><span>{item.question}</span><span className="transition-transform duration-300 group-open:rotate-180 border rounded-full p-1 border-gray-500"><FaChevronDown className="text-xs"/></span></summary>
+                                  <div className="text-gray-400 leading-relaxed pt-4 mt-2 text-base">{item.answer}</div>
+                              </details>
+                          ))}
+                      </div>
+                    </ScrollAnimationWrapper>
                 </div>
-                <div className="relative h-[500px] w-full rounded-2xl overflow-hidden hidden lg:block">
-                     <div className="absolute inset-0 bg-gray-600 rounded-2xl"></div> 
+
+                {/* KOLOM KANAN: GAMBAR ACCORD6.WEBP DENGAN TEKS BERANIMASI */}
+                <div className="relative h-[500px] lg:h-[600px] w-full rounded-3xl overflow-hidden hidden lg:block shadow-2xl">
+                     {/* Gambar Utama */}
+                     <Image src="/accord6.webp" alt="FAQ Background" fill className="object-cover" />
+                     
+                     {/* Overlay Gelap Gradien agar teks terbaca */}
+                     <div className="absolute inset-0 bg-gradient-to-t from-[#1e2338] via-[#1e2338]/60 to-transparent z-10"></div>
+
+                     {/* Kontainer Teks di Pojok Kiri Bawah */}
+                     <div className="absolute bottom-0 left-0 p-10 z-20">
+                        {/* Animasi Muncul dari Bawah saat discroll */}
+                        <ScrollAnimationWrapper className="animate-fade-in-up">
+                           {/* Tag Kecil */}
+                           <div className="flex items-center space-x-2 mb-4 opacity-90"><div className="flex -space-x-1"><div className="w-3 h-3 rounded-full bg-white"></div><div className="w-3 h-3 rounded-full bg-white opacity-50"></div></div><span className="text-sm font-bold tracking-widest uppercase">Seputar Layanan</span></div>
+                           {/* Judul Besar */}
+                           <h2 className="text-4xl md:text-5xl font-extrabold leading-tight">Frequently Asked<br/>Questions</h2>
+                        </ScrollAnimationWrapper>
+                     </div>
                 </div>
             </div>
         </div>

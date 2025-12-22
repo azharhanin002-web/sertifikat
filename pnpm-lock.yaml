@@ -62,6 +62,9 @@ importers:
       sanity:
         specifier: ^3.11.3
         version: 3.99.0(@emotion/is-prop-valid@1.2.2)(@types/node@18.19.130)(@types/react-dom@18.3.7(@types/react@18.3.27))(@types/react@18.3.27)(immer@10.2.0)(jiti@2.6.1)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(styled-components@6.1.19(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(typescript@5.9.3)(yaml@2.8.2)
+      swiper:
+        specifier: ^12.0.3
+        version: 12.0.3
       tailwind-merge:
         specifier: ^1.12.0
         version: 1.14.0
@@ -5577,6 +5580,10 @@ packages:
     resolution: {integrity: sha512-7yyJ1aBr9Ap4XZQOBaYlOelNcRc42zv50C0pVNOHfhW/DwTbHGFVZKKJsVndyQvQTv/fAkIO9TAMvGiSCjT0Zw==}
     peerDependencies:
       react: '>=17.0'
+
+  swiper@12.0.3:
+    resolution: {integrity: sha512-BHd6U1VPEIksrXlyXjMmRWO0onmdNPaTAFduzqR3pgjvi7KfmUCAm/0cj49u2D7B0zNjMw02TSeXfinC1hDCXg==}
+    engines: {node: '>= 4.7.0'}
 
   symbol-tree@3.2.4:
     resolution: {integrity: sha512-9QNk5KwDF+Bvz+PyObkmSYjI5ksVUYtjW7AU22r2NKcfLJcXp96hkDWU3+XndOsUb+AQ9QhfzfCT2O+CNWT5Tw==}
@@ -12493,6 +12500,8 @@ snapshots:
   suspend-react@0.0.10(react@18.2.0):
     dependencies:
       react: 18.2.0
+
+  swiper@12.0.3: {}
 
   symbol-tree@3.2.4: {}
 

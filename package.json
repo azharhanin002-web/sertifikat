@@ -26,6 +26,7 @@
     "react-dom": "18.2.0",
     "react-icons": "^5.5.0",
     "sanity": "^3.11.3",
+    "swiper": "^12.0.3",
     "tailwind-merge": "^1.12.0",
     "tailwindcss-animate": "^1.0.5",
     "zod": "^3.21.4"
