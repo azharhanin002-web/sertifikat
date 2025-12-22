@@ -4,7 +4,8 @@ await import("./env.mjs");
 const config = {
   reactStrictMode: true,
   
-  // Tambahkan ini agar gambar dari Sanity bisa muncul
+  // HAPUS bagian 'experimental: { appDir: true }'
+  // Ganti dengan konfigurasi gambar Sanity ini:
   images: {
     remotePatterns: [
       {
