@@ -4,6 +4,7 @@ import { getPosts, getVideos, getGallery, getLayanan } from "~/lib/sanity.client
 import ScrollAnimationWrapper from "~/components/ScrollAnimationWrapper";
 import Counter from "~/components/Counter";
 import PricingSlider from "~/components/PricingSlider";
+import VideoSection from "~/components/VideoSection"; // <--- IMPORT BARU
 
 import { 
   FaLaptopCode, FaStopwatch, FaUserTie, FaChevronDown, 
@@ -49,7 +50,7 @@ export default async function Home() {
         { title: "ISO 9001:2015", link: "#", image: "/mockup-skttk.png", desc: "Manajemen Mutu" }
     ];
 
-  // --- MAPPING DATA GALLERY (FIXED & SLICED) ---
+  // --- MAPPING DATA GALLERY ---
   const galleryDisplay = (gallery && gallery.length > 0) 
     ? gallery.map((item: any) => ({
         image: item.image,
@@ -59,14 +60,13 @@ export default async function Home() {
       { image: null }, { image: null }, { image: null } 
     ];
 
-  // --- DATA STATIC ---
-  const pricingData = [
-    { title: "SKUP Migas", price: "Rp 25jt", image: "/mockup-migas.png", features: ["Free Konsultasi", "Proses Pengerjaan Online", "Bebas Pilih Jumlah Bidang Usaha", "SKUP Migas dari Dirjen Migas ESDM"] },
-    { title: "SBUJPTL", price: "Rp 12jt", image: "/mockup-sbujptl.png", features: ["Free Konsultasi Sertifikasi", "Proses Pengerjaan Online", "Sertifikat Badan Usaha Jasa Penunjang Tenaga Listrik"] },
-    { title: "SKTTK (SERKOM)", price: "Rp 8.5jt", image: "/mockup-skttk.png", features: ["Free Konsultasi Sertifikasi", "Asesmen Online", "SKTTK dari Lembaga Sertifikasi Terakreditasi ESDM"] },
-    { title: "SBU Konstruksi", price: "Rp 3.5jt", image: "/mockup-sbu.png", features: ["Free Konsultasi Sertifikasi", "Proses Pengerjaan Online", "Sertifikat Badan Usaha (SBU) dari PUPR"] }
+  // --- MAPPING DATA VIDEO ---
+  const videoDisplayData = (videos && videos.length > 0) ? videos : [
+      { title: "Company Profile (Dummy)", thumb: "/video-thumb-1.jpg", youtubeUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ" },
+      { title: "Testimoni Klien (Dummy)", thumb: "/video-thumb-2.jpg", youtubeUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ" }
   ];
 
+  // --- DATA STATIC ---
   const faqData = [
     { question: "Apakah dokumen yang diterbitkan resmi?", answer: "Tentu saja. Kami menjamin 100% keaslian dokumen. Semua sertifikat diterbitkan langsung oleh instansi terkait dan dapat diverifikasi secara online." },
     { question: "Berapa lama proses pengerjaannya?", answer: "Estimasi waktu bervariasi. Untuk SBU biasanya 14-30 hari kerja, sedangkan SKTTK bisa lebih cepat sekitar 7-14 hari kerja setelah dokumen lengkap." },
@@ -78,11 +78,6 @@ export default async function Home() {
     { name: "Melanie", role: "Pengusaha - Bandar Lampung", text: "Terimakasih telah membantu pendirian PT saya. Team menjelaskan dengan detail setiap pertanyaan yang saya ajukan.", image: "/user-1.jpg" },
     { name: "Budi Santoso", role: "Kontraktor - Jakarta", text: "Proses pengerjaan di Workshop Legalitas cepat dan sesuai dengan kebutuhan. Pelayanan dari team memuaskan.", image: "/user-2.jpg" },
     { name: "Saputra Dwi Wijaya", role: "CEO Startup - Depok", text: "Layanan yang diberikan sangat baik. Semua bisa dilakukan online tanpa harus datang ke lokasi. Hemat waktu.", image: "/user-3.jpg" }
-  ];
-
-  const videoDisplayData = (videos && videos.length > 0) ? videos : [
-      { title: "Company Profile (Dummy)", thumb: "/video-thumb-1.jpg" },
-      { title: "Testimoni Klien (Dummy)", thumb: "/video-thumb-2.jpg" }
   ];
 
 
@@ -367,32 +362,17 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* VIDEO DOKUMENTASI */}
+      {/* VIDEO DOKUMENTASI (DIPERBAIKI: PAKAI KOMPONEN VIDEOSECTION) */}
       <section className="py-20 bg-white font-sans">
         <div className="max-w-7xl mx-auto px-6">
             <div className="text-center mb-12">
-               <div className="flex items-center justify-center space-x-2 mb-2"><div className="flex -space-x-1"><div className="w-3 h-3 rounded-full bg-slate-600"></div><div className="w-3 h-3 rounded-full bg-slate-400 opacity-50"></div></div><span className="text-sm font-medium text-gray-500">Dari Channel Youtube</span></div>
+               <div className="flex items-center justify-center space-x-2 mb-2"><div className="flex -space-x-1"><div className="w-3 h-3 rounded-full bg-slate-600"></div><div className="w-3 h-3 rounded-full bg-slate-400 opacity-50"></div></div><span className="text-sm font-medium text-gray-500">Dari Channel Resmi</span></div>
                <h2 className="text-3xl md:text-4xl font-extrabold text-[#1e2338]">Video Dokumentasi</h2>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                {videoDisplayData.map((item: any, index: number) => (
-                    <div key={index} className="group relative h-72 rounded-xl overflow-hidden cursor-pointer shadow-lg">
-                        <div className="absolute inset-0 bg-gray-200 flex items-center justify-center font-bold text-gray-400">
-                             {item.thumb ? (
-                                <Image src={item.thumb} alt={item.title} fill className="object-cover"/>
-                             ) : (
-                                "VIDEO THUMBNAIL"
-                             )}
-                        </div>
-                        <div className="absolute inset-0 flex items-center justify-center bg-black/10 group-hover:bg-black/30 transition">
-                            <a href={item.youtubeUrl || '#'} target="_blank" rel="noreferrer">
-                                <div className="h-16 w-16 bg-white rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition"><FaPlay className="text-[#1e2338] ml-1" /></div>
-                            </a>
-                        </div>
-                        <div className="absolute bottom-0 left-0 w-full p-6 bg-gradient-to-t from-black/80 to-transparent"><h3 className="text-white font-bold text-lg">{item.title}</h3></div>
-                    </div>
-                ))}
-            </div>
+            
+            {/* INI BAGIAN YANG DIPERBAIKI */}
+            <VideoSection videos={videoDisplayData} />
+
         </div>
       </section>
 
