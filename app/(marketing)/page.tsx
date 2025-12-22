@@ -11,7 +11,6 @@ import {
 } from 'react-icons/fa';
 
 // --- AUTO UPDATE SETIAP 10 DETIK ---
-// This enables Incremental Static Regeneration (ISR)
 export const revalidate = 10; 
 
 export default async function Home() {
@@ -21,11 +20,11 @@ export default async function Home() {
   const videos = await getVideos();
   const gallery = await getGallery();
 
-  // --- MAPPING DATA BERITA (DITAMBAH SLUG) ---
+  // --- MAPPING DATA BERITA (FIXED LINK) ---
   const blogData = (posts && posts.length > 0) 
     ? posts.map((post: any) => ({
         title: post.title,
-        // Ambil Slug (URL) dari Sanity
+        // PERBAIKAN DISINI: Cukup 'post.slug', tidak perlu 'post.slug.current'
         slug: post.slug || '#', 
         category: post.category || 'Berita',
         date: post.date ? new Date(post.date).toISOString().split('T')[0] : '2025',
@@ -40,13 +39,6 @@ export default async function Home() {
     ];
 
   // --- DATA STATIC ---
-  const pricingData = [
-    { title: "SKUP Migas", price: "Rp 25jt", image: "/mockup-migas.png", features: ["Free Konsultasi", "Proses Pengerjaan Online", "Bebas Pilih Jumlah Bidang Usaha", "SKUP Migas dari Dirjen Migas ESDM"] },
-    { title: "SBUJPTL", price: "Rp 12jt", image: "/mockup-sbujptl.png", features: ["Free Konsultasi Sertifikasi", "Proses Pengerjaan Online", "Sertifikat Badan Usaha Jasa Penunjang Tenaga Listrik"] },
-    { title: "SKTTK (SERKOM)", price: "Rp 8.5jt", image: "/mockup-skttk.png", features: ["Free Konsultasi Sertifikasi", "Asesmen Online", "SKTTK dari Lembaga Sertifikasi Terakreditasi ESDM"] },
-    { title: "SBU Konstruksi", price: "Rp 3.5jt", image: "/mockup-sbu.png", features: ["Free Konsultasi Sertifikasi", "Proses Pengerjaan Online", "Sertifikat Badan Usaha (SBU) dari PUPR"] }
-  ];
-
   const faqData = [
     { question: "Apakah dokumen yang diterbitkan resmi?", answer: "Tentu saja. Kami menjamin 100% keaslian dokumen. Semua sertifikat diterbitkan langsung oleh instansi terkait dan dapat diverifikasi secara online." },
     { question: "Berapa lama proses pengerjaannya?", answer: "Estimasi waktu bervariasi. Untuk SBU biasanya 14-30 hari kerja, sedangkan SKTTK bisa lebih cepat sekitar 7-14 hari kerja setelah dokumen lengkap." },
@@ -294,16 +286,17 @@ export default async function Home() {
          </div>
       </section>
 
-      {/* UPDATE TERKINI - (YANG DIPERBAIKI: PAKE LINK) */}
+      {/* UPDATE TERKINI - (YANG DIPERBAIKI: LINK SUDAH BENAR) */}
       <section className="py-20 bg-white font-sans">
         <div className="max-w-7xl mx-auto px-6">
             <div className="text-center mb-12">
                <h2 className="text-3xl md:text-4xl font-extrabold text-[#1e2338]">Update Terkini</h2>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                {blogData.map((item: any, index: number) => (
-                    // DISINI KUNCINYA: BUNGKUS DENGAN LINK
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+                {/* SLICE 6 Berita */}
+                {blogData.slice(0, 6).map((item: any, index: number) => (
                     <Link 
+                      // FIX: Panggil slug langsung, bukan slug.current
                       href={`/berita/${item.slug}`} 
                       key={index} 
                       className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition group border border-gray-100 flex flex-col h-full block"
@@ -325,6 +318,13 @@ export default async function Home() {
                         </div>
                     </Link>
                 ))}
+            </div>
+
+            {/* TOMBOL LIHAT SEMUA BERITA */}
+            <div className="text-center">
+                <Link href="/berita" className="inline-block px-8 py-3 rounded-full border-2 border-[#1e2338] text-[#1e2338] font-bold hover:bg-[#1e2338] hover:text-white transition duration-300">
+                    Lihat Semua Berita
+                </Link>
             </div>
         </div>
       </section>
