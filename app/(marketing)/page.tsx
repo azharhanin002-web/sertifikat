@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { getPosts, getVideos, getGallery } from "~/lib/sanity.client"; 
+import { getPosts, getVideos, getGallery, getLayanan } from "~/lib/sanity.client"; 
 import ScrollAnimationWrapper from "~/components/ScrollAnimationWrapper";
 import Counter from "~/components/Counter";
 import PricingSlider from "~/components/PricingSlider";
@@ -19,12 +19,12 @@ export default async function Home() {
   const posts = await getPosts();
   const videos = await getVideos();
   const gallery = await getGallery();
+  const layananData = await getLayanan();
 
-  // --- MAPPING DATA BERITA (FIXED LINK) ---
+  // --- MAPPING DATA BERITA ---
   const blogData = (posts && posts.length > 0) 
     ? posts.map((post: any) => ({
         title: post.title,
-        // PERBAIKAN DISINI: Cukup 'post.slug', tidak perlu 'post.slug.current'
         slug: post.slug || '#', 
         category: post.category || 'Berita',
         date: post.date ? new Date(post.date).toISOString().split('T')[0] : '2025',
@@ -32,27 +32,36 @@ export default async function Home() {
         excerpt: post.excerpt || "Klik untuk membaca informasi selengkapnya..."
       }))
     : [
-      // DATA DUMMY
-      { title: "CONTOH: Sertifikasi ISO", slug: "#", category: "Sertifikasi", date: "2025-10-23", image: "/blog-1.jpg", excerpt: "Data dummy muncul karena belum ada artikel di Sanity." },
-      { title: "CONTOH: Izin Konstruksi", slug: "#", category: "Konstruksi", date: "2025-04-28", image: "/blog-2.jpg", excerpt: "Silakan buat post baru di Sanity Studio." },
-      { title: "CONTOH: Pendirian PT", slug: "#", category: "Legalitas", date: "2025-04-25", image: "/blog-3.jpg", excerpt: "Artikel akan otomatis update di sini." }
+        { title: "Data Belum Tersedia", slug: "#", category: "-", date: "2025", image: "/blog-1.jpg", excerpt: "-" }
+    ];
+
+  // --- MAPPING DATA LAYANAN ---
+  const portfolioDisplay = (layananData && layananData.length > 0)
+    ? layananData.map((item: any) => ({
+        title: item.title,
+        link: item.slug ? `/layanan/${item.slug}` : '#', 
+        image: item.icon || '/mockup-migas.png', 
+        desc: item.shortDesc || "Layanan profesional terpercaya."
+    }))
+    : [
+        { title: "SKUP Migas", link: "#", image: "/mockup-migas.png", desc: "Perizinan SKUP Migas" },
+        { title: "SBU Konstruksi", link: "#", image: "/mockup-sbu.png", desc: "Sertifikat Badan Usaha" },
+        { title: "ISO 9001:2015", link: "#", image: "/mockup-skttk.png", desc: "Manajemen Mutu" }
     ];
 
   // --- DATA STATIC ---
+  const pricingData = [
+    { title: "SKUP Migas", price: "Rp 25jt", image: "/mockup-migas.png", features: ["Free Konsultasi", "Proses Pengerjaan Online", "Bebas Pilih Jumlah Bidang Usaha", "SKUP Migas dari Dirjen Migas ESDM"] },
+    { title: "SBUJPTL", price: "Rp 12jt", image: "/mockup-sbujptl.png", features: ["Free Konsultasi Sertifikasi", "Proses Pengerjaan Online", "Sertifikat Badan Usaha Jasa Penunjang Tenaga Listrik"] },
+    { title: "SKTTK (SERKOM)", price: "Rp 8.5jt", image: "/mockup-skttk.png", features: ["Free Konsultasi Sertifikasi", "Asesmen Online", "SKTTK dari Lembaga Sertifikasi Terakreditasi ESDM"] },
+    { title: "SBU Konstruksi", price: "Rp 3.5jt", image: "/mockup-sbu.png", features: ["Free Konsultasi Sertifikasi", "Proses Pengerjaan Online", "Sertifikat Badan Usaha (SBU) dari PUPR"] }
+  ];
+
   const faqData = [
     { question: "Apakah dokumen yang diterbitkan resmi?", answer: "Tentu saja. Kami menjamin 100% keaslian dokumen. Semua sertifikat diterbitkan langsung oleh instansi terkait dan dapat diverifikasi secara online." },
     { question: "Berapa lama proses pengerjaannya?", answer: "Estimasi waktu bervariasi. Untuk SBU biasanya 14-30 hari kerja, sedangkan SKTTK bisa lebih cepat sekitar 7-14 hari kerja setelah dokumen lengkap." },
     { question: "Apakah saya perlu datang ke kantor?", answer: "Tidak perlu. Seluruh proses pengumpulan data hingga terbitnya sertifikat dilakukan secara ONLINE." },
     { question: "Bagaimana jika pengajuan ditolak?", answer: "Kami memberikan GARANSI uang kembali atau proses ulang gratis jika kegagalan disebabkan oleh kelalaian tim kami." }
-  ];
-
-  const portfolioData = [
-    { title: "GMP (Good Manufacturing Practices)", category: "Sertifikasi Pabrik", link: "/portofolio/gmp" },
-    { title: "HACCP Certification", category: "Keamanan Pangan", link: "/portofolio/haccp" },
-    { title: "Izin Usaha Panas Bumi (EBTKE)", category: "Energi Terbarukan", link: "/portofolio/ebtke" },
-    { title: "SKUP Migas", category: "Minyak & Gas", link: "/portofolio/skup-migas" },
-    { title: "ISO 9001:2015", category: "Manajemen Mutu", link: "/portofolio/iso-9001" },
-    { title: "SMK3 Kemnaker", category: "K3 Konstruksi", link: "/portofolio/smk3" }
   ];
 
   const testimonials = [
@@ -74,8 +83,6 @@ export default async function Home() {
   return (
     <main className="min-h-screen font-sans bg-white">
       
-      {/* HEADER & FOOTER dipanggil otomatis dari app/layout.tsx */}
-
       {/* HERO SECTION */}
       <section className="relative h-[600px] lg:h-[700px] flex items-center overflow-hidden bg-gray-900">
         <div className="absolute inset-0 z-0">
@@ -213,24 +220,44 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* PORTOFOLIO */}
+      {/* PORTOFOLIO / LAYANAN (DIBATASI 6 & ADA LINK LIHAT SEMUA) */}
       <section className="py-20 bg-white font-sans">
          <div className="max-w-7xl mx-auto px-6">
             <div className="text-center mb-10">
                <div className="flex items-center justify-center space-x-2 mb-2"><div className="flex -space-x-1"><div className="w-3 h-3 rounded-full bg-slate-600"></div><div className="w-3 h-3 rounded-full bg-slate-400 opacity-50"></div></div><span className="text-sm font-medium text-gray-500">Karya Luar Biasa</span></div>
-               <h2 className="text-3xl md:text-4xl font-extrabold text-[#1e2338]">Portofolio Kami</h2>
+               <h2 className="text-3xl md:text-4xl font-extrabold text-[#1e2338]">Layanan Kami</h2>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-               {portfolioData.map((item, index) => (
-                  <Link href={item.link} key={index} className="group relative h-[300px] rounded-lg overflow-hidden cursor-pointer shadow-sm hover:shadow-lg transition-all">
-                     <div className="absolute inset-0 bg-[#3b4363]"></div>
-                     <div className="absolute inset-0 flex items-center justify-center opacity-20"><span className="text-6xl font-bold text-white">IMG</span></div>
-                     <div className="absolute bottom-0 left-0 p-6 w-full">
-                        <h3 className="text-white text-lg font-bold leading-tight mb-2">{item.title}</h3>
+            
+            {/* GRID LAYANAN (DIBATASI 6 SAJA) */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+               {portfolioDisplay.slice(0, 6).map((item: any, index: number) => (
+                  <Link href={item.link} key={index} className="group relative h-[300px] rounded-lg overflow-hidden cursor-pointer shadow-sm hover:shadow-lg transition-all border border-gray-100 block">
+                     <div className="absolute inset-0 bg-[#3b4363] opacity-0 group-hover:opacity-90 transition-opacity duration-300 z-10"></div>
+                     
+                     {item.image ? (
+                        <Image src={item.image} alt={item.title} fill className="object-cover" />
+                     ) : (
+                        <div className="absolute inset-0 bg-gray-200"></div>
+                     )}
+
+                     <div className="absolute inset-0 flex flex-col items-center justify-center z-20 opacity-0 group-hover:opacity-100 transition duration-300 px-4 text-center">
+                        <span className="text-2xl font-bold text-white mb-2">LIHAT</span>
+                        <p className="text-white text-xs">{item.desc}</p>
+                     </div>
+
+                     <div className="absolute bottom-0 left-0 p-6 w-full z-20 bg-gradient-to-t from-black/80 to-transparent">
+                        <h3 className="text-white text-lg font-bold leading-tight mb-2 drop-shadow-md">{item.title}</h3>
                         <div className="h-0.5 w-8 bg-gray-400 group-hover:w-16 transition-all duration-300"></div>
                      </div>
                   </Link>
                ))}
+            </div>
+
+            {/* TOMBOL LIHAT SEMUA LAYANAN */}
+            <div className="text-center">
+                <Link href="/layanan" className="inline-block px-8 py-3 rounded-full border-2 border-[#1e2338] text-[#1e2338] font-bold hover:bg-[#1e2338] hover:text-white transition duration-300">
+                    Lihat Semua Layanan
+                </Link>
             </div>
          </div>
       </section>
@@ -286,17 +313,15 @@ export default async function Home() {
          </div>
       </section>
 
-      {/* UPDATE TERKINI - (YANG DIPERBAIKI: LINK SUDAH BENAR) */}
+      {/* UPDATE TERKINI */}
       <section className="py-20 bg-white font-sans">
         <div className="max-w-7xl mx-auto px-6">
             <div className="text-center mb-12">
                <h2 className="text-3xl md:text-4xl font-extrabold text-[#1e2338]">Update Terkini</h2>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-                {/* SLICE 6 Berita */}
                 {blogData.slice(0, 6).map((item: any, index: number) => (
                     <Link 
-                      // FIX: Panggil slug langsung, bukan slug.current
                       href={`/berita/${item.slug}`} 
                       key={index} 
                       className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition group border border-gray-100 flex flex-col h-full block"
@@ -308,7 +333,7 @@ export default async function Home() {
                                 <div className="text-center"><h4 className="font-bold text-blue-900 text-sm uppercase mb-2">IMAGE</h4></div>
                              )}
                              <div className="absolute bottom-4 right-4 bg-white px-3 py-1.5 rounded text-xs font-bold shadow z-10">
-                                {item.date ? item.date.split('-')[2] : '01'} <span className="text-gray-500 ml-1">{item.date ? item.date.split('-')[1] : 'Jan'}</span>
+                                {item.date}
                              </div>
                         </div>
                         <div className="p-6 flex flex-col flex-grow">
@@ -319,8 +344,6 @@ export default async function Home() {
                     </Link>
                 ))}
             </div>
-
-            {/* TOMBOL LIHAT SEMUA BERITA */}
             <div className="text-center">
                 <Link href="/berita" className="inline-block px-8 py-3 rounded-full border-2 border-[#1e2338] text-[#1e2338] font-bold hover:bg-[#1e2338] hover:text-white transition duration-300">
                     Lihat Semua Berita
