@@ -12,21 +12,21 @@ export const metadata = {
   },
   metadataBase: new URL(siteConfig.url),
   description: siteConfig.description,
-  keywords: ["Next.js", "React", "Legalitas", "Sertifikasi", "Sulteng"],
+  keywords: ["Next.js", "React"],
   authors: [
     {
-      name: "Workshop Legalitas", // Diganti sesuai nama bisnis
+      name: "Workshop Legalitas",
       url: siteConfig.url,
     },
   ],
-  creator: "Workshop Legalitas", // Diganti sesuai nama bisnis
+  creator: "Workshop Legalitas",
   themeColor: [
     { media: "(prefers-color-scheme: light)", color: "white" },
     { media: "(prefers-color-scheme: dark)", color: "black" },
   ],
   openGraph: {
     type: "website",
-    locale: "id_ID", // Diganti ke Indonesia
+    locale: "id_ID",
     url: siteConfig.url,
     title: siteConfig.name,
     description: siteConfig.description,
@@ -37,7 +37,7 @@ export const metadata = {
     title: siteConfig.name,
     description: siteConfig.description,
     images: [`${siteConfig.url}/og.png`],
-    creator: "@workshop_legalitas", // Sesuaikan jika ada
+    creator: "@workshop_legalitas",
   },
   icons: {
     icon: "/favicon.svg",
@@ -47,20 +47,14 @@ export const metadata = {
   manifest: `${siteConfig.url}/site.webmanifest`,
 }
 
-// PERBAIKAN UTAMA: Hapus kata 'async' di depan function
+// PERBAIKAN: Kata 'async' SUDAH DIHAPUS di baris bawah ini
 export default function PageLayout({ children }: PageLayoutProps) {
   
   return (
     <div className="flex min-h-screen flex-col">
-      
-      {/* HEADER & FOOTER DIHAPUS DARI SINI 
-          Karena sudah ditangani oleh Global Layout (app/layout.tsx)
-      */}
-
       <main className="flex-1">
           {children}
       </main>
-
       <TailwindIndicator />
     </div>
   )
