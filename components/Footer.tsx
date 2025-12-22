@@ -78,7 +78,7 @@ export default function Footer() {
 
         {/* COPYRIGHT */}
         <div className="max-w-7xl mx-auto px-6 mt-16 pt-8 border-t border-[#2d334c] text-center text-xs text-gray-500">
-            <p>© 2025 Workshop Legalitas Indonesia. All Rights Reserved.</p>
+            <p>© 2025 www.solusi-sertifikat.com. All Rights Reserved.</p>
         </div>
       </footer>
   );

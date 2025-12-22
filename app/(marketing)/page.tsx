@@ -366,8 +366,8 @@ export default async function Home() {
       <section className="py-20 bg-white font-sans">
         <div className="max-w-7xl mx-auto px-6">
             <div className="text-center mb-12">
-               <div className="flex items-center justify-center space-x-2 mb-2"><div className="flex -space-x-1"><div className="w-3 h-3 rounded-full bg-slate-600"></div><div className="w-3 h-3 rounded-full bg-slate-400 opacity-50"></div></div><span className="text-sm font-medium text-gray-500">Dari Channel Resmi</span></div>
-               <h2 className="text-3xl md:text-4xl font-extrabold text-[#1e2338]">Video Dokumentasi</h2>
+               <div className="flex items-center justify-center space-x-2 mb-2"><div className="flex -space-x-1"><div className="w-3 h-3 rounded-full bg-slate-600"></div><div className="w-3 h-3 rounded-full bg-slate-400 opacity-50"></div></div><span className="text-sm font-medium text-gray-500">Dari Youtube</span></div>
+               <h2 className="text-3xl md:text-4xl font-extrabold text-[#1e2338]">Video Edukasi</h2>
             </div>
             
             {/* INI BAGIAN YANG DIPERBAIKI */}
