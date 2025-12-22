@@ -19,6 +19,7 @@ import {
   // --- IMPORT QUERY UTAMA (LAMA) ---
   postsQuery,
   PostsQueryResponse,
+  postBySlugQuery, // <--- TAMBAHAN: Query Detail Berita
   videosQuery,
   VideosQueryResponse,
   galleryQuery,
@@ -30,7 +31,7 @@ import {
   promoQuery,
   promoDetailQuery,   
   dokumenQuery,
-  dokumenByCategoryQuery, // <--- PENTING: Query Kategori Dokumen (DITAMBAHKAN)
+  dokumenByCategoryQuery,
   DokumenResponse,
 } from "./sanity.queries"
 
@@ -183,10 +184,16 @@ export async function getPromoBySlug(slug: string, token?: string) {
 
 // 3. Ambil Dokumen berdasarkan Kategori (Slug)
 export async function getDokumenByCategory(category: string) {
-  // Ubah tanda strip (-) di URL menjadi spasi agar cocok dengan data di Sanity
-  // Contoh: URL "kbli-2020" menjadi kategori "kbli 2020"
   const formattedCategory = category.replace(/-/g, ' ');
   
   return await sanityClient()?.fetch(dokumenByCategoryQuery, { category: formattedCategory })
-    .then((result) => (result ? result : []))
+    .then((result) => {
+       if (!result) return []
+       return result;
+    })
+}
+
+// 4. Ambil 1 Berita berdasarkan Slug (TAMBAHAN BARU)
+export async function getPostBySlug(slug: string, token?: string) {
+  return await sanityClient(token)?.fetch(postBySlugQuery, { slug })
 }

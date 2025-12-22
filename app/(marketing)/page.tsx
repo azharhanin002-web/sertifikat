@@ -10,12 +10,34 @@ import {
   FaStar, FaPlay 
 } from 'react-icons/fa';
 
+// --- AUTO UPDATE SETIAP 10 DETIK ---
+// This enables Incremental Static Regeneration (ISR)
+export const revalidate = 10; 
+
 export default async function Home() {
   
   // --- FETCH DATA ---
   const posts = await getPosts();
   const videos = await getVideos();
   const gallery = await getGallery();
+
+  // --- MAPPING DATA BERITA (DITAMBAH SLUG) ---
+  const blogData = (posts && posts.length > 0) 
+    ? posts.map((post: any) => ({
+        title: post.title,
+        // Ambil Slug (URL) dari Sanity
+        slug: post.slug || '#', 
+        category: post.category || 'Berita',
+        date: post.date ? new Date(post.date).toISOString().split('T')[0] : '2025',
+        image: post.image || '/blog-1.jpg', 
+        excerpt: post.excerpt || "Klik untuk membaca informasi selengkapnya..."
+      }))
+    : [
+      // DATA DUMMY
+      { title: "CONTOH: Sertifikasi ISO", slug: "#", category: "Sertifikasi", date: "2025-10-23", image: "/blog-1.jpg", excerpt: "Data dummy muncul karena belum ada artikel di Sanity." },
+      { title: "CONTOH: Izin Konstruksi", slug: "#", category: "Konstruksi", date: "2025-04-28", image: "/blog-2.jpg", excerpt: "Silakan buat post baru di Sanity Studio." },
+      { title: "CONTOH: Pendirian PT", slug: "#", category: "Legalitas", date: "2025-04-25", image: "/blog-3.jpg", excerpt: "Artikel akan otomatis update di sini." }
+    ];
 
   // --- DATA STATIC ---
   const pricingData = [
@@ -45,13 +67,6 @@ export default async function Home() {
     { name: "Melanie", role: "Pengusaha - Bandar Lampung", text: "Terimakasih telah membantu pendirian PT saya. Team menjelaskan dengan detail setiap pertanyaan yang saya ajukan.", image: "/user-1.jpg" },
     { name: "Budi Santoso", role: "Kontraktor - Jakarta", text: "Proses pengerjaan di Workshop Legalitas cepat dan sesuai dengan kebutuhan. Pelayanan dari team memuaskan.", image: "/user-2.jpg" },
     { name: "Saputra Dwi Wijaya", role: "CEO Startup - Depok", text: "Layanan yang diberikan sangat baik. Semua bisa dilakukan online tanpa harus datang ke lokasi. Hemat waktu.", image: "/user-3.jpg" }
-  ];
-
-  // --- LOGIKA FALLBACK ---
-  const blogData = (posts && posts.length > 0) ? posts : [
-    { title: "CONTOH: PT vs CV (Data Dummy)", category: "Pendirian Badan Usaha", date: "2025-10-23", image: "/blog-1.jpg", excerpt: "Ini muncul karena Anda belum isi konten di Sanity. Silakan input data dulu." },
-    { title: "CONTOH: Mengatasi Risiko", category: "Angkutan B3", date: "2025-04-28", image: "/blog-2.jpg", excerpt: "Data ini akan hilang otomatis jika Anda sudah publish berita di Sanity Studio." },
-    { title: "CONTOH: ISO 9001", category: "Sertifikasi", date: "2025-04-25", image: "/blog-3.jpg", excerpt: "Segera isi konten di localhost:3000/studio menu Post." }
   ];
 
   const videoDisplayData = (videos && videos.length > 0) ? videos : [
@@ -172,18 +187,14 @@ export default async function Home() {
              <h2 className="text-3xl md:text-4xl font-extrabold text-gray-800 mb-4">Pilihan Paket Terbaik</h2>
              <p className="text-gray-500 max-w-2xl mx-auto text-base">Sesuaikan kebutuhan legalitas perusahaan Anda dengan paket hemat yang kami tawarkan.</p>
           </div>
-          
-          {/* PEMANGGILAN SLIDER DI SINI */}
           <PricingSlider />
-
         </div>
       </section>
 
-      {/* FAQ - (BAGIAN INI YANG DIUBAH TOTAL) */}
+      {/* FAQ */}
       <section className="py-20 bg-[#1e2338] text-white font-sans overflow-hidden">
         <div className="max-w-7xl mx-auto px-6">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                {/* KOLOM KIRI: HANYA LIST PERTANYAAN (Accordion) */}
                 <div>
                     <ScrollAnimationWrapper className="animate-fade-in-left">
                       <div className="space-y-4">
@@ -196,22 +207,12 @@ export default async function Home() {
                       </div>
                     </ScrollAnimationWrapper>
                 </div>
-
-                {/* KOLOM KANAN: GAMBAR ACCORD6.WEBP DENGAN TEKS BERANIMASI */}
                 <div className="relative h-[500px] lg:h-[600px] w-full rounded-3xl overflow-hidden hidden lg:block shadow-2xl">
-                     {/* Gambar Utama */}
                      <Image src="/accord6.webp" alt="FAQ Background" fill className="object-cover" />
-                     
-                     {/* Overlay Gelap Gradien agar teks terbaca */}
                      <div className="absolute inset-0 bg-gradient-to-t from-[#1e2338] via-[#1e2338]/60 to-transparent z-10"></div>
-
-                     {/* Kontainer Teks di Pojok Kiri Bawah */}
                      <div className="absolute bottom-0 left-0 p-10 z-20">
-                        {/* Animasi Muncul dari Bawah saat discroll */}
                         <ScrollAnimationWrapper className="animate-fade-in-up">
-                           {/* Tag Kecil */}
                            <div className="flex items-center space-x-2 mb-4 opacity-90"><div className="flex -space-x-1"><div className="w-3 h-3 rounded-full bg-white"></div><div className="w-3 h-3 rounded-full bg-white opacity-50"></div></div><span className="text-sm font-bold tracking-widest uppercase">Seputar Layanan</span></div>
-                           {/* Judul Besar */}
                            <h2 className="text-4xl md:text-5xl font-extrabold leading-tight">Frequently Asked<br/>Questions</h2>
                         </ScrollAnimationWrapper>
                      </div>
@@ -293,7 +294,7 @@ export default async function Home() {
          </div>
       </section>
 
-      {/* UPDATE TERKINI */}
+      {/* UPDATE TERKINI - (YANG DIPERBAIKI: PAKE LINK) */}
       <section className="py-20 bg-white font-sans">
         <div className="max-w-7xl mx-auto px-6">
             <div className="text-center mb-12">
@@ -301,7 +302,12 @@ export default async function Home() {
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                 {blogData.map((item: any, index: number) => (
-                    <div key={index} className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition group border border-gray-100 flex flex-col h-full">
+                    // DISINI KUNCINYA: BUNGKUS DENGAN LINK
+                    <Link 
+                      href={`/berita/${item.slug}`} 
+                      key={index} 
+                      className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition group border border-gray-100 flex flex-col h-full block"
+                    >
                         <div className="relative h-48 bg-blue-50 overflow-hidden flex items-center justify-center">
                              {item.image ? (
                                 <Image src={item.image} alt={item.title} fill className="object-cover" />
@@ -313,11 +319,11 @@ export default async function Home() {
                              </div>
                         </div>
                         <div className="p-6 flex flex-col flex-grow">
-                            <span className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-2 block">{item.category || 'Berita'}</span>
-                            <h3 className="text-xl font-bold text-[#1e2338] mb-3 leading-tight group-hover:text-blue-700 transition cursor-pointer">{item.title}</h3>
+                            <span className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-2 block">{item.category}</span>
+                            <h3 className="text-xl font-bold text-[#1e2338] mb-3 leading-tight group-hover:text-blue-700 transition cursor-pointer line-clamp-2">{item.title}</h3>
                             <p className="text-gray-500 text-sm leading-relaxed mb-4 line-clamp-3 flex-grow">{item.excerpt}</p>
                         </div>
-                    </div>
+                    </Link>
                 ))}
             </div>
         </div>

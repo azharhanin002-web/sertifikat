@@ -2,7 +2,7 @@ import { groq } from "next-sanity"
 import { z } from "zod"
 
 // ==========================================
-// 1. EXISTING QUERIES (BAWAAN TEMPLATE)
+// 1. EXISTING QUERIES (TEMPLATE DEFAULTS)
 // ==========================================
 
 export const homePageQuery = groq`
@@ -138,15 +138,16 @@ export const SecondaryPagesSlugsQueryResponse = z
 
 
 // ==========================================
-// 2. NEW QUERIES (FITUR TAMBAHAN KITA)
+// 2. NEW QUERIES (CUSTOM ADDITIONS)
 // ==========================================
 
-// --- A. BERITA / BLOG ---
+// --- A. NEWS / BLOG POSTS ---
 export const postsQuery = groq`
   *[_type == "post"] | order(publishedAt desc) {
     _id,
     title,
-    category,
+    // Fetch title from the first category reference
+    "category": categories[0]->title, 
     "date": publishedAt,
     "image": mainImage.asset->url,
     excerpt,
@@ -164,6 +165,17 @@ export const PostZ = z.object({
 })
 export const PostsQueryResponse = z.array(PostZ).nullish()
 
+// --- POST BY SLUG (NEW) ---
+export const postBySlugQuery = groq`
+  *[_type == "post" && slug.current == $slug][0] {
+    title,
+    "category": categories[0]->title,
+    "date": publishedAt,
+    "image": mainImage.asset->url,
+    body,
+    "author": author->name
+  }
+`
 
 // --- B. VIDEO ---
 export const videosQuery = groq`
@@ -199,8 +211,8 @@ export const GalleryZ = z.object({
 export const GalleryQueryResponse = z.array(GalleryZ).nullish()
 
 
-// --- D. LAYANAN ---
-// 1. Listing (Daftar Layanan)
+// --- D. SERVICES (LAYANAN) ---
+// 1. Listing (List of Services)
 export const layananQuery = groq`
   *[_type == "layanan"] {
     _id, title, shortDesc,
@@ -216,18 +228,18 @@ export const LayananResponse = z.array(z.object({
   icon: z.string().nullish(),
 })).nullish()
 
-// 2. Detail (Satu Layanan)
+// 2. Detail (Single Service)
 export const layananDetailQuery = groq`
   *[_type == "layanan" && slug.current == $slug][0] {
     title,
     "icon": icon.asset->url,
-    description
+    description // Typically PortableText
   }
 `
 
 
 // --- E. PROMO ---
-// 1. Listing (Daftar Promo)
+// 1. Listing (List of Promos)
 export const promoQuery = groq`
   *[_type == "promo"] {
     _id, title, period,
@@ -237,7 +249,7 @@ export const promoQuery = groq`
   }
 `
 
-// 2. Detail (Satu Promo)
+// 2. Detail (Single Promo)
 export const promoDetailQuery = groq`
   *[_type == "promo" && slug.current == $slug][0] {
     title,
@@ -248,8 +260,8 @@ export const promoDetailQuery = groq`
 `
 
 
-// --- F. DOKUMEN ---
-// 1. Listing (Semua Dokumen)
+// --- F. DOCUMENTS ---
+// 1. Listing (All Documents)
 export const dokumenQuery = groq`
   *[_type == "dokumen"] {
     _id, title, category,
@@ -263,8 +275,7 @@ export const DokumenResponse = z.array(z.object({
   fileUrl: z.string().nullish(),
 })).nullish()
 
-// 2. By Category (Untuk halaman /dokumen/[slug])
-// Ini PENTING untuk halaman kategori dokumen
+// 2. By Category (For /dokumen/[slug] pages)
 export const dokumenByCategoryQuery = groq`
   *[_type == "dokumen" && lower(category) == lower($category)] | order(_createdAt desc) {
     _id,
