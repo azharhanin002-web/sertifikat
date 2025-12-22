@@ -1,14 +1,16 @@
 import { type Config } from "tailwindcss"
 import defaultTheme from "tailwindcss/defaultTheme"
 
-/** @type {import('tailwindcss').Config} */
-module.exports = {
+const config = {
+  darkMode: ["class"],
   content: [
-    "./app/**/*.{ts,tsx}",
+    "./pages/**/*.{ts,tsx}",
     "./components/**/*.{ts,tsx}",
+    "./app/**/*.{ts,tsx}",
+    "./src/**/*.{ts,tsx}",
     "./ui/**/*.{ts,tsx}",
   ],
-  darkMode: ["class"],
+  prefix: "",
   theme: {
     container: {
       center: true,
@@ -54,29 +56,45 @@ module.exports = {
         },
       },
       borderRadius: {
-        lg: `var(--radius)`,
-        md: `calc(var(--radius) - 2px)`,
+        lg: "var(--radius)",
+        md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
       },
       fontFamily: {
         sans: ["var(--font-sans)", ...defaultTheme.fontFamily.sans],
         heading: ["var(--font-heading)", ...defaultTheme.fontFamily.sans],
       },
+      // --- ANIMASI DI SINI ---
       keyframes: {
         "accordion-down": {
-          from: { height: " 0" },
+          from: { height: "0" },
           to: { height: "var(--radix-accordion-content-height)" },
         },
         "accordion-up": {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
         },
+        // 1. Muncul dari Kiri (Untuk Teks)
+        fadeInLeft: {
+          '0%': { opacity: '0', transform: 'translateX(-50px)' },
+          '100%': { opacity: '1', transform: 'translateX(0)' },
+        },
+        // 2. Muncul dari Bawah (Untuk Kartu)
+        fadeInUp: {
+          '0%': { opacity: '0', transform: 'translateY(40px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        // Panggil animasi di sini
+        "fade-in-left": "fadeInLeft 1s ease-out forwards",
+        "fade-in-up": "fadeInUp 0.8s ease-out forwards",
       },
     },
   },
   plugins: [require("tailwindcss-animate"), require("@tailwindcss/typography")],
 } satisfies Config
+
+export default config

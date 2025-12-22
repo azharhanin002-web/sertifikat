@@ -1,7 +1,8 @@
-// app/page.tsx
 import Image from 'next/image';
 import Link from 'next/link';
 import { getPosts, getVideos, getGallery } from "~/lib/sanity.client"; 
+import ScrollAnimationWrapper from "~/components/ScrollAnimationWrapper";
+import Counter from "~/components/Counter";
 
 import { 
   FaLaptopCode, FaStopwatch, FaUserTie, FaChevronDown, 
@@ -65,70 +66,110 @@ export default async function Home() {
   return (
     <main className="min-h-screen font-sans bg-white">
       
-      {/* CATATAN PENTING:
-          Header (Navbar) dan Footer SUDAH DIHAPUS dari sini.
-          Sekarang mereka dipanggil otomatis dari 'app/layout.tsx'.
-          Jadi di sini kita langsung mulai dari HERO SECTION.
-      */}
+      {/* HEADER & FOOTER dipanggil otomatis dari app/layout.tsx */}
 
-      {/* HERO SECTION */}
-      <section className="relative h-[500px] lg:h-[600px] flex items-center overflow-hidden bg-gray-900">
+      {/* HERO SECTION (Animasi Langsung) */}
+      <section className="relative h-[600px] lg:h-[700px] flex items-center overflow-hidden bg-gray-900">
         <div className="absolute inset-0 z-0">
            <Image src="/neo.webp" alt="Hero Background" fill className="object-cover object-right" priority />
         </div>
-        <div className="absolute inset-0 bg-[#1e2338] opacity-95 z-10" style={{ clipPath: 'polygon(0 0, 35% 0, 15% 100%, 0% 100%)' }}></div>
-        <div className="relative z-20 max-w-7xl mx-auto px-6 w-full pt-10">
-          <div className="max-w-xl text-white">
-            <p className="text-xs md:text-sm font-bold tracking-[0.1em] mb-4 uppercase text-gray-300">Buat Pilihan Terbaik</p>
-            <h1 className="text-4xl lg:text-6xl font-bold leading-tight mb-6">Kami Adalah Yang<br/>Terbaik Saat Ini</h1>
+        <div className="absolute inset-0 bg-[#1e2338] opacity-95 z-10" style={{ clipPath: 'polygon(0 0, 45% 0, 25% 100%, 0% 100%)' }}></div>
+        <div className="relative z-20 max-w-7xl mx-auto px-6 w-full pt-10 h-full flex items-center">
+          <div className="max-w-4xl text-white animate-fade-in-left">
+            <p className="text-xl md:text-2xl font-bold tracking-[0.15em] mb-4 uppercase text-gray-300 drop-shadow-md">
+              BUAT PILIHAN TERBAIK
+            </p>
+            <h1 className="text-5xl md:text-7xl lg:text-8xl font-extrabold leading-tight drop-shadow-xl text-white">
+              Kami Adalah Yang<br/>
+              Terbaik Saat Ini
+            </h1>
           </div>
         </div>
       </section>
       
-      {/* FEATURES */}
-      <section className="bg-gray-100 py-20 px-6 font-sans">
+      {/* FEATURES SECTION (Animasi On Scroll) */}
+      <section className="bg-gray-100 py-20 px-6 font-sans overflow-hidden">
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12">
           <div className="flex flex-col gap-10">
-            <div>
-                <div className="flex items-center space-x-2 text-gray-500 mb-4"><div className="flex -space-x-1"><div className="w-3 h-3 rounded-full bg-slate-600"></div><div className="w-3 h-3 rounded-full bg-slate-400 opacity-50"></div></div><span className="font-medium text-slate-600 text-sm">Your Smart legality Partner</span></div>
-                <h2 className="text-3xl md:text-4xl font-extrabold text-[#1e2338] leading-tight mb-6">Kami Selalu Melayani<br/>Dengan Sepenuh Hati</h2>
-                <p className="text-gray-500 leading-relaxed text-base md:text-lg">Workshop Legalitas adalah salah satu produk dari PT Workshop Mahakarya Indonesia yang memberikan layanan Business Legality Consultant serta Management & Employee Competency Certification.</p>
-            </div>
-            <div className="bg-white p-8 rounded-xl shadow-sm hover:shadow-lg transition duration-300 border-b-4 border-transparent hover:border-blue-500 group">
-                <div className="mb-6"><FaStopwatch className="text-5xl text-cyan-500 group-hover:scale-110 transition-transform duration-300" /></div>
-                <h3 className="text-xl font-bold text-gray-800 mb-4">Fast Process</h3><hr className="w-full border-gray-100 mb-4" />
-                <p className="text-gray-500 text-sm leading-relaxed">Setiap layanan yang kami tawarkan dikerjakan oleh tim kami yang sudah berpengalaman mengurus setiap perizinan.</p>
-            </div>
+            <ScrollAnimationWrapper className="animate-fade-in-left">
+                <div>
+                    <div className="flex items-center space-x-2 text-gray-500 mb-4"><div className="flex -space-x-1"><div className="w-3 h-3 rounded-full bg-slate-600"></div><div className="w-3 h-3 rounded-full bg-slate-400 opacity-50"></div></div><span className="font-medium text-slate-600 text-sm">Your Smart legality Partner</span></div>
+                    <h2 className="text-3xl md:text-4xl font-extrabold text-[#1e2338] leading-tight mb-6">Kami Selalu Melayani<br/>Dengan Sepenuh Hati</h2>
+                    <p className="text-gray-500 leading-relaxed text-base md:text-lg">Workshop Legalitas adalah salah satu produk dari PT Workshop Mahakarya Indonesia yang memberikan layanan Business Legality Consultant serta Management & Employee Competency Certification.</p>
+                </div>
+            </ScrollAnimationWrapper>
+            <ScrollAnimationWrapper className="animate-fade-in-up">
+                <div className="bg-white p-8 rounded-xl shadow-sm hover:shadow-lg transition duration-300 border-b-4 border-transparent hover:border-blue-500 group">
+                    <div className="mb-6"><FaStopwatch className="text-5xl text-cyan-500 group-hover:scale-110 transition-transform duration-300" /></div>
+                    <h3 className="text-xl font-bold text-gray-800 mb-4">Fast Process</h3><hr className="w-full border-gray-100 mb-4" />
+                    <p className="text-gray-500 text-base leading-relaxed">Setiap layanan yang kami tawarkan dikerjakan oleh tim kami yang sudah berpengalaman mengurus setiap perizinan.</p>
+                </div>
+            </ScrollAnimationWrapper>
           </div>
           <div className="flex flex-col gap-8 lg:-mt-24"> 
-            <div className="bg-white p-8 rounded-xl shadow-sm hover:shadow-lg transition duration-300 border-b-4 border-transparent hover:border-orange-500 group">
-                <div className="mb-6"><FaLaptopCode className="text-5xl text-yellow-500 group-hover:scale-110 transition-transform duration-300" /></div>
-                <h3 className="text-xl font-bold text-gray-800 mb-4">Online Processing</h3><hr className="w-full border-gray-100 mb-4" />
-                <p className="text-gray-500 text-sm leading-relaxed">Proses pengerjaan perizinan dapat dilakukan online seluruh indonesia. Anda tidak perlu datang ke kantor kami.</p>
-            </div>
-            <div className="bg-white p-8 rounded-xl shadow-sm hover:shadow-lg transition duration-300 border-b-4 border-transparent hover:border-blue-500 group">
-                <div className="mb-6"><FaUserTie className="text-5xl text-green-500 group-hover:scale-110 transition-transform duration-300" /></div>
-                <h3 className="text-xl font-bold text-gray-800 mb-4">Professional Consultant</h3><hr className="w-full border-gray-100 mb-4" />
-                <p className="text-gray-500 text-sm leading-relaxed">Konsultasikan semua kebutuhan legalitas usaha anda dengan tim kami yang sudah berpengalaman pada bidangnya.</p>
-            </div>
+            <ScrollAnimationWrapper className="animate-fade-in-up delay-[200ms]">
+                <div className="bg-white p-8 rounded-xl shadow-sm hover:shadow-lg transition duration-300 border-b-4 border-transparent hover:border-orange-500 group">
+                    <div className="mb-6"><FaLaptopCode className="text-5xl text-yellow-500 group-hover:scale-110 transition-transform duration-300" /></div>
+                    <h3 className="text-xl font-bold text-gray-800 mb-4">Online Processing</h3><hr className="w-full border-gray-100 mb-4" />
+                    <p className="text-gray-500 text-base leading-relaxed">Proses pengerjaan perizinan dapat dilakukan online seluruh indonesia. Anda tidak perlu datang ke kantor kami.</p>
+                </div>
+            </ScrollAnimationWrapper>
+            <ScrollAnimationWrapper className="animate-fade-in-up delay-[400ms]">
+                <div className="bg-white p-8 rounded-xl shadow-sm hover:shadow-lg transition duration-300 border-b-4 border-transparent hover:border-blue-500 group">
+                    <div className="mb-6"><FaUserTie className="text-5xl text-green-500 group-hover:scale-110 transition-transform duration-300" /></div>
+                    <h3 className="text-xl font-bold text-gray-800 mb-4">Professional Consultant</h3><hr className="w-full border-gray-100 mb-4" />
+                    <p className="text-gray-500 text-base leading-relaxed">Konsultasikan semua kebutuhan legalitas usaha anda dengan tim kami yang sudah berpengalaman pada bidangnya.</p>
+                </div>
+            </ScrollAnimationWrapper>
           </div>
         </div>
       </section>      
 
-      {/* STATISTIK */}
-      <section className="relative h-[500px] flex items-center bg-gray-900 overflow-hidden font-sans">
+      {/* STATISTIK - (FONT BESAR & AKSEN MERAH) */}
+      <section className="relative h-[650px] flex items-center bg-gray-900 overflow-hidden font-sans">
         <div className="absolute inset-0 z-0">
           <Image src="/neo.webp" alt="Stats Background" fill className="object-cover" />
-          <div className="absolute inset-0 bg-[#1e2338] opacity-90 z-10"></div>
+          <div className="absolute inset-0 bg-[#1e2338] opacity-80 z-10"></div>
         </div>
         <div className="relative z-10 max-w-7xl mx-auto px-6 w-full grid grid-cols-1 lg:grid-cols-2 items-center">
           <div className="text-white">
-            <div className="flex items-center space-x-2 mb-4 opacity-90"><div className="flex -space-x-1"><div className="w-3 h-3 rounded-full bg-white"></div><div className="w-3 h-3 rounded-full bg-white opacity-50"></div></div><span className="text-sm font-bold tracking-widest uppercase">KAMI BERI SOLUSI</span></div>
-            <h2 className="text-4xl md:text-5xl font-extrabold mb-12 leading-tight">Anda Masih Ragu?<br />Coba Lihat Ini</h2>
+            <ScrollAnimationWrapper className="animate-fade-in-left">
+                <div>
+                    <div className="flex items-center space-x-2 mb-4 opacity-90"><div className="flex -space-x-1"><div className="w-3 h-3 rounded-full bg-white"></div><div className="w-3 h-3 rounded-full bg-white opacity-50"></div></div><span className="text-sm font-bold tracking-widest uppercase">KAMI BERI SOLUSI</span></div>
+                    <h2 className="text-4xl md:text-5xl font-extrabold mb-12 leading-tight">Anda Masih Ragu?<br />Coba Lihat Ini</h2>
+                </div>
+            </ScrollAnimationWrapper>
+            
+            {/* ANGKA ANIMASI MENGGUNAKAN COUNTER */}
             <div className="grid grid-cols-3 gap-8 border-t border-white/20 pt-8">
-              <div><div className="text-4xl md:text-5xl font-extrabold text-white">.30<span className="text-red-500">+</span></div><p className="mt-2 text-sm opacity-80 uppercase tracking-widest">layanan</p></div>
-              <div><div className="text-4xl md:text-5xl font-extrabold text-white">822</div><p className="mt-2 text-sm opacity-80 uppercase tracking-widest">project selesai</p></div>
-              <div><div className="text-4xl md:text-5xl font-extrabold text-white">428<span className="text-red-500">+</span></div><p className="mt-2 text-sm opacity-80 uppercase tracking-widest">klien puas</p></div>
+              {/* ITEM 1 */}
+              <div>
+                  {/* Ukuran Font Diperbesar Jauh & Flex untuk sejajarkan titik merah */}
+                  <div className="text-6xl md:text-7xl lg:text-8xl font-extrabold text-white flex items-baseline">
+                      {/* Titik Merah */}
+                      <span className="text-red-500 mr-1">.</span>
+                      <Counter end={30} />
+                      {/* Plus Merah */}
+                      <span className="text-red-500 ml-1">+</span>
+                  </div>
+                  <p className="mt-4 text-lg md:text-xl font-bold opacity-90 capitalize">layanan</p>
+              </div>
+              {/* ITEM 2 */}
+              <div>
+                  <div className="text-6xl md:text-7xl lg:text-8xl font-extrabold text-white flex items-baseline">
+                      <Counter end={822} />
+                  </div>
+                  <p className="mt-4 text-lg md:text-xl font-bold opacity-90 capitalize">project selesai</p>
+              </div>
+              {/* ITEM 3 */}
+              <div>
+                  <div className="text-6xl md:text-7xl lg:text-8xl font-extrabold text-white flex items-baseline">
+                      <Counter end={428} />
+                      {/* Plus Merah */}
+                      <span className="text-red-500 ml-1">+</span>
+                  </div>
+                  <p className="mt-4 text-lg md:text-xl font-bold opacity-90 capitalize">klien yang puas</p>
+              </div>
             </div>
           </div>
         </div>
@@ -139,13 +180,13 @@ export default async function Home() {
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-12">
              <h2 className="text-3xl md:text-4xl font-extrabold text-gray-800 mb-4">Pilihan Paket Terbaik</h2>
-             <p className="text-gray-500 max-w-2xl mx-auto">Sesuaikan kebutuhan legalitas perusahaan Anda dengan paket hemat yang kami tawarkan.</p>
+             <p className="text-gray-500 max-w-2xl mx-auto text-base">Sesuaikan kebutuhan legalitas perusahaan Anda dengan paket hemat yang kami tawarkan.</p>
           </div>
           <div className="flex overflow-x-auto pb-8 space-x-6 snap-x snap-mandatory scrollbar-hide">
             {pricingData.map((item, index) => (
               <div key={index} className={`min-w-[300px] md:min-w-[320px] bg-white rounded-3xl p-6 flex-shrink-0 snap-center transition-all duration-300 border ${index === 0 ? 'border-red-400 shadow-xl scale-100' : 'border-gray-200 hover:border-blue-300 hover:shadow-lg'}`}>
                 <div className="mb-4">
-                    <h3 className="text-gray-600 font-medium text-sm mb-1">{item.title}</h3>
+                    <h3 className="text-gray-600 font-bold text-base mb-1">{item.title}</h3>
                     <div className="flex items-start">
                         <span className="text-xs bg-black text-white rounded-full px-1 mr-1 mt-1">Rp</span>
                         <span className="text-4xl font-extrabold text-gray-900">{item.price.replace('Rp ','').replace('jt','')}</span>
@@ -158,10 +199,10 @@ export default async function Home() {
                    <span className="text-gray-400 text-xs z-10">Gambar {item.title}</span>
                 </div>
                 <button className={`block w-full py-2.5 rounded-lg font-bold text-sm text-center transition mb-6 ${index === 0 ? 'bg-red-500 text-white hover:bg-red-600 shadow-lg shadow-red-200' : 'bg-white border border-gray-800 text-gray-800 hover:bg-gray-800 hover:text-white'}`}>Contact Us</button>
-                <div className="space-y-2 border-t pt-4">
-                  <p className="text-xs text-gray-500 mb-2">Detail paket harga</p>
+                <div className="space-y-3 border-t pt-4">
+                  <p className="text-xs text-gray-500 mb-2 font-bold uppercase">Detail paket</p>
                   {item.features.map((feature, i) => (
-                    <div key={i} className="flex items-start text-xs text-gray-600"><span className="mr-2 text-orange-400 font-bold">›</span>{feature}</div>
+                    <div key={i} className="flex items-start text-sm text-gray-600"><span className="mr-2 text-orange-400 font-bold">›</span>{feature}</div>
                   ))}
                 </div>
               </div>
@@ -180,13 +221,13 @@ export default async function Home() {
                         {faqData.map((item, index) => (
                             <details key={index} className="group bg-transparent border-b border-gray-700 pb-4">
                                 <summary className="flex justify-between items-center cursor-pointer list-none font-bold text-lg select-none hover:text-gray-300 transition"><span>{item.question}</span><span className="transition-transform duration-300 group-open:rotate-180 border rounded-full p-1 border-gray-500"><FaChevronDown className="text-xs"/></span></summary>
-                                <div className="text-gray-400 leading-relaxed pt-4 mt-2 text-sm">{item.answer}</div>
+                                <div className="text-gray-400 leading-relaxed pt-4 mt-2 text-base">{item.answer}</div>
                             </details>
                         ))}
                     </div>
                 </div>
                 <div className="relative h-[500px] w-full rounded-2xl overflow-hidden hidden lg:block">
-                     <div className="absolute inset-0 bg-gray-600 rounded-2xl"></div> {/* Placeholder gambar */}
+                     <div className="absolute inset-0 bg-gray-600 rounded-2xl"></div> 
                 </div>
             </div>
         </div>
@@ -214,7 +255,7 @@ export default async function Home() {
          </div>
       </section>
 
-      {/* GALLERY DOKUMENTASI (FETCHED FROM SANITY) */}
+      {/* GALLERY POST */}
       <section className="py-20 bg-white font-sans">
          <div className="max-w-7xl mx-auto px-6">
             <div className="text-center mb-12">
@@ -222,20 +263,18 @@ export default async function Home() {
                <h2 className="text-3xl md:text-4xl font-extrabold text-[#1e2338]">Gallery Post</h2>
             </div>
             <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
-               {/* Gunakan galleryDisplayData */}
                {galleryDisplayData.map((item: any, index: number) => (
                   <div key={index} className="relative h-48 md:h-64 rounded-lg overflow-hidden bg-gray-100 hover:shadow-lg transition cursor-pointer group">
-                     {item.image ? (
+                      {item.image ? (
                         <Image src={item.image} alt={item.caption || 'Gallery'} fill className="object-cover group-hover:scale-110 transition duration-500"/>
-                     ) : (
+                      ) : (
                         <div className="absolute inset-0 flex items-center justify-center text-gray-300 font-bold text-2xl">FOTO</div>
-                     )}
-                     {/* Overlay Caption (jika ada) */}
-                     {item.caption && (
-                         <div className="absolute bottom-0 left-0 w-full bg-black/60 p-2 text-white text-xs opacity-0 group-hover:opacity-100 transition">
-                             {item.caption}
-                         </div>
-                     )}
+                      )}
+                      {item.caption && (
+                          <div className="absolute bottom-0 left-0 w-full bg-black/60 p-2 text-white text-xs opacity-0 group-hover:opacity-100 transition">
+                              {item.caption}
+                          </div>
+                      )}
                   </div>
                ))}
             </div>
@@ -251,12 +290,15 @@ export default async function Home() {
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                {testimonials.map((item, index) => (
-                  <div key={index} className="bg-white p-8 rounded-lg shadow-[0_5px_20px_rgba(0,0,0,0.05)] border border-gray-50">
-                     <div className="flex space-x-1 text-[#4ade80] mb-4 text-xs">{[...Array(5)].map((_, i) => <FaStar key={i} />)}</div>
-                     <p className="text-gray-600 text-sm leading-relaxed mb-6">"{item.text}"</p>
-                     <div className="flex items-center mt-auto pt-4">
-                        <div className="h-10 w-10 rounded-full bg-gray-200 overflow-hidden mr-3"><div className="w-full h-full bg-gray-300"></div></div>
-                        <div><h4 className="font-bold text-gray-900 text-sm">{item.name}</h4><span className="text-xs text-[#4ade80] font-medium">{item.role}</span></div>
+                  <div key={index} className="bg-white p-8 rounded-lg shadow-[0_5px_20px_rgba(0,0,0,0.05)] border border-gray-50 hover:shadow-lg transition">
+                     <div className="flex space-x-1 text-[#4ade80] mb-4 text-sm">{[...Array(5)].map((_, i) => <FaStar key={i} />)}</div>
+                     <p className="text-gray-600 text-base md:text-lg italic leading-relaxed mb-6">"{item.text}"</p>
+                     <div className="flex items-center mt-auto pt-4 border-t border-gray-100">
+                        <div className="h-12 w-12 rounded-full bg-gray-200 overflow-hidden mr-4"><div className="w-full h-full bg-gray-300"></div></div>
+                        <div>
+                            <h4 className="font-bold text-gray-900 text-lg">{item.name}</h4>
+                            <span className="text-sm text-[#4ade80] font-medium">{item.role}</span>
+                        </div>
                      </div>
                   </div>
                ))}
@@ -264,33 +306,29 @@ export default async function Home() {
          </div>
       </section>
 
-      {/* UPDATE TERKINI (FETCHED FROM SANITY) */}
+      {/* UPDATE TERKINI */}
       <section className="py-20 bg-white font-sans">
         <div className="max-w-7xl mx-auto px-6">
             <div className="text-center mb-12">
                <h2 className="text-3xl md:text-4xl font-extrabold text-[#1e2338]">Update Terkini</h2>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                {/* Gunakan blogData (yang sudah ada logika fallback) */}
                 {blogData.map((item: any, index: number) => (
                     <div key={index} className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition group border border-gray-100 flex flex-col h-full">
                         <div className="relative h-48 bg-blue-50 overflow-hidden flex items-center justify-center">
                              {item.image ? (
                                 <Image src={item.image} alt={item.title} fill className="object-cover" />
                              ) : (
-                                <div className="text-center">
-                                    <h4 className="font-bold text-blue-900 text-sm uppercase mb-2">IMAGE</h4>
-                                </div>
+                                <div className="text-center"><h4 className="font-bold text-blue-900 text-sm uppercase mb-2">IMAGE</h4></div>
                              )}
-                             <div className="absolute bottom-4 right-4 bg-white px-2 py-1 rounded text-xs font-bold shadow z-10">
-                                {item.date ? item.date.split('-')[2] : '01'} <br/> 
-                                <span className="text-[10px] text-gray-500">{item.date ? item.date.split('-')[1] : 'Jan'}</span>
+                             <div className="absolute bottom-4 right-4 bg-white px-3 py-1.5 rounded text-xs font-bold shadow z-10">
+                                {item.date ? item.date.split('-')[2] : '01'} <span className="text-gray-500 ml-1">{item.date ? item.date.split('-')[1] : 'Jan'}</span>
                              </div>
                         </div>
                         <div className="p-6 flex flex-col flex-grow">
-                            <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2 block">{item.category || 'Berita'}</span>
-                            <h3 className="text-lg font-bold text-[#1e2338] mb-3 leading-tight group-hover:text-blue-700 transition cursor-pointer">{item.title}</h3>
-                            <p className="text-gray-500 text-xs leading-relaxed mb-4 line-clamp-3 flex-grow">{item.excerpt}</p>
+                            <span className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-2 block">{item.category || 'Berita'}</span>
+                            <h3 className="text-xl font-bold text-[#1e2338] mb-3 leading-tight group-hover:text-blue-700 transition cursor-pointer">{item.title}</h3>
+                            <p className="text-gray-500 text-sm leading-relaxed mb-4 line-clamp-3 flex-grow">{item.excerpt}</p>
                         </div>
                     </div>
                 ))}
@@ -298,7 +336,7 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* VIDEO DOKUMENTASI (FETCHED FROM SANITY) */}
+      {/* VIDEO DOKUMENTASI */}
       <section className="py-20 bg-white font-sans">
         <div className="max-w-7xl mx-auto px-6">
             <div className="text-center mb-12">
@@ -306,7 +344,6 @@ export default async function Home() {
                <h2 className="text-3xl md:text-4xl font-extrabold text-[#1e2338]">Video Dokumentasi</h2>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                {/* Gunakan videoDisplayData */}
                 {videoDisplayData.map((item: any, index: number) => (
                     <div key={index} className="group relative h-72 rounded-xl overflow-hidden cursor-pointer shadow-lg">
                         <div className="absolute inset-0 bg-gray-200 flex items-center justify-center font-bold text-gray-400">
@@ -327,11 +364,6 @@ export default async function Home() {
             </div>
         </div>
       </section>
-
-      {/* CATATAN PENTING:
-          Bagian FOOTER juga SUDAH DIHAPUS. 
-          Footer akan muncul otomatis di bawah semua konten ini karena dipanggil oleh layout.tsx.
-      */}
 
     </main>
   );
