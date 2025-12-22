@@ -12,21 +12,21 @@ export const metadata = {
   },
   metadataBase: new URL(siteConfig.url),
   description: siteConfig.description,
-  keywords: ["Next.js", "React"],
+  keywords: ["Next.js", "React", "Legalitas", "Sertifikasi", "Sulteng"],
   authors: [
     {
-      name: "Darius Pasca",
-      url: "https://github.com/dariuspasca",
+      name: "Workshop Legalitas", // Diganti sesuai nama bisnis
+      url: siteConfig.url,
     },
   ],
-  creator: "Darius Pasca",
+  creator: "Workshop Legalitas", // Diganti sesuai nama bisnis
   themeColor: [
     { media: "(prefers-color-scheme: light)", color: "white" },
     { media: "(prefers-color-scheme: dark)", color: "black" },
   ],
   openGraph: {
     type: "website",
-    locale: "en_US",
+    locale: "id_ID", // Diganti ke Indonesia
     url: siteConfig.url,
     title: siteConfig.name,
     description: siteConfig.description,
@@ -37,7 +37,7 @@ export const metadata = {
     title: siteConfig.name,
     description: siteConfig.description,
     images: [`${siteConfig.url}/og.png`],
-    creator: "@dariuspasca",
+    creator: "@workshop_legalitas", // Sesuaikan jika ada
   },
   icons: {
     icon: "/favicon.svg",
@@ -47,23 +47,19 @@ export const metadata = {
   manifest: `${siteConfig.url}/site.webmanifest`,
 }
 
-export default async function PageLayout({ children }: PageLayoutProps) {
-  // Kita tidak perlu memanggil getSettingsPage atau getFooter lagi
-  // karena kita menggunakan Navbar dan Footer custom di page.tsx
-
+// PERBAIKAN UTAMA: Hapus kata 'async' di depan function
+export default function PageLayout({ children }: PageLayoutProps) {
+  
   return (
     <div className="flex min-h-screen flex-col">
       
-      {/* HEADER LAMA SUDAH DIHAPUS DI SINI 
-         Agar tidak bentrok dengan Navbar custom kita 
+      {/* HEADER & FOOTER DIHAPUS DARI SINI 
+          Karena sudah ditangani oleh Global Layout (app/layout.tsx)
       */}
 
       <main className="flex-1">
           {children}
       </main>
-
-      {/* FOOTER LAMA SUDAH DIHAPUS DI SINI 
-      */}
 
       <TailwindIndicator />
     </div>
