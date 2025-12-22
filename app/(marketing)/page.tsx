@@ -49,6 +49,16 @@ export default async function Home() {
         { title: "ISO 9001:2015", link: "#", image: "/mockup-skttk.png", desc: "Manajemen Mutu" }
     ];
 
+  // --- MAPPING DATA GALLERY (FIXED & SLICED) ---
+  const galleryDisplay = (gallery && gallery.length > 0) 
+    ? gallery.map((item: any) => ({
+        image: item.image,
+        caption: item.caption
+    })) 
+    : [
+      { image: null }, { image: null }, { image: null } 
+    ];
+
   // --- DATA STATIC ---
   const pricingData = [
     { title: "SKUP Migas", price: "Rp 25jt", image: "/mockup-migas.png", features: ["Free Konsultasi", "Proses Pengerjaan Online", "Bebas Pilih Jumlah Bidang Usaha", "SKUP Migas dari Dirjen Migas ESDM"] },
@@ -73,10 +83,6 @@ export default async function Home() {
   const videoDisplayData = (videos && videos.length > 0) ? videos : [
       { title: "Company Profile (Dummy)", thumb: "/video-thumb-1.jpg" },
       { title: "Testimoni Klien (Dummy)", thumb: "/video-thumb-2.jpg" }
-  ];
-
-  const galleryDisplayData = (gallery && gallery.length > 0) ? gallery : [
-      { image: null }, { image: null }, { image: null }, { image: null }, { image: null }, { image: null } 
   ];
 
 
@@ -262,15 +268,17 @@ export default async function Home() {
          </div>
       </section>
 
-      {/* GALLERY POST */}
+      {/* GALLERY POST (DIBATASI 6 & TOMBOL LIHAT SEMUA) */}
       <section className="py-20 bg-white font-sans">
          <div className="max-w-7xl mx-auto px-6">
             <div className="text-center mb-12">
                <div className="flex items-center justify-center space-x-2 mb-2"><div className="flex -space-x-1"><div className="w-3 h-3 rounded-full bg-slate-600"></div><div className="w-3 h-3 rounded-full bg-slate-400 opacity-50"></div></div><span className="text-sm font-medium text-gray-500">Dokumentasi</span></div>
                <h2 className="text-3xl md:text-4xl font-extrabold text-[#1e2338]">Gallery Post</h2>
             </div>
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
-               {galleryDisplayData.map((item: any, index: number) => (
+            
+            {/* GRID GALLERY (DIBATASI 6) */}
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 mb-12">
+               {galleryDisplay.slice(0, 6).map((item: any, index: number) => (
                   <div key={index} className="relative h-48 md:h-64 rounded-lg overflow-hidden bg-gray-100 hover:shadow-lg transition cursor-pointer group">
                       {item.image ? (
                         <Image src={item.image} alt={item.caption || 'Gallery'} fill className="object-cover group-hover:scale-110 transition duration-500"/>
@@ -284,6 +292,13 @@ export default async function Home() {
                       )}
                   </div>
                ))}
+            </div>
+
+            {/* TOMBOL LIHAT GALLERY LENGKAP */}
+            <div className="text-center">
+                <Link href="/gallery" className="inline-block px-8 py-3 rounded-full border-2 border-[#1e2338] text-[#1e2338] font-bold hover:bg-[#1e2338] hover:text-white transition duration-300">
+                    Lihat Gallery Lengkap
+                </Link>
             </div>
          </div>
       </section>
