@@ -3,10 +3,10 @@ import { type SiteConfig } from "types"
 export const siteConfig: SiteConfig = {
   name: "Solusi Sertifikat",
   description: "Solusi Sertifikasi Sulteng",
-  url: "https://nextjs.org",
+  url: "https://solusi-sertifikat.com",
   ogImage:
-    "https://assets.vercel.com/image/upload/front/nextjs/twitter-card.png",
+    "https://solusi-sertifikat.com/neo.webp",
   links: {
-    twitter: "https://twitter.com/pasca_darius",
+    twitter: "https://twitter.com/onislaminfo",
   },
 }
