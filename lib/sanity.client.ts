@@ -16,15 +16,15 @@ import {
   SecondaryPagesSlugsQueryResponse,
   settingsQuery,
   SettingsQueryResponse,
-  // --- IMPORT QUERY UTAMA (LAMA) ---
+  // --- IMPORT QUERY UTAMA ---
   postsQuery,
   PostsQueryResponse,
-  postBySlugQuery, // <--- TAMBAHAN: Query Detail Berita
+  postBySlugQuery, // Query Detail Berita
   videosQuery,
   VideosQueryResponse,
   galleryQuery,
   GalleryQueryResponse,
-  // --- IMPORT QUERY BARU (TAMBAHAN) ---
+  // --- IMPORT QUERY BARU ---
   layananQuery,
   layananDetailQuery, 
   LayananResponse,
@@ -184,6 +184,7 @@ export async function getPromoBySlug(slug: string, token?: string) {
 
 // 3. Ambil Dokumen berdasarkan Kategori (Slug)
 export async function getDokumenByCategory(category: string) {
+  // Logic: Ubah "pendaftaran-usaha" (URL) menjadi "pendaftaran usaha" (Data Sanity)
   const formattedCategory = category.replace(/-/g, ' ');
   
   return await sanityClient()?.fetch(dokumenByCategoryQuery, { category: formattedCategory })
@@ -193,7 +194,7 @@ export async function getDokumenByCategory(category: string) {
     })
 }
 
-// 4. Ambil 1 Berita berdasarkan Slug (TAMBAHAN BARU)
+// 4. Ambil 1 Berita berdasarkan Slug
 export async function getPostBySlug(slug: string, token?: string) {
   return await sanityClient(token)?.fetch(postBySlugQuery, { slug })
 }

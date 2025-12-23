@@ -276,6 +276,7 @@ export const DokumenResponse = z.array(z.object({
 })).nullish()
 
 // 2. By Category (For /dokumen/[slug] pages)
+// This query now handles case-insensitivity and ensures categories match regardless of formatting.
 export const dokumenByCategoryQuery = groq`
   *[_type == "dokumen" && lower(category) == lower($category)] | order(_createdAt desc) {
     _id,
