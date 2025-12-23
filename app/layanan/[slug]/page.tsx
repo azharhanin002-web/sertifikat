@@ -44,6 +44,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function LayananDetailPage({ params }: Props) {
   
+  // 1. Ambil Data
   const data = await getLayananBySlug(params.slug);
   const recentPosts = await getPosts();
 
@@ -97,7 +98,7 @@ export default async function LayananDetailPage({ params }: Props) {
 
               {/* DETAIL & DESKRIPSI */}
               <div>
-                  {/* (BAGIAN TABEL HARGA DIHAPUS DI SINI) */}
+                  {/* (BAGIAN TABEL HARGA SUDAH DIHAPUS) */}
 
                   {/* Isi Konten Lengkap */}
                   <div className="prose prose-lg prose-blue max-w-none text-gray-700 leading-relaxed">
