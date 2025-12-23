@@ -10,9 +10,11 @@ import {
   FaVideo, FaBriefcase, FaBullhorn, FaFilePdf 
 } from 'react-icons/fa'
 
-// --- 2. IMPORT KOMPONEN (PERBAIKAN DISINI) ---
+// --- 2. IMPORT KOMPONEN ---
 import { StudioLogo } from "./components/StudioLogo"
-import { DashboardWelcome } from "./components/DashboardWelcome" // <--- Import Komponen Baru
+import { DashboardWelcome } from "./components/DashboardWelcome" 
+// PERBAIKAN PENTING: Import Layout WordPress yang sebelumnya LUPA di-import
+import { WordPressLayout } from "./components/WordPressLayout" 
 
 // --- 3. IMPORT SCHEMA ---
 import page from "~/schemas/documents/page"
@@ -36,6 +38,8 @@ export default defineConfig({
   studio: {
     components: {
       logo: StudioLogo,
+      // PERBAIKAN UTAMA: Pasang Layout disini agar sidebar berubah HITAM
+      layout: WordPressLayout, 
     },
   },
 
@@ -56,9 +60,10 @@ export default defineConfig({
     deskTool({
       structure: (S) =>
         S.list()
-          .title('Dashboard')
+          .title('Menu Utama') 
           .items([
-            // 1. DASHBOARD
+            // 1. DASHBOARD (MENU PERTAMA = DEFAULT PAGE)
+            // Ini akan membuat halaman "Selamat Datang" muncul saat login
             S.listItem()
               .title('Dashboard')
               .icon(FaTachometerAlt)
@@ -66,12 +71,12 @@ export default defineConfig({
                 S.component()
                   .id('dashboard-view')
                   .title('Dashboard')
-                  .component(DashboardWelcome) // <--- Panggil Komponen di sini (Tanpa JSX)
+                  .component(DashboardWelcome)
               ),
 
-            S.divider(),
+            S.divider(), // --- Garis Pemisah ---
 
-            // 2. BERITA (POSTS)
+            // 2. BERITA & ARTIKEL
             S.documentTypeListItem('post')
               .title('Berita & Artikel')
               .icon(FaThumbtack),
@@ -94,19 +99,18 @@ export default defineConfig({
                   ])
               ),
 
-            // 5. PROMO
+            // 5. PROMO & DOKUMEN
             S.documentTypeListItem('promo')
               .title('Promo Spesial')
               .icon(FaBullhorn),
 
-            // 6. DOKUMEN (FILE DOWNLOAD)
             S.documentTypeListItem('dokumen')
               .title('File Download')
               .icon(FaFilePdf),
 
-            S.divider(),
+            S.divider(), // --- Garis Pemisah ---
 
-            // 7. HALAMAN (PAGES & HOME)
+            // 6. HALAMAN (PAGES & HOME)
             S.listItem()
               .title('Halaman (Pages)')
               .icon(FaFileAlt)
