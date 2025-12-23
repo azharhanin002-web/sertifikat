@@ -5,53 +5,55 @@ import { getLayananBySlug, getPosts } from "~/lib/sanity.client";
 import { PortableText } from "@portabletext/react";
 import { FaSearch, FaFolder, FaRegClock } from "react-icons/fa";
 
-// Update data tiap 10 detik
 export const revalidate = 10;
 
 export default async function LayananDetailPage({ params }: { params: { slug: string } }) {
   
-  // 1. Ambil Data Layanan
+  // 1. Ambil Data
   const data = await getLayananBySlug(params.slug);
-  
-  // 2. Ambil Data Recent Posts untuk Sidebar
   const recentPosts = await getPosts();
 
   if (!data) return notFound();
 
   return (
-    <main className="min-h-screen font-sans bg-gray-50 pt-8 pb-20">
+    <main className="min-h-screen font-sans bg-gray-50 pb-20">
+      
+      {/* HEADER JUDUL & BREADCRUMB */}
+      <div className="bg-[#1e2338] text-white py-16 mb-12">
+        <div className="max-w-7xl mx-auto px-6">
+            <h1 className="text-4xl md:text-5xl font-bold mb-4">{data.title}</h1>
+            <div className="text-sm font-medium text-gray-300">
+                Anda di sini : <Link href="/" className="text-[#fca311] hover:underline">Beranda</Link> / <span className="text-[#fca311]">Daftar Harga</span>
+            </div>
+        </div>
+      </div>
+
       <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-3 gap-12">
           
-          {/* ==========================
-              KOLOM KIRI (KONTEN UTAMA)
-             ========================== */}
+          {/* KOLOM KIRI (KONTEN UTAMA) */}
           <div className="lg:col-span-2 bg-white p-8 rounded-lg shadow-sm border border-gray-100 h-fit">
               
-              {/* 1. GAMBAR PRODUK (FULL WIDTH DI ATAS) - DIPERBAIKI */}
+              {/* 1. GAMBAR PRODUK */}
               <div className="w-full mb-8 relative rounded-lg overflow-hidden border border-gray-200 shadow-inner bg-gray-50">
                   {data.icon ? (
-                      // Hapus 'fill' dan 'aspect-video'. Gunakan width/height dinamis.
-                      // Kita set width/height besar agar Next.js mengoptimalkannya, 
-                      // tapi CSS w-full h-auto akan membuatnya responsif sesuai kontainer.
                       <Image 
                         src={data.icon} 
                         alt={data.title} 
-                        width={1200} // Nilai arbitrary besar untuk kualitas baik
-                        height={800} // Nilai arbitrary besar
-                        className="w-full h-auto object-contain" // Gunakan object-contain agar tidak terpotong
+                        width={1200} 
+                        height={800} 
+                        className="w-full h-auto object-contain"
                         priority
                       />
                   ) : (
                       <div className="w-full h-64 bg-gray-100 flex items-center justify-center text-gray-400">No Image</div>
                   )}
                   
-                  {/* Label */}
                   <div className="absolute top-4 left-0 bg-blue-600 text-white text-xs font-bold px-3 py-1 shadow-md z-10">
                       LAYANAN UNGGULAN
                   </div>
               </div>
 
-              {/* 2. DETAIL & DESKRIPSI (DI BAWAH GAMBAR) */}
+              {/* 2. DETAIL & DESKRIPSI */}
               <div>
                   {/* Tabel Info Singkat */}
                   <div className="border-b border-gray-200 pb-6 mb-6">
@@ -69,21 +71,16 @@ export default async function LayananDetailPage({ params }: { params: { slug: st
                       </div>
                   </div>
 
-                  {/* Isi Konten Lengkap (Menggunakan Styling dari Referensi) */}
+                  {/* Isi Konten Lengkap */}
                   <div className="prose prose-lg prose-blue max-w-none text-gray-700 leading-relaxed">
                       
-                      {/* Judul Paket */}
-                      <h3 className="text-red-600 font-bold text-2xl mb-4">
-                        Paket : <span className="text-[#1e2338]">{data.title}</span>
-                      </h3>
+                      {/* Judul "Paket :" DIHAPUS karena sudah ada di deskripsi */}
 
-                      {/* Deskripsi (Portable Text) */}
                       {data.description ? (
                           <div className="prose-ul:list-none prose-li:pl-0 prose-li:mb-2">
                             <PortableText 
                               value={data.description} 
                               components={{
-                                // Kustomisasi tampilan list agar mirip referensi (pakai bintang *)
                                 list: {
                                   bullet: ({children}) => <ul className="space-y-2 font-medium text-gray-800">{children}</ul>,
                                 },
@@ -101,9 +98,7 @@ export default async function LayananDetailPage({ params }: { params: { slug: st
 
           </div>
 
-          {/* ==========================
-              KOLOM KANAN (SIDEBAR) - TETAP SAMA
-             ========================== */}
+          {/* KOLOM KANAN (SIDEBAR) */}
           <div className="hidden lg:block space-y-8">
               
               {/* Search Widget */}
