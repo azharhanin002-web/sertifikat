@@ -4,12 +4,46 @@ import { notFound } from "next/navigation";
 import { getLayananBySlug, getPosts } from "~/lib/sanity.client";
 import { PortableText } from "@portabletext/react";
 import { FaSearch, FaFolder, FaRegClock } from "react-icons/fa";
+import { Metadata } from "next";
 
 export const revalidate = 10;
 
-export default async function LayananDetailPage({ params }: { params: { slug: string } }) {
+type Props = {
+  params: { slug: string };
+};
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const data = await getLayananBySlug(params.slug);
+
+  if (!data) {
+    return {
+      title: "Layanan Tidak Ditemukan",
+    };
+  }
+
+  return {
+    title: `${data.title} | PT Solusi Sertifikasi`,
+    description: `Lihat rincian paket ${data.title}. Konsultasi gratis dan proses cepat.`,
+    openGraph: {
+      title: data.title,
+      description: `Layanan profesional untuk ${data.title}.`,
+      url: `/layanan/${params.slug}`,
+      siteName: 'PT Solusi Sertifikasi',
+      images: [
+        {
+          url: data.icon || "",
+          width: 1200,
+          height: 630,
+          alt: data.title,
+        },
+      ],
+      type: 'website',
+    },
+  };
+}
+
+export default async function LayananDetailPage({ params }: Props) {
   
-  // 1. Ambil Data
   const data = await getLayananBySlug(params.slug);
   const recentPosts = await getPosts();
 
@@ -21,10 +55,19 @@ export default async function LayananDetailPage({ params }: { params: { slug: st
       {/* HEADER JUDUL & BREADCRUMB */}
       <div className="bg-[#1e2338] text-white py-16 mb-12">
         <div className="max-w-7xl mx-auto px-6">
-            <h1 className="text-4xl md:text-5xl font-bold mb-4">{data.title}</h1>
-            <div className="text-sm font-medium text-gray-300">
-                Anda di sini : <Link href="/" className="text-[#fca311] hover:underline">Beranda</Link> / <span className="text-[#fca311]">Daftar Harga</span>
+            <h1 className="text-3xl md:text-5xl font-bold mb-4 leading-tight">{data.title}</h1>
+            
+            {/* FIX: BREADCRUMB DINAMIS */}
+            <div className="text-sm font-medium text-gray-300 flex flex-wrap items-center gap-1">
+                <span>Anda di sini :</span>
+                <Link href="/" className="text-[#fca311] hover:underline">Beranda</Link> 
+                <span>/</span>
+                <Link href="/layanan" className="text-[#fca311] hover:underline">Layanan</Link> 
+                <span>/</span>
+                {/* Judul Layanan Sekarang */}
+                <span className="text-white opacity-90">{data.title}</span>
             </div>
+
         </div>
       </div>
 
@@ -33,7 +76,7 @@ export default async function LayananDetailPage({ params }: { params: { slug: st
           {/* KOLOM KIRI (KONTEN UTAMA) */}
           <div className="lg:col-span-2 bg-white p-8 rounded-lg shadow-sm border border-gray-100 h-fit">
               
-              {/* 1. GAMBAR PRODUK */}
+              {/* GAMBAR PRODUK */}
               <div className="w-full mb-8 relative rounded-lg overflow-hidden border border-gray-200 shadow-inner bg-gray-50">
                   {data.icon ? (
                       <Image 
@@ -53,7 +96,7 @@ export default async function LayananDetailPage({ params }: { params: { slug: st
                   </div>
               </div>
 
-              {/* 2. DETAIL & DESKRIPSI */}
+              {/* DETAIL & DESKRIPSI */}
               <div>
                   {/* Tabel Info Singkat */}
                   <div className="border-b border-gray-200 pb-6 mb-6">
@@ -73,9 +116,6 @@ export default async function LayananDetailPage({ params }: { params: { slug: st
 
                   {/* Isi Konten Lengkap */}
                   <div className="prose prose-lg prose-blue max-w-none text-gray-700 leading-relaxed">
-                      
-                      {/* Judul "Paket :" DIHAPUS karena sudah ada di deskripsi */}
-
                       {data.description ? (
                           <div className="prose-ul:list-none prose-li:pl-0 prose-li:mb-2">
                             <PortableText 

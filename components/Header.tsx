@@ -1,7 +1,7 @@
-"use client"; // Needs to be a client component for hydration/hooks
+"use client";
 
 import { useState, useEffect } from 'react';
-import Link from 'next/link';
+import Link from 'next/link'; // Import Link
 import Image from 'next/image';
 import { 
   FaPhoneAlt, FaEnvelope, FaRegClock, FaFacebookF, 
@@ -13,12 +13,11 @@ export default function Header() {
 
   useEffect(() => {
     // FIX TANGGAL: Timezone Asia/Jakarta
-    // Logic: Force locale to 'id-ID' and timeZone to 'Asia/Jakarta'
     const dateStr = new Date().toLocaleDateString('id-ID', { 
-        weekday: 'long',  // "Senin"
-        day: 'numeric',   // "22"
-        month: 'short',   // "Des"
-        year: 'numeric',  // "2025"
+        weekday: 'long', 
+        day: 'numeric',   
+        month: 'short',   
+        year: 'numeric',  
         timeZone: 'Asia/Jakarta' 
     });
     setCurrentDate(dateStr);
@@ -32,7 +31,6 @@ export default function Header() {
            <div className="flex items-center space-x-6">
               <div className="flex items-center space-x-2">
                 <FaRegClock className="text-white"/>
-                {/* Updated: Use state variable for client-side date rendering */}
                 <span className="font-medium">{currentDate || "Memuat..."}</span>
               </div>
               <div className="flex items-center space-x-2">
@@ -71,15 +69,14 @@ export default function Header() {
             
             {/* LAYANAN DROPDOWN */}
             <div className="relative group">
-                <button className="flex items-center hover:text-green-600 px-3 py-2 group-hover:text-green-600">
+                {/* FIX: GANTI BUTTON JADI LINK AGAR BISA DIKLIK */}
+                <Link href="/layanan" className="flex items-center hover:text-green-600 px-3 py-2 group-hover:text-green-600 cursor-pointer">
                     LAYANAN <FaChevronDown className="ml-1 text-[10px] opacity-70" />
-                </button>
-                {/* Lebar ditambah jadi w-80 agar muat font besar */}
+                </Link>
+                
                 <div className="absolute top-full left-0 w-80 bg-[#1e2338] shadow-2xl rounded-b-lg border-t-4 border-green-500 hidden group-hover:block transition-all duration-300 z-50">
                     <div className="px-6 py-4 border-b border-gray-600/50">
                         <span className="text-xs font-extrabold text-[#4ade80] uppercase tracking-widest mb-3 block opacity-80">Pendirian & Perubahan</span>
-                        
-                        {/* FONT DIPERBESAR JADI text-base (16px) */}
                         <Link href="/layanan/pendirian-cv" className="block text-white hover:text-[#4ade80] text-base font-bold py-2 transition">Pendirian / Perubahan CV</Link>
                         <Link href="/layanan/pendirian-pt" className="block text-white hover:text-[#4ade80] text-base font-bold py-2 transition">Pendirian / Perubahan PT</Link>
                         <Link href="/layanan/pendirian-pt-perorangan" className="block text-white hover:text-[#4ade80] text-base font-bold py-2 transition">PT Perorangan</Link>
@@ -101,12 +98,13 @@ export default function Header() {
             
             {/* PROMO DROPDOWN */}
             <div className="relative group">
-                <button className="flex items-center hover:text-green-600 px-3 py-2 group-hover:text-green-600">
+                {/* FIX: GANTI BUTTON JADI LINK */}
+                <Link href="/promo" className="flex items-center hover:text-green-600 px-3 py-2 group-hover:text-green-600 cursor-pointer">
                     PROMO <FaChevronDown className="ml-1 text-[10px] opacity-70" />
-                </button>
+                </Link>
+
                 <div className="absolute top-full left-0 w-72 bg-[#1e2338] shadow-2xl rounded-b-lg border-t-4 border-green-500 hidden group-hover:block transition-all duration-300 z-50">
                     <div className="py-3">
-                        {/* FONT DIPERBESAR JADI text-base */}
                         <Link href="/promo/cv-konstruksi" className="block px-6 py-2.5 text-base font-bold text-white hover:bg-white/5 hover:text-[#4ade80] border-b border-gray-600/30 transition">Pembuatan CV Konstruksi</Link>
                         <Link href="/promo/npwp" className="block px-6 py-2.5 text-base font-bold text-white hover:bg-white/5 hover:text-[#4ade80] border-b border-gray-600/30 transition">Pembuatan NPWP</Link>
                         <Link href="/promo/nib" className="block px-6 py-2.5 text-base font-bold text-white hover:bg-white/5 hover:text-[#4ade80] border-b border-gray-600/30 transition">Pembuatan NIB</Link>
@@ -121,9 +119,11 @@ export default function Header() {
 
             {/* DOKUMEN DROPDOWN */}
             <div className="relative group">
-                <button className="flex items-center hover:text-green-600 px-3 py-2 group-hover:text-green-600">
+                {/* FIX: GANTI BUTTON JADI LINK */}
+                <Link href="/dokumen" className="flex items-center hover:text-green-600 px-3 py-2 group-hover:text-green-600 cursor-pointer">
                     DOKUMEN <FaChevronDown className="ml-1 text-[10px] opacity-70" />
-                </button>
+                </Link>
+
                 <div className="absolute top-full left-0 w-56 bg-[#1e2338] shadow-2xl rounded-b-lg border-t-4 border-green-500 hidden group-hover:block transition-all duration-300 z-50">
                     <div className="py-3">
                         <Link href="/dokumen/legalitas" className="block px-6 py-2.5 text-base font-bold text-white hover:bg-white/5 hover:text-[#4ade80] border-b border-gray-600/30 transition">Legalitas</Link>
