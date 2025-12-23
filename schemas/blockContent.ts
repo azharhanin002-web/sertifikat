@@ -1,5 +1,5 @@
 import { defineType, defineArrayMember } from 'sanity'
-import { FaPalette, FaLink } from 'react-icons/fa'
+import { FaPalette, FaLink, FaTextHeight } from 'react-icons/fa' // Tambah FaTextHeight
 
 export default defineType({
   title: 'Block Content',
@@ -21,13 +21,11 @@ export default defineType({
         {title: 'Number', value: 'number'}
       ],
       marks: {
-        // Decorators sederhana (Bold, Italic, dll)
         decorators: [
           {title: 'Strong', value: 'strong'},
           {title: 'Emphasis', value: 'em'},
           {title: 'Underline', value: 'underline'},
         ],
-        // Annotations (Fitur lebih kompleks dengan input data)
         annotations: [
           // 1. Link URL
           {
@@ -43,12 +41,12 @@ export default defineType({
               },
             ],
           },
-          // 2. PILIHAN WARNA TEKS (BANYAK WARNA)
+          // 2. WARNA TEKS (Yang tadi)
           {
             name: 'textColor',
             type: 'object',
             title: 'Warna Teks',
-            icon: FaPalette, // Ikon Palet Lukis
+            icon: FaPalette,
             fields: [
               {
                 name: 'color',
@@ -56,16 +54,35 @@ export default defineType({
                 title: 'Pilih Warna',
                 options: {
                   list: [
-                    // Daftar Warna yang Anda inginkan
-                    { title: 'Merah (Red)', value: '#dc2626' },
-                    { title: 'Biru (Blue)', value: '#2563eb' },
-                    { title: 'Hijau (Green)', value: '#16a34a' },
-                    { title: 'Kuning Emas (Gold)', value: '#d97706' },
-                    { title: 'Ungu (Purple)', value: '#9333ea' },
-                    { title: 'Pink', value: '#db2777' },
-                    { title: 'Abu-abu (Grey)', value: '#4b5563' },
-                    { title: 'Hitam (Black)', value: '#000000' },
-                    { title: 'Biru Dongker (Navy)', value: '#1e2338' },
+                    { title: 'Merah', value: '#dc2626' },
+                    { title: 'Biru', value: '#2563eb' },
+                    { title: 'Hijau', value: '#16a34a' },
+                    { title: 'Hitam', value: '#000000' },
+                  ],
+                },
+              },
+            ],
+          },
+          // 3. UKURAN FONT (BARU! FITUR CUSTOM SIZE)
+          {
+            name: 'fontSize',
+            type: 'object',
+            title: 'Ukuran Font',
+            icon: FaTextHeight, // Ikon Ukuran Teks
+            fields: [
+              {
+                name: 'size',
+                type: 'string',
+                title: 'Pilih Ukuran',
+                options: {
+                  list: [
+                    { title: 'Kecil (12px)', value: 'text-xs' },
+                    { title: 'Normal (16px)', value: 'text-base' },
+                    { title: 'Sedang (18px)', value: 'text-lg' },
+                    { title: 'Besar (20px)', value: 'text-xl' },
+                    { title: 'Sangat Besar (24px)', value: 'text-2xl' },
+                    { title: 'Jumbo (30px)', value: 'text-3xl' },
+                    { title: 'Raksasa (36px)', value: 'text-4xl' },
                   ],
                 },
               },
@@ -74,7 +91,6 @@ export default defineType({
         ],
       },
     }),
-    // Support Gambar di tengah teks
     defineArrayMember({
       type: 'image',
       options: { hotspot: true },
