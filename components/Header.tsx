@@ -1,3 +1,6 @@
+"use client"; // Needs to be a client component for hydration/hooks
+
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { 
@@ -6,6 +9,21 @@ import {
 } from 'react-icons/fa';
 
 export default function Header() {
+  const [currentDate, setCurrentDate] = useState("");
+
+  useEffect(() => {
+    // FIX TANGGAL: Timezone Asia/Jakarta
+    // Logic: Force locale to 'id-ID' and timeZone to 'Asia/Jakarta'
+    const dateStr = new Date().toLocaleDateString('id-ID', { 
+        weekday: 'long',  // "Senin"
+        day: 'numeric',   // "22"
+        month: 'short',   // "Des"
+        year: 'numeric',  // "2025"
+        timeZone: 'Asia/Jakarta' 
+    });
+    setCurrentDate(dateStr);
+  }, []);
+
   return (
     <>
       {/* TOP BAR */}
@@ -14,7 +32,8 @@ export default function Header() {
            <div className="flex items-center space-x-6">
               <div className="flex items-center space-x-2">
                 <FaRegClock className="text-white"/>
-                <span className="font-medium">Senin, 22 Des 2025</span>
+                {/* Updated: Use state variable for client-side date rendering */}
+                <span className="font-medium">{currentDate || "Memuat..."}</span>
               </div>
               <div className="flex items-center space-x-2">
                 <FaPhoneAlt className="text-[#4ade80]"/>
