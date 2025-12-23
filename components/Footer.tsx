@@ -61,7 +61,7 @@ export default function Footer() {
                 <ul className="space-y-4 text-sm">
                     <li className="flex items-start">
                         <FaPhoneAlt className="mt-1 mr-3 text-[#4ade80]" />
-                        <span>+62 895-2786-2303 (Office)<br/><span className="text-white font-bold">+62 852-1085-2131 (WhatsApp)</span></span>
+                        <span>+62 895-2786-2303 (Office)</span>
                     </li>
                     <li className="flex items-start">
                         <FaEnvelope className="mt-1 mr-3 text-[#4ade80]" />
