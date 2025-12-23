@@ -4,106 +4,78 @@ import { getPosts, getVideos, getGallery, getLayanan } from "~/lib/sanity.client
 import ScrollAnimationWrapper from "~/components/ScrollAnimationWrapper";
 import Counter from "~/components/Counter";
 import PricingSlider from "~/components/PricingSlider";
-import VideoSection from "~/components/VideoSection"; // <--- IMPORT BARU
+import VideoSection from "~/components/VideoSection";
 
 import { 
   FaLaptopCode, FaStopwatch, FaUserTie, FaChevronDown, 
-  FaStar, FaPlay 
+  FaStar, FaFolder, FaRegClock 
 } from 'react-icons/fa';
 
-// --- AUTO UPDATE SETIAP 10 DETIK ---
 export const revalidate = 10; 
 
 export default async function Home() {
-  
-  // --- FETCH DATA ---
   const posts = await getPosts();
   const videos = await getVideos();
   const gallery = await getGallery();
   const layananData = await getLayanan();
 
-  // --- MAPPING DATA BERITA ---
-  const blogData = (posts && posts.length > 0) 
-    ? posts.map((post: any) => ({
-        title: post.title,
-        slug: post.slug || '#', 
-        category: post.category || 'Berita',
-        date: post.date ? new Date(post.date).toISOString().split('T')[0] : '2025',
-        image: post.image || '/blog-1.jpg', 
-        excerpt: post.excerpt || "Klik untuk membaca informasi selengkapnya..."
-      }))
-    : [
-        { title: "Data Belum Tersedia", slug: "#", category: "-", date: "2025", image: "/blog-1.jpg", excerpt: "-" }
-    ];
-
-  // --- MAPPING DATA LAYANAN ---
-  const portfolioDisplay = (layananData && layananData.length > 0)
-    ? layananData.map((item: any) => ({
-        title: item.title,
-        link: item.slug ? `/layanan/${item.slug}` : '#', 
-        image: item.icon || '/mockup-migas.png', 
-        desc: item.shortDesc || "Layanan profesional terpercaya."
-    }))
-    : [
-        { title: "SKUP Migas", link: "#", image: "/mockup-migas.png", desc: "Perizinan SKUP Migas" },
-        { title: "SBU Konstruksi", link: "#", image: "/mockup-sbu.png", desc: "Sertifikat Badan Usaha" },
-        { title: "ISO 9001:2015", link: "#", image: "/mockup-skttk.png", desc: "Manajemen Mutu" }
-    ];
-
-  // --- MAPPING DATA GALLERY ---
-  const galleryDisplay = (gallery && gallery.length > 0) 
-    ? gallery.map((item: any) => ({
-        image: item.image,
-        caption: item.caption
-    })) 
-    : [
-      { image: null }, { image: null }, { image: null } 
-    ];
-
-  // --- MAPPING DATA VIDEO ---
-  const videoDisplayData = (videos && videos.length > 0) ? videos : [
-      { title: "Company Profile (Dummy)", thumb: "/video-thumb-1.jpg", youtubeUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ" },
-      { title: "Testimoni Klien (Dummy)", thumb: "/video-thumb-2.jpg", youtubeUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ" }
-  ];
-
-  // --- DATA STATIC ---
-  const faqData = [
-    { question: "Apakah dokumen yang diterbitkan resmi?", answer: "Tentu saja. Kami menjamin 100% keaslian dokumen. Semua sertifikat diterbitkan langsung oleh instansi terkait dan dapat diverifikasi secara online." },
-    { question: "Berapa lama proses pengerjaannya?", answer: "Estimasi waktu bervariasi. Untuk SBU biasanya 14-30 hari kerja, sedangkan SKTTK bisa lebih cepat sekitar 7-14 hari kerja setelah dokumen lengkap." },
-    { question: "Apakah saya perlu datang ke kantor?", answer: "Tidak perlu. Seluruh proses pengumpulan data hingga terbitnya sertifikat dilakukan secara ONLINE." },
-    { question: "Bagaimana jika pengajuan ditolak?", answer: "Kami memberikan GARANSI uang kembali atau proses ulang gratis jika kegagalan disebabkan oleh kelalaian tim kami." }
-  ];
-
-  const testimonials = [
-    { name: "Melanie", role: "Pengusaha - Bandar Lampung", text: "Terimakasih telah membantu pendirian PT saya. Team menjelaskan dengan detail setiap pertanyaan yang saya ajukan.", image: "/user-1.jpg" },
-    { name: "Budi Santoso", role: "Kontraktor - Jakarta", text: "Proses pengerjaan di Workshop Legalitas cepat dan sesuai dengan kebutuhan. Pelayanan dari team memuaskan.", image: "/user-2.jpg" },
-    { name: "Saputra Dwi Wijaya", role: "CEO Startup - Depok", text: "Layanan yang diberikan sangat baik. Semua bisa dilakukan online tanpa harus datang ke lokasi. Hemat waktu.", image: "/user-3.jpg" }
-  ];
-
+  // --- DATA MAPPING ---
+  const blogData = (posts && posts.length > 0) ? posts.map((post: any) => ({ title: post.title, slug: post.slug || '#', category: post.category || 'Berita', date: post.date ? new Date(post.date).toISOString().split('T')[0] : '2025', image: post.image || '/blog-1.jpg', excerpt: post.excerpt || "Klik untuk membaca informasi selengkapnya..." })) : [{ title: "Data Belum Tersedia", slug: "#", category: "-", date: "2025", image: "/blog-1.jpg", excerpt: "-" }];
+  const portfolioDisplay = (layananData && layananData.length > 0) ? layananData.map((item: any) => ({ title: item.title, link: item.slug ? `/layanan/${item.slug}` : '#', image: item.icon || '/mockup-migas.png', desc: item.shortDesc || "Layanan profesional terpercaya." })) : [{ title: "SKUP Migas", link: "#", image: "/mockup-migas.png", desc: "Perizinan SKUP Migas" }, { title: "SBU Konstruksi", link: "#", image: "/mockup-sbu.png", desc: "Sertifikat Badan Usaha" }, { title: "ISO 9001:2015", link: "#", image: "/mockup-skttk.png", desc: "Manajemen Mutu" }];
+  const galleryDisplay = (gallery && gallery.length > 0) ? gallery.map((item: any) => ({ image: item.image, caption: item.caption })) : [{ image: null }, { image: null }, { image: null }];
+  const videoDisplayData = (videos && videos.length > 0) ? videos : [{ title: "Company Profile (Dummy)", thumb: "/video-thumb-1.jpg", youtubeUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ" }, { title: "Testimoni Klien (Dummy)", thumb: "/video-thumb-2.jpg", youtubeUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ" }];
+  const faqData = [{ question: "Apakah dokumen yang diterbitkan resmi?", answer: "Tentu saja. Kami menjamin 100% keaslian dokumen. Semua sertifikat diterbitkan langsung oleh instansi terkait dan dapat diverifikasi secara online." }, { question: "Berapa lama proses pengerjaannya?", answer: "Estimasi waktu bervariasi. Untuk SBU biasanya 14-30 hari kerja, sedangkan SKTTK bisa lebih cepat sekitar 7-14 hari kerja setelah dokumen lengkap." }, { question: "Apakah saya perlu datang ke kantor?", answer: "Tidak perlu. Seluruh proses pengumpulan data hingga terbitnya sertifikat dilakukan secara ONLINE." }, { question: "Bagaimana jika pengajuan ditolak?", answer: "Kami memberikan GARANSI uang kembali atau proses ulang gratis jika kegagalan disebabkan oleh kelalaian tim kami." }];
+  const testimonials = [{ name: "Melanie", role: "Pengusaha - Bandar Lampung", text: "Terimakasih telah membantu pendirian PT saya. Team menjelaskan dengan detail setiap pertanyaan yang saya ajukan.", image: "/user-1.jpg" }, { name: "Budi Santoso", role: "Kontraktor - Jakarta", text: "Proses pengerjaan di Workshop Legalitas cepat dan sesuai dengan kebutuhan. Pelayanan dari team memuaskan.", image: "/user-2.jpg" }, { name: "Saputra Dwi Wijaya", role: "CEO Startup - Depok", text: "Layanan yang diberikan sangat baik. Semua bisa dilakukan online tanpa harus datang ke lokasi. Hemat waktu.", image: "/user-3.jpg" }];
 
   return (
     <main className="min-h-screen font-sans bg-white">
       
-      {/* HERO SECTION */}
-      <section className="relative h-[600px] lg:h-[700px] flex items-center overflow-hidden bg-gray-900">
+      {/* === HERO SECTION === */}
+      <section className="relative h-[600px] md:h-[700px] flex items-start md:items-center overflow-hidden bg-gray-900">
+        
+        {/* 1. BACKGROUND IMAGE (POSISI DIUBAH) */}
         <div className="absolute inset-0 z-0">
-           <Image src="/neo.webp" alt="Hero Background" fill className="object-cover object-right" priority />
+           <Image 
+             src="/neo.webp" 
+             alt="Hero Background" 
+             fill 
+             // Mengubah object-[85%_center] menjadi object-[70%_center] agar fokus geser ke kiri, 
+             // memberi efek orangnya mundur sedikit.
+             className="object-cover object-[70%_center] md:object-right" 
+             priority 
+           />
         </div>
-        <div className="absolute inset-0 bg-[#1e2338] opacity-95 z-10" style={{ clipPath: 'polygon(0 0, 45% 0, 25% 100%, 0% 100%)' }}></div>
-        <div className="relative z-20 max-w-7xl mx-auto px-6 w-full pt-10 h-full flex items-center">
-          <div className="max-w-4xl text-white animate-fade-in-left">
-            <p className="text-xl md:text-2xl font-bold tracking-[0.15em] mb-4 uppercase text-gray-300 drop-shadow-md">
+
+        {/* 2. OVERLAY (TETAP 50%) */}
+        <div 
+          className="absolute inset-0 bg-[#1e2338]/50 z-10 md:hidden" 
+          style={{ clipPath: 'polygon(0 0, 55% 0, 20% 100%, 0% 100%)' }} 
+        ></div>
+        
+        <div 
+          className="absolute inset-0 bg-[#1e2338]/95 z-10 hidden md:block" 
+          style={{ clipPath: 'polygon(0 0, 55% 0, 30% 100%, 0% 100%)' }} 
+        ></div>
+
+        {/* 3. KONTEN TEKS (TETAP) */}
+        <div className="relative z-20 max-w-7xl mx-auto px-6 w-full pt-32 md:pt-0 h-full flex items-start md:items-center">
+          <div className="max-w-[70%] sm:max-w-[75%] md:max-w-2xl text-white animate-fade-in-left pr-2">
+            
+            <p className="text-base md:text-xl font-bold tracking-[0.2em] mb-4 uppercase text-gray-200 drop-shadow-md">
               BUAT PILIHAN TERBAIK
             </p>
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-extrabold leading-tight drop-shadow-xl text-white">
-              Kami Adalah Yang<br/>
-              Terbaik Saat Ini
+            
+            <h1 className="text-5xl sm:text-6xl md:text-7xl font-extrabold leading-[1.1] mb-6 drop-shadow-xl text-white">
+              Kami Adalah 
+              <span className="block mt-1">Yang Terbaik</span>
+              <span className="block mt-1">Saat Ini</span>
             </h1>
+
           </div>
         </div>
       </section>
       
-      {/* FEATURES SECTION */}
+      {/* ... (SISA KONTEN KE BAWAH TIDAK BERUBAH) ... */}
       <section className="bg-gray-100 py-20 px-6 font-sans overflow-hidden">
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12">
           <div className="flex flex-col gap-10">
@@ -208,20 +180,20 @@ export default async function Home() {
                     </ScrollAnimationWrapper>
                 </div>
                 <div className="relative h-[500px] lg:h-[600px] w-full rounded-3xl overflow-hidden hidden lg:block shadow-2xl">
-                     <Image src="/accord6.webp" alt="FAQ Background" fill className="object-cover" />
-                     <div className="absolute inset-0 bg-gradient-to-t from-[#1e2338] via-[#1e2338]/60 to-transparent z-10"></div>
-                     <div className="absolute bottom-0 left-0 p-10 z-20">
+                      <Image src="/accord6.webp" alt="FAQ Background" fill className="object-cover" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#1e2338] via-[#1e2338]/60 to-transparent z-10"></div>
+                      <div className="absolute bottom-0 left-0 p-10 z-20">
                         <ScrollAnimationWrapper className="animate-fade-in-up">
                            <div className="flex items-center space-x-2 mb-4 opacity-90"><div className="flex -space-x-1"><div className="w-3 h-3 rounded-full bg-white"></div><div className="w-3 h-3 rounded-full bg-white opacity-50"></div></div><span className="text-sm font-bold tracking-widest uppercase">Seputar Layanan</span></div>
                            <h2 className="text-4xl md:text-5xl font-extrabold leading-tight">Frequently Asked<br/>Questions</h2>
                         </ScrollAnimationWrapper>
-                     </div>
+                      </div>
                 </div>
             </div>
         </div>
       </section>
 
-      {/* PORTOFOLIO / LAYANAN (DIBATASI 6 & ADA LINK LIHAT SEMUA) */}
+      {/* PORTOFOLIO / LAYANAN */}
       <section className="py-20 bg-white font-sans">
          <div className="max-w-7xl mx-auto px-6">
             <div className="text-center mb-10">
@@ -229,32 +201,30 @@ export default async function Home() {
                <h2 className="text-3xl md:text-4xl font-extrabold text-[#1e2338]">Layanan Kami</h2>
             </div>
             
-            {/* GRID LAYANAN (DIBATASI 6 SAJA) */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
                {portfolioDisplay.slice(0, 6).map((item: any, index: number) => (
                   <Link href={item.link} key={index} className="group relative h-[300px] rounded-lg overflow-hidden cursor-pointer shadow-sm hover:shadow-lg transition-all border border-gray-100 block">
-                     <div className="absolute inset-0 bg-[#3b4363] opacity-0 group-hover:opacity-90 transition-opacity duration-300 z-10"></div>
-                     
-                     {item.image ? (
+                      <div className="absolute inset-0 bg-[#3b4363] opacity-0 group-hover:opacity-90 transition-opacity duration-300 z-10"></div>
+                      
+                      {item.image ? (
                         <Image src={item.image} alt={item.title} fill className="object-cover" />
-                     ) : (
+                      ) : (
                         <div className="absolute inset-0 bg-gray-200"></div>
-                     )}
+                      )}
 
-                     <div className="absolute inset-0 flex flex-col items-center justify-center z-20 opacity-0 group-hover:opacity-100 transition duration-300 px-4 text-center">
+                      <div className="absolute inset-0 flex flex-col items-center justify-center z-20 opacity-0 group-hover:opacity-100 transition duration-300 px-4 text-center">
                         <span className="text-2xl font-bold text-white mb-2">LIHAT</span>
                         <p className="text-white text-xs">{item.desc}</p>
-                     </div>
+                      </div>
 
-                     <div className="absolute bottom-0 left-0 p-6 w-full z-20 bg-gradient-to-t from-black/80 to-transparent">
+                      <div className="absolute bottom-0 left-0 p-6 w-full z-20 bg-gradient-to-t from-black/80 to-transparent">
                         <h3 className="text-white text-lg font-bold leading-tight mb-2 drop-shadow-md">{item.title}</h3>
                         <div className="h-0.5 w-8 bg-gray-400 group-hover:w-16 transition-all duration-300"></div>
-                     </div>
+                      </div>
                   </Link>
                ))}
             </div>
 
-            {/* TOMBOL LIHAT SEMUA LAYANAN */}
             <div className="text-center">
                 <Link href="/layanan" className="inline-block px-8 py-3 rounded-full border-2 border-[#1e2338] text-[#1e2338] font-bold hover:bg-[#1e2338] hover:text-white transition duration-300">
                     Lihat Semua Layanan
@@ -263,7 +233,7 @@ export default async function Home() {
          </div>
       </section>
 
-      {/* GALLERY POST (DIBATASI 6 & TOMBOL LIHAT SEMUA) */}
+      {/* GALLERY POST */}
       <section className="py-20 bg-white font-sans">
          <div className="max-w-7xl mx-auto px-6">
             <div className="text-center mb-12">
@@ -271,7 +241,6 @@ export default async function Home() {
                <h2 className="text-3xl md:text-4xl font-extrabold text-[#1e2338]">Gallery Post</h2>
             </div>
             
-            {/* GRID GALLERY (DIBATASI 6) */}
             <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 mb-12">
                {galleryDisplay.slice(0, 6).map((item: any, index: number) => (
                   <div key={index} className="relative h-48 md:h-64 rounded-lg overflow-hidden bg-gray-100 hover:shadow-lg transition cursor-pointer group">
@@ -289,7 +258,6 @@ export default async function Home() {
                ))}
             </div>
 
-            {/* TOMBOL LIHAT GALLERY LENGKAP */}
             <div className="text-center">
                 <Link href="/gallery" className="inline-block px-8 py-3 rounded-full border-2 border-[#1e2338] text-[#1e2338] font-bold hover:bg-[#1e2338] hover:text-white transition duration-300">
                     Lihat Gallery Lengkap
@@ -308,15 +276,15 @@ export default async function Home() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                {testimonials.map((item, index) => (
                   <div key={index} className="bg-white p-8 rounded-lg shadow-[0_5px_20px_rgba(0,0,0,0.05)] border border-gray-50 hover:shadow-lg transition">
-                     <div className="flex space-x-1 text-[#4ade80] mb-4 text-sm">{[...Array(5)].map((_, i) => <FaStar key={i} />)}</div>
-                     <p className="text-gray-600 text-base md:text-lg italic leading-relaxed mb-6">"{item.text}"</p>
-                     <div className="flex items-center mt-auto pt-4 border-t border-gray-100">
+                      <div className="flex space-x-1 text-[#4ade80] mb-4 text-sm">{[...Array(5)].map((_, i) => <FaStar key={i} />)}</div>
+                      <p className="text-gray-600 text-base md:text-lg italic leading-relaxed mb-6">"{item.text}"</p>
+                      <div className="flex items-center mt-auto pt-4 border-t border-gray-100">
                         <div className="h-12 w-12 rounded-full bg-gray-200 overflow-hidden mr-4"><div className="w-full h-full bg-gray-300"></div></div>
                         <div>
                             <h4 className="font-bold text-gray-900 text-lg">{item.name}</h4>
                             <span className="text-sm text-[#4ade80] font-medium">{item.role}</span>
                         </div>
-                     </div>
+                      </div>
                   </div>
                ))}
             </div>
@@ -362,7 +330,7 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* VIDEO DOKUMENTASI (DIPERBAIKI: PAKAI KOMPONEN VIDEOSECTION) */}
+      {/* VIDEO DOKUMENTASI */}
       <section className="py-20 bg-white font-sans">
         <div className="max-w-7xl mx-auto px-6">
             <div className="text-center mb-12">
@@ -370,7 +338,6 @@ export default async function Home() {
                <h2 className="text-3xl md:text-4xl font-extrabold text-[#1e2338]">Video Edukasi</h2>
             </div>
             
-            {/* INI BAGIAN YANG DIPERBAIKI */}
             <VideoSection videos={videoDisplayData} />
 
         </div>

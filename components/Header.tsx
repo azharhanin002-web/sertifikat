@@ -1,18 +1,18 @@
 "use client";
 
 import { useState, useEffect } from 'react';
-import Link from 'next/link'; // Import Link
+import Link from 'next/link';
 import Image from 'next/image';
 import { 
   FaPhoneAlt, FaEnvelope, FaRegClock, FaFacebookF, 
-  FaInstagram, FaLinkedinIn, FaYoutube, FaChevronDown 
+  FaInstagram, FaLinkedinIn, FaYoutube, FaChevronDown, FaBars, FaTimes 
 } from 'react-icons/fa';
 
 export default function Header() {
   const [currentDate, setCurrentDate] = useState("");
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
-    // FIX TANGGAL: Timezone Asia/Jakarta
     const dateStr = new Date().toLocaleDateString('id-ID', { 
         weekday: 'long', 
         day: 'numeric',   
@@ -25,129 +25,132 @@ export default function Header() {
 
   return (
     <>
-      {/* TOP BAR */}
-      <div className="bg-[#1e2338] text-white text-xs md:text-[13px] py-2">
-        <div className="w-full px-4 md:px-8 flex flex-col md:flex-row justify-between items-center gap-2">
-           <div className="flex items-center space-x-6">
-              <div className="flex items-center space-x-2">
-                <FaRegClock className="text-white"/>
-                <span className="font-medium">{currentDate || "Memuat..."}</span>
+      {/* === TOP BAR (HITAM) === */}
+      {/* Container Full Width */}
+      <div className="bg-[#1e2338] text-white text-xs py-2 transition-all z-50 relative">
+        <div className="w-full px-4 md:px-8 flex justify-start md:justify-between items-center gap-4 md:gap-0">
+           
+           {/* KIRI: Jam / Tanggal */}
+           <div className="flex items-center space-x-2">
+              <FaRegClock className="text-[#fca311]"/>
+              <span className="font-medium truncate">{currentDate || "..."}</span>
+           </div>
+
+           {/* KANAN: Kontak */}
+           <div className="flex items-center">
+              {/* Tampilan Desktop: Teks Lengkap (Rata Kanan) */}
+              <div className="hidden md:flex items-center space-x-6">
+                  <div className="flex items-center space-x-2">
+                    <FaPhoneAlt className="text-[#4ade80]"/>
+                    <span className="font-bold">+62 895-2786-2303</span>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <FaEnvelope className="text-[#4ade80]"/>
+                    <span className="font-bold">ss.sulteng@gmail.com</span>
+                  </div>
               </div>
-              <div className="flex items-center space-x-2">
-                <FaPhoneAlt className="text-[#4ade80]"/>
-                <span className="text-[#4ade80] font-bold">+62 895-2786-2303</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <FaEnvelope className="text-[#4ade80]"/>
-                <span className="text-[#4ade80] font-bold">ss.sulteng@gmail.com</span>
+
+              {/* Tampilan Mobile: Ikon Hijau (Geser ke Kiri dekat tanggal) */}
+              <div className="flex md:hidden gap-4 items-center ml-4 pl-4 border-l border-gray-600">
+                  <a href="tel:+6289527862303" className="text-[#4ade80] hover:text-white transition">
+                    <FaPhoneAlt className="text-sm" />
+                  </a>
+                  <a href="mailto:ss.sulteng@gmail.com" className="text-[#4ade80] hover:text-white transition">
+                    <FaEnvelope className="text-sm" />
+                  </a>
               </div>
            </div>
-           <div className="hidden md:flex space-x-3 text-gray-400"></div>
         </div>
       </div>
 
-      {/* NAVBAR */}
-      <header className="bg-white/70 backdrop-blur-md shadow-sm sticky top-0 z-50 transition-all border-b border-white/20">
+      {/* === NAVBAR (PUTIH & EFEK KACA) === */}
+      {/* Kembali ke bg-white/70 agar lebih transparan (tipis) dan w-full agar full size */}
+      <header className="bg-white/70 backdrop-blur-md shadow-sm sticky top-0 z-40 border-b border-white/20 transition-all">
         <div className="w-full px-4 md:px-8 py-3 flex justify-between items-center">
           
           {/* LOGO */}
           <Link href="/" className="flex items-center">
              <Image 
                src="/logo-solusi.png" 
-               alt="PT Solusi Sertifikasi Sulteng" 
-               width={300} 
-               height={100} 
+               alt="Logo" 
+               width={280} 
+               height={90} 
                className="h-14 md:h-16 w-auto object-contain" 
                priority 
              />
           </Link>
           
-          {/* MENU */}
-          <nav className="hidden lg:flex items-center text-sm md:text-[15px] font-bold text-gray-700 space-x-1">
-            <Link href="/" className="hover:text-green-600 px-3 py-2">BERANDA</Link>
+          {/* MENU DESKTOP */}
+          <nav className="hidden lg:flex items-center text-[13px] font-bold text-gray-700 space-x-1 uppercase tracking-wide">
+            <Link href="/" className="hover:text-green-600 px-3 py-2">Beranda</Link>
             <span className="text-gray-300">|</span>
-            
-            {/* LAYANAN DROPDOWN */}
             <div className="relative group">
-                {/* FIX: GANTI BUTTON JADI LINK AGAR BISA DIKLIK */}
                 <Link href="/layanan" className="flex items-center hover:text-green-600 px-3 py-2 group-hover:text-green-600 cursor-pointer">
-                    LAYANAN <FaChevronDown className="ml-1 text-[10px] opacity-70" />
+                    Layanan <FaChevronDown className="ml-1 text-[10px] opacity-70" />
                 </Link>
-                
-                <div className="absolute top-full left-0 w-80 bg-[#1e2338] shadow-2xl rounded-b-lg border-t-4 border-green-500 hidden group-hover:block transition-all duration-300 z-50">
-                    <div className="px-6 py-4 border-b border-gray-600/50">
-                        <span className="text-xs font-extrabold text-[#4ade80] uppercase tracking-widest mb-3 block opacity-80">Pendirian & Perubahan</span>
-                        <Link href="/layanan/pendirian-cv" className="block text-white hover:text-[#4ade80] text-base font-bold py-2 transition">Pendirian / Perubahan CV</Link>
-                        <Link href="/layanan/pendirian-pt" className="block text-white hover:text-[#4ade80] text-base font-bold py-2 transition">Pendirian / Perubahan PT</Link>
-                        <Link href="/layanan/pendirian-pt-perorangan" className="block text-white hover:text-[#4ade80] text-base font-bold py-2 transition">PT Perorangan</Link>
-                    </div>
-                    <div className="px-6 py-4 border-b border-gray-600/50">
-                        <span className="text-xs font-extrabold text-[#4ade80] uppercase tracking-widest mb-3 block opacity-80">Konstruksi</span>
-                        <Link href="/layanan/sbu-konstruksi" className="block text-white hover:text-[#4ade80] text-base font-bold py-2 transition">SBU Konstruksi</Link>
-                        <Link href="/layanan/skk-konstruksi" className="block text-white hover:text-[#4ade80] text-base font-bold py-2 transition">SKK Konstruksi</Link>
-                    </div>
-                    <div className="px-6 py-4">
-                        <span className="text-xs font-extrabold text-[#4ade80] uppercase tracking-widest mb-3 block opacity-80">Kelistrikan</span>
-                        <Link href="/layanan/skttk" className="block text-white hover:text-[#4ade80] text-base font-bold py-2 transition">SKTTK (SERKOM)</Link>
-                        <Link href="/layanan/sbujptl" className="block text-white hover:text-[#4ade80] text-base font-bold py-2 transition">SBUJPTL</Link>
-                        <Link href="/layanan/iujptl" className="block text-white hover:text-[#4ade80] text-base font-bold py-2 transition">IUJPTL</Link>
+                <div className="absolute top-full left-0 w-64 bg-[#1e2338] shadow-2xl rounded-b-lg border-t-4 border-green-500 hidden group-hover:block transition-all duration-300 z-50">
+                    <div className="py-2">
+                        <Link href="/layanan/pendirian-cv" className="block px-6 py-2 text-white hover:text-[#4ade80] border-b border-gray-700/50">Pendirian CV</Link>
+                        <Link href="/layanan/pendirian-pt" className="block px-6 py-2 text-white hover:text-[#4ade80] border-b border-gray-700/50">Pendirian PT</Link>
+                        <Link href="/layanan/sbu-konstruksi" className="block px-6 py-2 text-white hover:text-[#4ade80]">SBU Konstruksi</Link>
                     </div>
                 </div>
             </div>
             <span className="text-gray-300">|</span>
-            
-            {/* PROMO DROPDOWN */}
             <div className="relative group">
-                {/* FIX: GANTI BUTTON JADI LINK */}
                 <Link href="/promo" className="flex items-center hover:text-green-600 px-3 py-2 group-hover:text-green-600 cursor-pointer">
-                    PROMO <FaChevronDown className="ml-1 text-[10px] opacity-70" />
+                    Promo <FaChevronDown className="ml-1 text-[10px] opacity-70" />
                 </Link>
-
-                <div className="absolute top-full left-0 w-72 bg-[#1e2338] shadow-2xl rounded-b-lg border-t-4 border-green-500 hidden group-hover:block transition-all duration-300 z-50">
-                    <div className="py-3">
-                        <Link href="/promo/cv-konstruksi" className="block px-6 py-2.5 text-base font-bold text-white hover:bg-white/5 hover:text-[#4ade80] border-b border-gray-600/30 transition">Pembuatan CV Konstruksi</Link>
-                        <Link href="/promo/npwp" className="block px-6 py-2.5 text-base font-bold text-white hover:bg-white/5 hover:text-[#4ade80] border-b border-gray-600/30 transition">Pembuatan NPWP</Link>
-                        <Link href="/promo/nib" className="block px-6 py-2.5 text-base font-bold text-white hover:bg-white/5 hover:text-[#4ade80] border-b border-gray-600/30 transition">Pembuatan NIB</Link>
-                        <Link href="/promo/oss" className="block px-6 py-2.5 text-base font-bold text-white hover:bg-white/5 hover:text-[#4ade80] transition">Sertifikat Standart OSS</Link>
+                <div className="absolute top-full left-0 w-64 bg-[#1e2338] shadow-2xl rounded-b-lg border-t-4 border-green-500 hidden group-hover:block transition-all duration-300 z-50">
+                    <div className="py-2">
+                        <Link href="/promo/nib" className="block px-6 py-2 text-white hover:text-[#4ade80]">Pembuatan NIB</Link>
                     </div>
                 </div>
             </div>
             <span className="text-gray-300">|</span>
-
-            <Link href="/kontak" className="hover:text-green-600 px-3 py-2">KONTAK</Link>
+            <Link href="/kontak" className="hover:text-green-600 px-3 py-2">Kontak</Link>
             <span className="text-gray-300">|</span>
-
-            {/* DOKUMEN DROPDOWN */}
-            <div className="relative group">
-                {/* FIX: GANTI BUTTON JADI LINK */}
-                <Link href="/dokumen" className="flex items-center hover:text-green-600 px-3 py-2 group-hover:text-green-600 cursor-pointer">
-                    DOKUMEN <FaChevronDown className="ml-1 text-[10px] opacity-70" />
-                </Link>
-
-                <div className="absolute top-full left-0 w-56 bg-[#1e2338] shadow-2xl rounded-b-lg border-t-4 border-green-500 hidden group-hover:block transition-all duration-300 z-50">
-                    <div className="py-3">
-                        <Link href="/dokumen/legalitas" className="block px-6 py-2.5 text-base font-bold text-white hover:bg-white/5 hover:text-[#4ade80] border-b border-gray-600/30 transition">Legalitas</Link>
-                        <Link href="/dokumen/kbli-2020" className="block px-6 py-2.5 text-base font-bold text-white hover:bg-white/5 hover:text-[#4ade80] transition">KBLI 2020</Link>
-                    </div>
-                </div>
-            </div>
+            <Link href="/dokumen" className="hover:text-green-600 px-3 py-2">Dokumen</Link>
             <span className="text-gray-300">|</span>
-
-            <Link href="/berita" className="hover:text-green-600 px-3 py-2">BERITA</Link>
-            <span className="text-gray-300">|</span>
-
-            <Link href="/testimoni" className="hover:text-green-600 px-3 py-2">TESTIMONI</Link>
+            <Link href="/berita" className="hover:text-green-600 px-3 py-2">Berita</Link>
           </nav>
 
-          {/* SOSMED */}
-          <div className="hidden md:flex items-center space-x-2">
-             <a href="#" className="h-9 w-9 bg-gray-100/80 rounded-full flex items-center justify-center text-gray-600 hover:bg-blue-600 hover:text-white transition transform hover:scale-110 shadow-sm backdrop-blur-sm" title="Facebook"><FaFacebookF className="text-sm" /></a>
-             <a href="#" className="h-9 w-9 bg-gray-100/80 rounded-full flex items-center justify-center text-gray-600 hover:bg-pink-600 hover:text-white transition transform hover:scale-110 shadow-sm backdrop-blur-sm" title="Instagram"><FaInstagram className="text-sm" /></a>
-             <a href="#" className="h-9 w-9 bg-gray-100/80 rounded-full flex items-center justify-center text-gray-600 hover:bg-red-600 hover:text-white transition transform hover:scale-110 shadow-sm backdrop-blur-sm" title="YouTube"><FaYoutube className="text-sm" /></a>
-             <a href="#" className="h-9 w-9 bg-gray-100/80 rounded-full flex items-center justify-center text-gray-600 hover:bg-blue-800 hover:text-white transition transform hover:scale-110 shadow-sm backdrop-blur-sm" title="LinkedIn"><FaLinkedinIn className="text-sm" /></a>
+          {/* SOSMED (Desktop Only) */}
+          <div className="hidden lg:flex items-center space-x-2 ml-4">
+              <a href="#" className="h-8 w-8 bg-gray-100/80 rounded-full flex items-center justify-center text-gray-600 hover:bg-blue-600 hover:text-white transition"><FaFacebookF className="text-xs" /></a>
+              <a href="#" className="h-8 w-8 bg-gray-100/80 rounded-full flex items-center justify-center text-gray-600 hover:bg-pink-600 hover:text-white transition"><FaInstagram className="text-xs" /></a>
+              <a href="#" className="h-8 w-8 bg-gray-100/80 rounded-full flex items-center justify-center text-gray-600 hover:bg-blue-800 hover:text-white transition"><FaLinkedinIn className="text-xs" /></a>
           </div>
 
+          {/* TOMBOL MOBILE (KANAN) */}
+          <div className="flex items-center gap-3 lg:hidden">
+              {/* Tombol Telepon Mobile */}
+              <a href="tel:+6289527862303" className="bg-[#1e2338] text-white p-2.5 rounded-md hover:bg-blue-900 transition shadow-sm flex items-center justify-center">
+                  <FaPhoneAlt className="text-sm" />
+              </a>
+              {/* Tombol Menu Mobile */}
+              <button 
+                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                className="bg-[#1e2338] text-white p-2.5 rounded-md hover:bg-blue-900 transition shadow-sm flex items-center justify-center"
+              >
+                  {isMobileMenuOpen ? <FaTimes className="text-lg" /> : <FaBars className="text-lg" />}
+              </button>
+          </div>
         </div>
+
+        {/* MOBILE MENU DROPDOWN */}
+        {isMobileMenuOpen && (
+            <div className="lg:hidden w-full bg-white shadow-xl border-t border-gray-100 absolute top-full left-0 h-screen overflow-y-auto pb-20 animate-fade-in-down z-50">
+                <div className="flex flex-col p-6 space-y-4 font-bold text-[#1e2338]">
+                    <Link href="/" onClick={() => setIsMobileMenuOpen(false)} className="border-b border-gray-100 pb-2 hover:text-green-600">BERANDA</Link>
+                    <Link href="/layanan" onClick={() => setIsMobileMenuOpen(false)} className="border-b border-gray-100 pb-2 hover:text-green-600">LAYANAN</Link>
+                    <Link href="/promo" onClick={() => setIsMobileMenuOpen(false)} className="border-b border-gray-100 pb-2 hover:text-green-600">PROMO</Link>
+                    <Link href="/dokumen" onClick={() => setIsMobileMenuOpen(false)} className="border-b border-gray-100 pb-2 hover:text-green-600">DOKUMEN</Link>
+                    <Link href="/berita" onClick={() => setIsMobileMenuOpen(false)} className="border-b border-gray-100 pb-2 hover:text-green-600">BERITA</Link>
+                    <Link href="/kontak" onClick={() => setIsMobileMenuOpen(false)} className="border-b border-gray-100 pb-2 hover:text-green-600">KONTAK</Link>
+                </div>
+            </div>
+        )}
       </header>
     </>
   );
