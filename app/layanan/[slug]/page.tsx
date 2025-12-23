@@ -57,14 +57,13 @@ export default async function LayananDetailPage({ params }: Props) {
         <div className="max-w-7xl mx-auto px-6">
             <h1 className="text-3xl md:text-5xl font-bold mb-4 leading-tight">{data.title}</h1>
             
-            {/* FIX: BREADCRUMB DINAMIS */}
+            {/* BREADCRUMB DINAMIS */}
             <div className="text-sm font-medium text-gray-300 flex flex-wrap items-center gap-1">
                 <span>Anda di sini :</span>
                 <Link href="/" className="text-[#fca311] hover:underline">Beranda</Link> 
                 <span>/</span>
                 <Link href="/layanan" className="text-[#fca311] hover:underline">Layanan</Link> 
                 <span>/</span>
-                {/* Judul Layanan Sekarang */}
                 <span className="text-white opacity-90">{data.title}</span>
             </div>
 
@@ -98,21 +97,7 @@ export default async function LayananDetailPage({ params }: Props) {
 
               {/* DETAIL & DESKRIPSI */}
               <div>
-                  {/* Tabel Info Singkat */}
-                  <div className="border-b border-gray-200 pb-6 mb-6">
-                      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-3">
-                          <span className="text-gray-500 font-medium">Nama Layanan</span>
-                          <span className="col-span-2 font-bold text-[#1e2338] text-xl">{data.title}</span>
-                      </div>
-                      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-2">
-                          <span className="text-gray-500 font-medium">Estimasi Harga</span>
-                          <span className="col-span-2 font-bold text-red-500 text-lg">Hubungi Kami</span>
-                      </div>
-                      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                          <span></span>
-                          <span className="col-span-2 text-xs text-gray-400 italic">Harga dapat berubah sewaktu-waktu sesuai kebijakan.</span>
-                      </div>
-                  </div>
+                  {/* (BAGIAN TABEL HARGA DIHAPUS DI SINI) */}
 
                   {/* Isi Konten Lengkap */}
                   <div className="prose prose-lg prose-blue max-w-none text-gray-700 leading-relaxed">
