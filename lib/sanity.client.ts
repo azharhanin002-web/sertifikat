@@ -33,6 +33,9 @@ import {
   dokumenQuery,
   dokumenByCategoryQuery,
   DokumenResponse,
+  // --- IMPORT QUERY ABOUT (PENTING) ---
+  aboutQuery, 
+  AboutResponse 
 } from "./sanity.queries"
 
 /**
@@ -199,7 +202,7 @@ export async function getPostBySlug(slug: string, token?: string) {
 }
 
 // ==========================================
-// FUNGSI BARU (TESTIMONI & KONTAK)
+// FUNGSI BARU (TESTIMONI, KONTAK, ABOUT)
 // ==========================================
 
 export async function getTestimonials() {
@@ -212,7 +215,6 @@ export async function getTestimonials() {
   }`);
 }
 
-// PERBAIKAN: Mengambil SEMUA kontak (Array) untuk Grid 3 Kolom
 export async function getContacts() {
   return await sanityClient()?.fetch(`*[_type == "contact"] | order(_createdAt asc) {
     title,
@@ -220,4 +222,15 @@ export async function getContacts() {
     phone,
     email
   }`);
+}
+
+// --- FUNGSI YANG HILANG SEBELUMNYA ---
+export async function getAboutPage() {
+  return await sanityClient()
+    ?.fetch(aboutQuery)
+    .then((result) => {
+        if (!result) return null;
+        // Opsional: Validasi dengan AboutResponse.parse(result) jika mau strict
+        return result; 
+    })
 }
