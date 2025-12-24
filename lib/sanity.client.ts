@@ -33,9 +33,13 @@ import {
   dokumenQuery,
   dokumenByCategoryQuery,
   DokumenResponse,
-  // --- IMPORT QUERY ABOUT (PENTING) ---
+  // --- IMPORT QUERY KHUSUS (CONTACT, ABOUT, CLIENT) ---
+  contactQuery,
+  ContactResponse,
   aboutQuery, 
-  AboutResponse 
+  AboutResponse,
+  clientQuery, // Pastikan ini ada di sanity.queries.ts
+  ClientResponse
 } from "./sanity.queries"
 
 /**
@@ -202,35 +206,25 @@ export async function getPostBySlug(slug: string, token?: string) {
 }
 
 // ==========================================
-// FUNGSI BARU (TESTIMONI, KONTAK, ABOUT)
+// FUNGSI BARU (ABOUT, CONTACT, CLIENTS)
 // ==========================================
 
-export async function getTestimonials() {
-  return await sanityClient()?.fetch(`*[_type == "testimonial"] | order(_createdAt desc) {
-    name,
-    role,
-    message,
-    "image": photo.asset->url,
-    rating
-  }`);
-}
-
-export async function getContacts() {
-  return await sanityClient()?.fetch(`*[_type == "contact"] | order(_createdAt asc) {
-    title,
-    address,
-    phone,
-    email
-  }`);
-}
-
-// --- FUNGSI YANG HILANG SEBELUMNYA ---
+// 1. TENTANG KAMI (Fix Error sebelumnya)
 export async function getAboutPage() {
   return await sanityClient()
     ?.fetch(aboutQuery)
     .then((result) => {
         if (!result) return null;
-        // Opsional: Validasi dengan AboutResponse.parse(result) jika mau strict
         return result; 
     })
+}
+
+// 2. DAFTAR KONTAK (Array untuk Grid)
+export async function getContacts() {
+  return await sanityClient()?.fetch(contactQuery);
+}
+
+// 3. DAFTAR KLIEN (Pengganti Testimoni)
+export async function getClients() {
+  return await sanityClient()?.fetch(clientQuery);
 }

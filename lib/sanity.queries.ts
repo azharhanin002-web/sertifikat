@@ -285,7 +285,8 @@ export const dokumenByCategoryQuery = groq`
   }
 `
 
-// --- G. TESTIMONIALS (NEW) ---
+// --- G. TESTIMONIALS (DEPRECATED/OLD) ---
+// Masih disimpan agar tidak error jika ada kode lama yang memanggil
 export const testimonialQuery = groq`
   *[_type == "testimonial"] | order(_createdAt desc) {
     name,
@@ -344,3 +345,16 @@ export const AboutResponse = z.object({
   ceoMessage: z.string().nullish(),
   ceoImage: z.string().nullish(),
 }).nullish()
+
+
+// --- J. CLIENTS (NEW: DAFTAR KLIEN) ---
+export const clientQuery = groq`
+  *[_type == "client"] | order(_createdAt desc) {
+    name,
+    "logo": logo.asset->url
+  }
+`
+export const ClientResponse = z.array(z.object({
+  name: z.string().nullish(),
+  logo: z.string().nullish(),
+})).nullish()
