@@ -26,43 +26,51 @@ export default async function PromoPage() {
         {promos && promos.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {promos.map((item: any, index: number) => (
-              <div key={index} className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-all group">
+              <div key={index} className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-all group flex flex-col h-full">
                 
-                {/* Gambar */}
-                <div className="relative h-56 w-full bg-gray-200 overflow-hidden">
+                {/* PERBAIKAN GAMBAR:
+                   1. Menggunakan 'aspect-video' (16:9) agar proporsional di semua layar.
+                   2. Tetap menggunakan 'object-cover' agar rapi, tapi karena rasionya sudah 16:9, kemungkinan terpotongnya bagian penting sangat kecil (standar banner).
+                   3. Jika Anda ingin GAMBAR UTUH 100% tanpa terpotong sama sekali, ganti 'object-cover' dengan 'object-contain' dan beri bg-gray-100 pada div pembungkusnya.
+                */}
+                <div className="relative w-full aspect-video bg-gray-100 overflow-hidden">
                   {item.image ? (
                     <Image 
                       src={item.image} 
                       alt={item.title} 
                       fill 
                       className="object-cover group-hover:scale-105 transition-transform duration-500"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     />
                   ) : (
                     <div className="flex items-center justify-center h-full text-gray-400">No Image</div>
                   )}
                   {/* Badge Promo */}
-                  <div className="absolute top-4 right-4 bg-red-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-md">
+                  <div className="absolute top-4 right-4 bg-red-600 text-white text-[10px] font-bold px-3 py-1 rounded-full shadow-md z-10">
                     HOT PROMO
                   </div>
                 </div>
 
-                {/* Konten */}
-                <div className="p-6">
+                {/* Konten (Flex-grow agar tinggi kartu seragam) */}
+                <div className="p-6 flex flex-col flex-grow">
                   <div className="flex items-center text-xs text-gray-500 mb-3 space-x-2">
                     <FaCalendarAlt className="text-blue-500" />
                     <span>{item.period || 'Periode Terbatas'}</span>
                   </div>
 
-                  <h3 className="text-xl font-bold text-[#1e2338] mb-3 line-clamp-2 group-hover:text-blue-600 transition">
+                  <h3 className="text-lg font-bold text-[#1e2338] mb-3 line-clamp-2 group-hover:text-blue-600 transition">
                     {item.title}
                   </h3>
 
-                  <Link 
-                    href={`/promo/${item.slug}`} 
-                    className="inline-flex items-center text-sm font-bold text-blue-600 hover:text-blue-800 transition"
-                  >
-                    Lihat Detail <FaArrowRight className="ml-2 text-xs" />
-                  </Link>
+                  {/* Spacer untuk mendorong tombol ke bawah */}
+                  <div className="mt-auto pt-4">
+                      <Link 
+                        href={`/promo/${item.slug}`} 
+                        className="inline-flex items-center text-sm font-bold text-white bg-blue-600 hover:bg-blue-700 py-2 px-4 rounded-md transition w-full justify-center"
+                      >
+                        Lihat Detail <FaArrowRight className="ml-2 text-xs" />
+                      </Link>
+                  </div>
                 </div>
 
               </div>
@@ -70,8 +78,8 @@ export default async function PromoPage() {
           </div>
         ) : (
           <div className="text-center py-20 text-gray-500">
-             <h3 className="text-2xl font-bold mb-2">Belum ada promo aktif.</h3>
-             <p>Nantikan penawaran menarik dari kami segera.</p>
+              <h3 className="text-2xl font-bold mb-2">Belum ada promo aktif.</h3>
+              <p>Nantikan penawaran menarik dari kami segera.</p>
           </div>
         )}
       </div>
