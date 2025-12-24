@@ -304,20 +304,19 @@ export const TestimonialResponse = z.array(z.object({
 })).nullish()
 
 
-// --- H. CONTACT (NEW) ---
+// --- H. CONTACT (NEW - PERBAIKAN) ---
+// Mengambil banyak data (array) tanpa mapsUrl
 export const contactQuery = groq`
-  *[_type == "contact"][0]{
+  *[_type == "contact"] | order(_createdAt asc) {
     title,
     address,
     phone,
-    email,
-    mapsUrl
+    email
   }
 `
-export const ContactResponse = z.object({
+export const ContactResponse = z.array(z.object({
   title: z.string().nullish(),
   address: z.string().nullish(),
   phone: z.string().nullish(),
   email: z.string().nullish(),
-  mapsUrl: z.string().nullish(),
-}).nullish()
+})).nullish()

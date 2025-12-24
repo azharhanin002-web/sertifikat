@@ -184,7 +184,6 @@ export async function getPromoBySlug(slug: string, token?: string) {
 
 // 3. Ambil Dokumen berdasarkan Kategori (Slug)
 export async function getDokumenByCategory(category: string) {
-  // Logic: Ubah "pendaftaran-usaha" (URL) menjadi "pendaftaran usaha" (Data Sanity)
   const formattedCategory = category.replace(/-/g, ' ');
   
   return await sanityClient()?.fetch(dokumenByCategoryQuery, { category: formattedCategory })
@@ -213,13 +212,13 @@ export async function getTestimonials() {
   }`);
 }
 
-export async function getContact() {
-  // Mengambil 1 dokumen kontak (terbaru)
-  return await sanityClient()?.fetch(`*[_type == "contact"][0]{
+// PERBAIKAN: Mengambil SEMUA kontak (Array) untuk Grid 3 Kolom
+// Menghapus [0] agar tidak cuma ambil satu
+export async function getContacts() {
+  return await sanityClient()?.fetch(`*[_type == "contact"] | order(_createdAt asc) {
     title,
     address,
     phone,
-    email,
-    mapsUrl
+    email
   }`);
 }

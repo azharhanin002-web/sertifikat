@@ -9,7 +9,7 @@ export default defineType({
   fields: [
     defineField({
       name: 'title',
-      title: 'Judul Kontak', // Misal: Kantor Pusat, Cabang Jakarta
+      title: 'Nama Cabang / Kabupaten', 
       type: 'string',
     }),
     defineField({
@@ -18,20 +18,14 @@ export default defineType({
       type: 'text',
     }),
     defineField({
-      name: 'phone',
-      title: 'Nomor Telepon',
-      type: 'string',
-    }),
-    defineField({
       name: 'email',
       title: 'Email',
       type: 'string',
     }),
     defineField({
-      name: 'mapsUrl',
-      title: 'Google Maps Embed URL',
-      type: 'url',
-      description: 'Link embed dari Google Maps (src)',
+      name: 'phone',
+      title: 'Nomor WhatsApp (Cth: 628xxx)',
+      type: 'string',
     }),
   ],
 });
