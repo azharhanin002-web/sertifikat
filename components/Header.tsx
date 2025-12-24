@@ -85,6 +85,8 @@ export default function Header() {
           <nav className="hidden lg:flex items-center text-[13px] font-bold text-gray-800 space-x-1 uppercase tracking-wide">
             <Link href="/" className="hover:text-green-600 px-3 py-2">Beranda</Link>
             <span className="text-gray-400">|</span>
+            
+            {/* LAYANAN (Masih Dropdown) */}
             <div className="relative group">
                 <Link href="/layanan" className="flex items-center hover:text-green-600 px-3 py-2 group-hover:text-green-600 cursor-pointer">
                     Layanan <FaChevronDown className="ml-1 text-[10px] opacity-70" />
@@ -109,34 +111,19 @@ export default function Header() {
                     </div>
                 </div>
             </div>
+            
             <span className="text-gray-400">|</span>
-            <div className="relative group">
-                <Link href="/promo" className="flex items-center hover:text-green-600 px-3 py-2 group-hover:text-green-600 cursor-pointer">
-                    Promo <FaChevronDown className="ml-1 text-[10px] opacity-70" />
-                </Link>
-                <div className="absolute top-full left-0 w-72 bg-[#222244] shadow-2xl rounded-b-lg border-t-4 border-green-500 hidden group-hover:block transition-all duration-300 z-50">
-                    <div className="py-3">
-                        <Link href="/promo/cv-konstruksi" className="block px-6 py-2 text-sm font-bold text-white hover:bg-white/5 hover:text-[#4ade80] border-b border-gray-600/30 transition">Pembuatan CV Konstruksi</Link>
-                        <Link href="/promo/npwp" className="block px-6 py-2 text-sm font-bold text-white hover:bg-white/5 hover:text-[#4ade80] border-b border-gray-600/30 transition">Pembuatan NPWP</Link>
-                        <Link href="/promo/nib" className="block px-6 py-2 text-sm font-bold text-white hover:bg-white/5 hover:text-[#4ade80] border-b border-gray-600/30 transition">Pembuatan NIB</Link>
-                        <Link href="/promo/oss" className="block px-6 py-2 text-sm font-bold text-white hover:bg-white/5 hover:text-[#4ade80] transition">Sertifikat Standart OSS</Link>
-                    </div>
-                </div>
-            </div>
+            
+            {/* PROMO (Sudah Tidak Dropdown) */}
+            <Link href="/promo" className="hover:text-green-600 px-3 py-2">Promo</Link>
+            
             <span className="text-gray-400">|</span>
             <Link href="/kontak" className="hover:text-green-600 px-3 py-2">Kontak</Link>
             <span className="text-gray-400">|</span>
-            <div className="relative group">
-                <Link href="/dokumen" className="flex items-center hover:text-green-600 px-3 py-2 group-hover:text-green-600 cursor-pointer">
-                    Dokumen <FaChevronDown className="ml-1 text-[10px] opacity-70" />
-                </Link>
-                <div className="absolute top-full left-0 w-56 bg-[#222244] shadow-2xl rounded-b-lg border-t-4 border-green-500 hidden group-hover:block transition-all duration-300 z-50">
-                    <div className="py-3">
-                        <Link href="/dokumen/legalitas" className="block px-6 py-2 text-sm font-bold text-white hover:bg-white/5 hover:text-[#4ade80] border-b border-gray-600/30 transition">Legalitas</Link>
-                        <Link href="/dokumen/kbli-2020" className="block px-6 py-2 text-sm font-bold text-white hover:bg-white/5 hover:text-[#4ade80] transition">KBLI 2020</Link>
-                    </div>
-                </div>
-            </div>
+            
+            {/* DOKUMEN (Sudah Tidak Dropdown) */}
+            <Link href="/dokumen" className="hover:text-green-600 px-3 py-2">Dokumen</Link>
+            
             <span className="text-gray-400">|</span>
             <Link href="/berita" className="hover:text-green-600 px-3 py-2">Berita</Link>
             <span className="text-gray-400">|</span>
