@@ -213,7 +213,6 @@ export async function getTestimonials() {
 }
 
 // PERBAIKAN: Mengambil SEMUA kontak (Array) untuk Grid 3 Kolom
-// Menghapus [0] agar tidak cuma ambil satu
 export async function getContacts() {
   return await sanityClient()?.fetch(`*[_type == "contact"] | order(_createdAt asc) {
     title,

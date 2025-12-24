@@ -304,8 +304,7 @@ export const TestimonialResponse = z.array(z.object({
 })).nullish()
 
 
-// --- H. CONTACT (NEW - PERBAIKAN) ---
-// Mengambil banyak data (array) tanpa mapsUrl
+// --- H. CONTACT (NEW) ---
 export const contactQuery = groq`
   *[_type == "contact"] | order(_createdAt asc) {
     title,
@@ -320,3 +319,28 @@ export const ContactResponse = z.array(z.object({
   phone: z.string().nullish(),
   email: z.string().nullish(),
 })).nullish()
+
+
+// --- I. ABOUT US (NEW) ---
+export const aboutQuery = groq`
+  *[_type == "about"][0]{
+    title,
+    "heroImage": heroImage.asset->url,
+    overview,
+    vision,
+    mission,
+    ceoName,
+    ceoMessage,
+    "ceoImage": ceoImage.asset->url
+  }
+`
+export const AboutResponse = z.object({
+  title: z.string().nullish(),
+  heroImage: z.string().nullish(),
+  overview: z.any().nullish(), // Portable Text
+  vision: z.string().nullish(),
+  mission: z.array(z.string()).nullish(),
+  ceoName: z.string().nullish(),
+  ceoMessage: z.string().nullish(),
+  ceoImage: z.string().nullish(),
+}).nullish()
