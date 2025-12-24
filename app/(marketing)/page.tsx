@@ -1,6 +1,5 @@
 import Image from 'next/image';
 import Link from 'next/link';
-// Import fungsi getClients untuk daftar klien
 import { getPosts, getVideos, getGallery, getLayanan, getClients } from "~/lib/sanity.client"; 
 import ScrollAnimationWrapper from "~/components/ScrollAnimationWrapper";
 import Counter from "~/components/Counter";
@@ -19,14 +18,13 @@ export default async function Home() {
   const videos = await getVideos();
   const gallery = await getGallery();
   const layananData = await getLayanan();
-  // Fetch data Klien
   const clientData = await getClients();
 
   // --- DATA MAPPING ---
   
-  // Mapping Klien: Ambil 5 logo pertama untuk Home
+  // UPDATE: Ambil 6 logo untuk Home (sebelumnya 5)
   const clients = (clientData && clientData.length > 0) 
-    ? clientData.slice(0, 5).map((item: any) => ({
+    ? clientData.slice(0, 6).map((item: any) => ({
         name: item.name,
         logo: item.logo, 
       }))
@@ -38,7 +36,6 @@ export default async function Home() {
   
   const galleryDisplay = (gallery && gallery.length > 0) ? gallery.map((item: any) => ({ image: item.image, caption: item.caption })) : [{ image: null }, { image: null }, { image: null }];
   
-  // Mapping Video
   const videoDisplayData = (videos && videos.length > 0) ? videos : [{ title: "Company Profile (Dummy)", thumb: "/video-thumb-1.jpg", youtubeUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ" }, { title: "Testimoni Klien (Dummy)", thumb: "/video-thumb-2.jpg", youtubeUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ" }];
   
   const faqData = [{ question: "Apakah dokumen yang diterbitkan resmi?", answer: "Tentu saja. Kami menjamin 100% keaslian dokumen. Semua sertifikat diterbitkan langsung oleh instansi terkait dan dapat diverifikasi secara online." }, { question: "Berapa lama proses pengerjaannya?", answer: "Estimasi waktu bervariasi. Untuk SBU biasanya 14-30 hari kerja, sedangkan SKTTK bisa lebih cepat sekitar 7-14 hari kerja setelah dokumen lengkap." }, { question: "Apakah saya perlu datang ke kantor?", answer: "Tidak perlu. Seluruh proses pengumpulan data hingga terbitnya sertifikat dilakukan secara ONLINE." }, { question: "Bagaimana jika pengajuan ditolak?", answer: "Kami memberikan GARANSI uang kembali atau proses ulang gratis jika kegagalan disebabkan oleh kelalaian tim kami." }];
@@ -65,7 +62,7 @@ export default async function Home() {
         </div>
       </section>
       
-      {/* 2. FEATURES (KEUNGGULAN) */}
+      {/* 2. FEATURES */}
       <section className="bg-gray-100 py-20 px-6 font-sans overflow-hidden">
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12">
           <div className="flex flex-col gap-10">
@@ -104,74 +101,11 @@ export default async function Home() {
       </section>      
 
       {/* 3. STATISTIK */}
-      <section className="relative h-[650px] flex items-center bg-gray-900 overflow-hidden font-sans">
-        <div className="absolute inset-0 z-0">
-          <Image src="/neo.webp" alt="Stats Background" fill className="object-cover" />
-          <div className="absolute inset-0 bg-[#1e2338] opacity-80 z-10"></div>
-        </div>
-        <div className="relative z-10 max-w-7xl mx-auto px-6 w-full grid grid-cols-1 lg:grid-cols-2 items-center">
-          <div className="text-white">
-            <ScrollAnimationWrapper className="animate-fade-in-left">
-                <div>
-                    <div className="flex items-center space-x-2 mb-4 opacity-90"><div className="flex -space-x-1"><div className="w-3 h-3 rounded-full bg-white"></div><div className="w-3 h-3 rounded-full bg-white opacity-50"></div></div><span className="text-sm font-bold tracking-widest uppercase">KAMI BERI SOLUSI</span></div>
-                    <h2 className="text-4xl md:text-5xl font-extrabold mb-12 leading-tight">Anda Masih Ragu?<br />Coba Lihat Ini</h2>
-                </div>
-            </ScrollAnimationWrapper>
-            <div className="grid grid-cols-3 gap-8 border-t border-white/20 pt-8">
-              <div>
-                  <div className="text-6xl md:text-7xl lg:text-8xl font-extrabold text-white flex items-baseline">
-                      <span className="text-red-500 mr-1">.</span><Counter end={30} /><span className="text-red-500 ml-1">+</span>
-                  </div>
-                  <p className="mt-4 text-lg md:text-xl font-bold opacity-90 capitalize">layanan</p>
-              </div>
-              <div>
-                  <div className="text-6xl md:text-7xl lg:text-8xl font-extrabold text-white flex items-baseline">
-                      <Counter end={822} />
-                  </div>
-                  <p className="mt-4 text-lg md:text-xl font-bold opacity-90 capitalize">project selesai</p>
-              </div>
-              <div>
-                  <div className="text-6xl md:text-7xl lg:text-8xl font-extrabold text-white flex items-baseline">
-                      <Counter end={428} /><span className="text-red-500 ml-1">+</span>
-                  </div>
-                  <p className="mt-4 text-lg md:text-xl font-bold opacity-90 capitalize">klien yang puas</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      <section className="relative h-[650px] flex items-center bg-gray-900 overflow-hidden font-sans"><div className="absolute inset-0 z-0"><Image src="/neo.webp" alt="Stats Background" fill className="object-cover" /><div className="absolute inset-0 bg-[#1e2338] opacity-80 z-10"></div></div><div className="relative z-10 max-w-7xl mx-auto px-6 w-full grid grid-cols-1 lg:grid-cols-2 items-center"><div className="text-white"><ScrollAnimationWrapper className="animate-fade-in-left"><div><div className="flex items-center space-x-2 mb-4 opacity-90"><div className="flex -space-x-1"><div className="w-3 h-3 rounded-full bg-white"></div><div className="w-3 h-3 rounded-full bg-white opacity-50"></div></div><span className="text-sm font-bold tracking-widest uppercase">KAMI BERI SOLUSI</span></div><h2 className="text-4xl md:text-5xl font-extrabold mb-12 leading-tight">Anda Masih Ragu?<br />Coba Lihat Ini</h2></div></ScrollAnimationWrapper><div className="grid grid-cols-3 gap-8 border-t border-white/20 pt-8"><div><div className="text-6xl md:text-7xl lg:text-8xl font-extrabold text-white flex items-baseline"><span className="text-red-500 mr-1">.</span><Counter end={30} /><span className="text-red-500 ml-1">+</span></div><p className="mt-4 text-lg md:text-xl font-bold opacity-90 capitalize">layanan</p></div><div><div className="text-6xl md:text-7xl lg:text-8xl font-extrabold text-white flex items-baseline"><Counter end={822} /></div><p className="mt-4 text-lg md:text-xl font-bold opacity-90 capitalize">project selesai</p></div><div><div className="text-6xl md:text-7xl lg:text-8xl font-extrabold text-white flex items-baseline"><Counter end={428} /><span className="text-red-500 ml-1">+</span></div><p className="mt-4 text-lg md:text-xl font-bold opacity-90 capitalize">klien yang puas</p></div></div></div></div></section>
+      
+      <section className="py-20 bg-[#1e2338] text-white font-sans overflow-hidden"><div className="max-w-7xl mx-auto px-6"><div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center"><div><ScrollAnimationWrapper className="animate-fade-in-left"><div className="space-y-4">{faqData.map((item, index) => (<details key={index} className="group bg-transparent border-b border-gray-700 pb-4"><summary className="flex justify-between items-center cursor-pointer list-none font-bold text-lg select-none hover:text-gray-300 transition"><span>{item.question}</span><span className="transition-transform duration-300 group-open:rotate-180 border rounded-full p-1 border-gray-500"><FaChevronDown className="text-xs"/></span></summary><div className="text-gray-400 leading-relaxed pt-4 mt-2 text-base">{item.answer}</div></details>))}</div></ScrollAnimationWrapper></div><div className="relative h-[500px] lg:h-[600px] w-full rounded-3xl overflow-hidden hidden lg:block shadow-2xl"><Image src="/accord6.webp" alt="FAQ Background" fill className="object-cover" /><div className="absolute inset-0 bg-gradient-to-t from-[#1e2338] via-[#1e2338]/60 to-transparent z-10"></div><div className="absolute bottom-0 left-0 p-10 z-20"><ScrollAnimationWrapper className="animate-fade-in-up"><div className="flex items-center space-x-2 mb-4 opacity-90"><div className="flex -space-x-1"><div className="w-3 h-3 rounded-full bg-white"></div><div className="w-3 h-3 rounded-full bg-white opacity-50"></div></div><span className="text-sm font-bold tracking-widest uppercase">Seputar Layanan</span></div><h2 className="text-4xl md:text-5xl font-extrabold leading-tight">Frequently Asked<br/>Questions</h2></ScrollAnimationWrapper></div></div></div></div></section>
 
-      {/* 4. FAQ */}
-      <section className="py-20 bg-[#1e2338] text-white font-sans overflow-hidden">
-        <div className="max-w-7xl mx-auto px-6">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-                <div>
-                    <ScrollAnimationWrapper className="animate-fade-in-left">
-                      <div className="space-y-4">
-                          {faqData.map((item, index) => (
-                              <details key={index} className="group bg-transparent border-b border-gray-700 pb-4">
-                                  <summary className="flex justify-between items-center cursor-pointer list-none font-bold text-lg select-none hover:text-gray-300 transition"><span>{item.question}</span><span className="transition-transform duration-300 group-open:rotate-180 border rounded-full p-1 border-gray-500"><FaChevronDown className="text-xs"/></span></summary>
-                                  <div className="text-gray-400 leading-relaxed pt-4 mt-2 text-base">{item.answer}</div>
-                              </details>
-                          ))}
-                      </div>
-                    </ScrollAnimationWrapper>
-                </div>
-                <div className="relative h-[500px] lg:h-[600px] w-full rounded-3xl overflow-hidden hidden lg:block shadow-2xl">
-                      <Image src="/accord6.webp" alt="FAQ Background" fill className="object-cover" />
-                      <div className="absolute inset-0 bg-gradient-to-t from-[#1e2338] via-[#1e2338]/60 to-transparent z-10"></div>
-                      <div className="absolute bottom-0 left-0 p-10 z-20">
-                        <ScrollAnimationWrapper className="animate-fade-in-up">
-                           <div className="flex items-center space-x-2 mb-4 opacity-90"><div className="flex -space-x-1"><div className="w-3 h-3 rounded-full bg-white"></div><div className="w-3 h-3 rounded-full bg-white opacity-50"></div></div><span className="text-sm font-bold tracking-widest uppercase">Seputar Layanan</span></div>
-                           <h2 className="text-4xl md:text-5xl font-extrabold leading-tight">Frequently Asked<br/>Questions</h2>
-                        </ScrollAnimationWrapper>
-                      </div>
-                </div>
-            </div>
-        </div>
-      </section>
-
-      {/* 5. PORTOFOLIO / LAYANAN */}
+      {/* 6. PORTOFOLIO / LAYANAN */}
       <section className="py-20 bg-white font-sans">
          <div className="max-w-7xl mx-auto px-6">
             <div className="text-center mb-10">
@@ -206,7 +140,7 @@ export default async function Home() {
          </div>
       </section>
 
-      {/* 6. GALLERY POST */}
+      {/* 7. GALLERY POST */}
       <section className="py-20 bg-white font-sans">
          <div className="max-w-7xl mx-auto px-6">
             <div className="text-center mb-12">
@@ -237,7 +171,26 @@ export default async function Home() {
          </div>
       </section>
 
-      {/* 7. DAFTAR KLIEN (LOGO BARIS 6 KOLOM) */}
+     
+
+      {/* 8. UPDATE TERKINI */}
+      <section className="py-20 bg-white font-sans"><div className="max-w-7xl mx-auto px-6"><div className="text-center mb-12"><h2 className="text-3xl md:text-4xl font-extrabold text-[#1e2338]">Update Terkini</h2></div><div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">{blogData.slice(0, 6).map((item: any, index: number) => (<Link href={`/berita/${item.slug}`} key={index} className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition group border border-gray-100 flex flex-col h-full block"><div className="relative h-48 bg-blue-50 overflow-hidden flex items-center justify-center">{item.image ? (<Image src={item.image} alt={item.title} fill className="object-cover" />) : (<div className="text-center"><h4 className="font-bold text-blue-900 text-sm uppercase mb-2">IMAGE</h4></div>)}<div className="absolute bottom-4 right-4 bg-white px-3 py-1.5 rounded text-xs font-bold shadow z-10">{item.date}</div></div><div className="p-6 flex flex-col flex-grow"><span class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-2 block">{item.category}</span><h3 className="text-xl font-bold text-[#1e2338] mb-3 leading-tight group-hover:text-blue-700 transition cursor-pointer line-clamp-2">{item.title}</h3><p className="text-gray-500 text-sm leading-relaxed mb-4 line-clamp-3 flex-grow">{item.excerpt}</p></div></Link>))}</div><div className="text-center"><Link href="/berita" className="inline-block px-8 py-3 rounded-full border-2 border-[#1e2338] text-[#1e2338] font-bold hover:bg-[#1e2338] hover:text-white transition duration-300">Lihat Semua Berita</Link></div></div></section>
+      
+      {/* 9. VIDEO EDUKASI */}
+      <section className="py-20 bg-white font-sans">
+        <div className="max-w-7xl mx-auto px-6">
+            <div className="text-center mb-12">
+               <div className="flex items-center justify-center space-x-2 mb-2"><div className="flex -space-x-1"><div className="w-3 h-3 rounded-full bg-slate-600"></div><div className="w-3 h-3 rounded-full bg-slate-400 opacity-50"></div></div><span className="text-sm font-medium text-gray-500">Dari Youtube</span></div>
+               <h2 className="text-3xl md:text-4xl font-extrabold text-[#1e2338]">Video Edukasi</h2>
+            </div>
+            
+            <VideoSection videos={videoDisplayData} />
+
+        </div>
+      </section>
+	  
+	  
+	   {/* 10. DAFTAR KLIEN (LOGO BARIS 6 KOLOM - SUDAH DIPERBAIKI) */}
       <section className="py-24 bg-white font-sans">
          <div className="max-w-7xl mx-auto px-6">
             <div className="text-center mb-12">
@@ -245,24 +198,27 @@ export default async function Home() {
                <h2 className="text-3xl md:text-4xl font-extrabold text-[#1e2338]">Dipercaya Oleh</h2>
             </div>
             
-            <div className="flex flex-wrap justify-center items-center gap-8 md:gap-12 lg:gap-16 mb-12 opacity-80 hover:opacity-100 transition-opacity">
+            {/* GRID 6 KOLOM MENGGUNAKAN GRID CSS */}
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 mb-12 opacity-80 hover:opacity-100 transition-opacity">
                {clients && clients.length > 0 ? (
                   clients.map((item: any, index: number) => (
                      item.logo && (
-                        <div key={index} className="relative w-32 h-16 grayscale hover:grayscale-0 transition duration-500" title={item.name}>
-                           <Image 
-                             src={item.logo} 
-                             alt={item.name || 'Client Logo'} 
-                             fill 
-                             className="object-contain"
-                           />
+                        <div key={index} className="flex justify-center items-center h-20 grayscale hover:grayscale-0 transition duration-500" title={item.name}>
+                           <div className="relative w-full h-full max-w-[120px]">
+                               <Image 
+                                 src={item.logo} 
+                                 alt={item.name || 'Client Logo'} 
+                                 fill 
+                                 className="object-contain"
+                               />
+                           </div>
                         </div>
                      )
                   ))
                ) : (
-                  // PLACEHOLDER
+                  // PLACEHOLDER JIKA BELUM ADA DATA
                   [1, 2, 3, 4, 5, 6].map((_, i) => (
-                     <div key={i} className="flex items-center justify-center text-gray-300">
+                     <div key={i} className="flex items-center justify-center text-gray-300 h-20">
                         <FaBuilding className="text-4xl mb-1" />
                      </div>
                   ))
@@ -275,58 +231,6 @@ export default async function Home() {
                 </Link>
             </div>
          </div>
-      </section>
-
-      {/* 8. UPDATE TERKINI */}
-      <section className="py-20 bg-white font-sans">
-        <div className="max-w-7xl mx-auto px-6">
-            <div className="text-center mb-12">
-               <h2 className="text-3xl md:text-4xl font-extrabold text-[#1e2338]">Update Terkini</h2>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-                {blogData.slice(0, 6).map((item: any, index: number) => (
-                    <Link 
-                      href={`/berita/${item.slug}`} 
-                      key={index} 
-                      className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition group border border-gray-100 flex flex-col h-full block"
-                    >
-                        <div className="relative h-48 bg-blue-50 overflow-hidden flex items-center justify-center">
-                             {item.image ? (
-                                <Image src={item.image} alt={item.title} fill className="object-cover" />
-                             ) : (
-                                <div className="text-center"><h4 className="font-bold text-blue-900 text-sm uppercase mb-2">IMAGE</h4></div>
-                             )}
-                             <div className="absolute bottom-4 right-4 bg-white px-3 py-1.5 rounded text-xs font-bold shadow z-10">
-                                {item.date}
-                             </div>
-                        </div>
-                        <div className="p-6 flex flex-col flex-grow">
-                            <span className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-2 block">{item.category}</span>
-                            <h3 className="text-xl font-bold text-[#1e2338] mb-3 leading-tight group-hover:text-blue-700 transition cursor-pointer line-clamp-2">{item.title}</h3>
-                            <p className="text-gray-500 text-sm leading-relaxed mb-4 line-clamp-3 flex-grow">{item.excerpt}</p>
-                        </div>
-                    </Link>
-                ))}
-            </div>
-            <div className="text-center">
-                <Link href="/berita" className="inline-block px-8 py-3 rounded-full border-2 border-[#1e2338] text-[#1e2338] font-bold hover:bg-[#1e2338] hover:text-white transition duration-300">
-                    Lihat Semua Berita
-                </Link>
-            </div>
-        </div>
-      </section>
-
-      {/* 9. VIDEO EDUKASI */}
-      <section className="py-20 bg-white font-sans">
-        <div className="max-w-7xl mx-auto px-6">
-            <div className="text-center mb-12">
-               <div className="flex items-center justify-center space-x-2 mb-2"><div className="flex -space-x-1"><div className="w-3 h-3 rounded-full bg-slate-600"></div><div className="w-3 h-3 rounded-full bg-slate-400 opacity-50"></div></div><span className="text-sm font-medium text-gray-500">Dari Youtube</span></div>
-               <h2 className="text-3xl md:text-4xl font-extrabold text-[#1e2338]">Video Edukasi</h2>
-            </div>
-            
-            <VideoSection videos={videoDisplayData} />
-
-        </div>
       </section>
 
     </main>
