@@ -1,13 +1,14 @@
 import { defineConfig } from "sanity"
 import { deskTool } from "sanity/desk"
 import { visionTool } from "@sanity/vision"
-import { apiVersion, dataset, projectId } from "~/lib/sanity.api"
+import { apiVersion, dataset, projectId, useCdn } from "~/lib/sanity.api"
 import { singletonPlugin } from "~/plugins/settings"
 
 // --- 1. IMPORT ICONS ---
 import { 
   FaTachometerAlt, FaThumbtack, FaFileAlt, FaImages, 
-  FaVideo, FaBriefcase, FaBullhorn, FaFilePdf, FaAddressBook, FaQuoteLeft 
+  FaVideo, FaBriefcase, FaBullhorn, FaFilePdf, 
+  FaAddressBook, FaQuoteLeft, FaInfoCircle 
 } from 'react-icons/fa'
 
 // --- 2. IMPORT KOMPONEN ---
@@ -24,8 +25,9 @@ import gallery from "~/schemas/gallery"
 import layanan from "~/schemas/layanan"
 import promo from "~/schemas/promo"
 import dokumen from "~/schemas/dokumen"
-import contact from "~/schemas/contact" // Schema Baru
-import testimonial from "~/schemas/testimonial" // Schema Baru
+import contact from "~/schemas/contact"
+import testimonial from "~/schemas/testimonial"
+import about from "~/schemas/about" // <--- IMPORT BARU
 
 const title = "Admin Panel - Solusi Sertifikasi"
 
@@ -53,8 +55,9 @@ export default defineConfig({
       layanan,   
       promo,     
       dokumen,
-      contact,     // Tambahkan Contact
-      testimonial, // Tambahkan Testimonial
+      contact,
+      testimonial,
+      about, // <--- DAFTARKAN DISINI
     ],
   },
 
@@ -109,21 +112,32 @@ export default defineConfig({
               .title('File Download')
               .icon(FaFilePdf),
 
-            S.divider(), // --- Garis Pemisah ---
+            S.divider(), 
 
-            // --- MENU BARU (Menggantikan Halaman/Pages) ---
-
-            // 6. DAFTAR KONTAK
+            // 6. KONTAK & TESTIMONI
             S.documentTypeListItem('contact')
               .title('Daftar Kontak')
               .icon(FaAddressBook),
 
-            // 7. TESTIMONI
             S.documentTypeListItem('testimonial')
               .title('Testimoni Klien')
               .icon(FaQuoteLeft),
 
-            // Opsi: Jika masih ingin akses ke Home Page singleton (tanpa menu Pages yang ribet)
+            S.divider(),
+
+            // 7. HALAMAN DINAMIS (EDITABLE)
+            
+            // --- MENU TENTANG KAMI (SINGLETON) ---
+            S.listItem()
+                .title('Tentang Kami')
+                .icon(FaInfoCircle)
+                .child(
+                    S.document()
+                        .schemaType('about')
+                        .documentId('about') // ID Tetap agar cuma 1 halaman
+                ),
+
+            // Opsi Edit Home Page (Singleton)
             S.listItem()
                 .title('Edit Home Page')
                 .icon(FaFileAlt)
@@ -135,7 +149,7 @@ export default defineConfig({
           ]),
     }),
     
-    singletonPlugin({ types: ["home"] }),
+    singletonPlugin({ types: ["home", "about"] }), // Tambahkan "about" agar tidak bisa "Create New"
     visionTool({ defaultApiVersion: apiVersion }),
   ],
 });
