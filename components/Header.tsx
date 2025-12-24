@@ -161,7 +161,7 @@ export default function Header() {
                     <Link href="/dokumen" onClick={() => setIsMobileMenuOpen(false)} className="border-b border-gray-100 pb-2 hover:text-green-600">DOKUMEN</Link>
                     <Link href="/berita" onClick={() => setIsMobileMenuOpen(false)} className="border-b border-gray-100 pb-2 hover:text-green-600">BERITA</Link>
                     <Link href="/kontak" onClick={() => setIsMobileMenuOpen(false)} className="border-b border-gray-100 pb-2 hover:text-green-600">KONTAK</Link>
-					<Link href="/testimoni" onClick={() => setIsMobileMenuOpen(false)} className="border-b border-gray-100 pb-2 hover:text-green-600">Klien Kami</Link>
+					<Link href="/klien-kami" onClick={() => setIsMobileMenuOpen(false)} className="border-b border-gray-100 pb-2 hover:text-green-600">Klien Kami</Link>
                 </div>
             </div>
         )}
