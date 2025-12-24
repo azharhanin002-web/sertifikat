@@ -12,45 +12,41 @@ export const revalidate = 10;
 
 export default async function ClientListPage() {
   const clients = await getClients();
-
-  // Data Dummy untuk preview jika Sanity kosong
   const dummyClients = Array(12).fill(null); 
 
   return (
     <main className="min-h-screen bg-white font-sans pb-20">
       
       {/* HEADER BACKGROUND */}
-      <div className="bg-[#1e2338] h-[350px] w-full absolute top-0 left-0 z-0">
+      {/* UPDATE: Tinggi ditambah jadi h-[450px] agar teks tidak keluar dari area biru */}
+      <div className="bg-[#1e2338] h-[450px] w-full absolute top-0 left-0 z-0">
         <div className="w-full h-full bg-[#1e2338] opacity-95 absolute top-0 left-0"></div>
         <div className="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
       </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-6 pt-32 pb-10">
+      {/* CONTAINER CONTENT */}
+      {/* UPDATE: pt-32 diubah jadi pt-28 agar posisi teks NAIK sedikit ke atas (ke tengah area biru) */}
+      <div className="relative z-10 max-w-7xl mx-auto px-6 pt-28 pb-10">
         
         {/* JUDUL HALAMAN */}
         <div className="text-center text-white mb-16">
-            <h1 className="text-4xl md:text-5xl font-extrabold mb-4">Daftar Klien</h1>
-            <p className="text-gray-300 text-lg max-w-2xl mx-auto">
+            <h1 className="text-4xl md:text-5xl font-extrabold mb-4 drop-shadow-md">Daftar Klien</h1>
+            <p className="text-gray-200 text-lg max-w-2xl mx-auto font-medium">
               Kami bangga telah menjadi bagian dari pertumbuhan bisnis berbagai perusahaan di Indonesia.
             </p>
         </div>
 
         {/* GRID LOGO KLIEN */}
-        <div className="bg-white rounded-3xl shadow-xl p-8 md:p-12 border border-gray-100">
+        <div className="bg-white rounded-3xl shadow-xl p-8 md:p-12 border border-gray-100 relative z-20">
             
-            {/* Grid Responsif:
-               - Mobile: 2 Kolom
-               - Tablet: 4 Kolom
-               - Desktop: 5-6 Kolom
-            */}
             <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-6 items-center justify-center">
                 
                 {clients && clients.length > 0 ? (
                     clients.map((item: any, index: number) => (
                         <div 
                             key={index} 
-                            className="group flex items-center justify-center p-4 h-28 border border-gray-100 rounded-xl hover:shadow-lg hover:border-blue-200 transition-all duration-300 bg-white"
-                            title={item.name} // Tooltip nama perusahaan saat hover
+                            className="group flex items-center justify-center p-4 h-28 border border-gray-100 rounded-xl hover:shadow-lg hover:border-blue-200 transition-all duration-300 bg-white relative"
+                            title={item.name}
                         >
                             {item.logo ? (
                                 <div className="relative w-full h-full">
@@ -72,7 +68,7 @@ export default async function ClientListPage() {
                         </div>
                     ))
                 ) : (
-                    // TAMPILAN DUMMY JIKA KOSONG (Placeholder)
+                    // DUMMY DATA JIKA KOSONG
                     dummyClients.map((_, index) => (
                         <div key={index} className="flex items-center justify-center p-4 h-28 border border-gray-100 rounded-xl bg-gray-50">
                             <span className="text-gray-300 font-bold text-sm">LOGO {index + 1}</span>
@@ -82,7 +78,6 @@ export default async function ClientListPage() {
 
             </div>
 
-            {/* Pesan jika kosong */}
             {clients && clients.length === 0 && (
                 <div className="text-center py-10 text-gray-400 mt-8 border-t border-gray-100 pt-8">
                     <p>Belum ada data klien yang diupload.</p>
