@@ -8,7 +8,7 @@ import { singletonPlugin } from "~/plugins/settings"
 import { 
   FaTachometerAlt, FaThumbtack, FaFileAlt, FaImages, 
   FaVideo, FaBriefcase, FaBullhorn, FaFilePdf, 
-  FaAddressBook, FaQuoteLeft, FaInfoCircle 
+  FaAddressBook, FaInfoCircle, FaBuilding // Gunakan FaBuilding untuk ikon Klien
 } from 'react-icons/fa'
 
 // --- 2. IMPORT KOMPONEN ---
@@ -26,8 +26,9 @@ import layanan from "~/schemas/layanan"
 import promo from "~/schemas/promo"
 import dokumen from "~/schemas/dokumen"
 import contact from "~/schemas/contact"
-import testimonial from "~/schemas/testimonial"
-import about from "~/schemas/about" // <--- IMPORT BARU
+// import testimonial from "~/schemas/testimonial" // Testimoni bisa dihapus/dikomentari
+import about from "~/schemas/about"
+import client from "~/schemas/client" // Pastikan import schema client
 
 const title = "Admin Panel - Solusi Sertifikasi"
 
@@ -56,8 +57,9 @@ export default defineConfig({
       promo,     
       dokumen,
       contact,
-      testimonial,
-      about, // <--- DAFTARKAN DISINI
+      about,
+      client, // Daftarkan schema client
+      // testimonial, // Schema testimonial bisa dihapus jika sudah tidak dipakai
     ],
   },
 
@@ -85,12 +87,12 @@ export default defineConfig({
               .title('Berita & Artikel')
               .icon(FaThumbtack),
 
-            // 3. LAYANAN (PORTFOLIO)
+            // 3. LAYANAN
             S.documentTypeListItem('layanan')
               .title('Layanan Kami')
               .icon(FaBriefcase),
 
-            // 4. MEDIA (VIDEO & GALLERY)
+            // 4. MEDIA
             S.listItem()
               .title('Media Galeri')
               .icon(FaImages)
@@ -114,30 +116,28 @@ export default defineConfig({
 
             S.divider(), 
 
-            // 6. KONTAK & TESTIMONI
+            // 6. KONTAK & KLIEN (PERUBAHAN DISINI)
             S.documentTypeListItem('contact')
               .title('Daftar Kontak')
               .icon(FaAddressBook),
 
-            S.documentTypeListItem('testimonial')
-              .title('Testimoni Klien')
-              .icon(FaQuoteLeft),
+            // GANTI MENU TESTIMONI DENGAN DAFTAR KLIEN
+            S.documentTypeListItem('client')
+              .title('Daftar Klien')
+              .icon(FaBuilding),
 
             S.divider(),
 
-            // 7. HALAMAN DINAMIS (EDITABLE)
-            
-            // --- MENU TENTANG KAMI (SINGLETON) ---
+            // 7. HALAMAN DINAMIS
             S.listItem()
                 .title('Tentang Kami')
                 .icon(FaInfoCircle)
                 .child(
                     S.document()
                         .schemaType('about')
-                        .documentId('about') // ID Tetap agar cuma 1 halaman
+                        .documentId('about')
                 ),
 
-            // Opsi Edit Home Page (Singleton)
             S.listItem()
                 .title('Edit Home Page')
                 .icon(FaFileAlt)
@@ -149,7 +149,7 @@ export default defineConfig({
           ]),
     }),
     
-    singletonPlugin({ types: ["home", "about"] }), // Tambahkan "about" agar tidak bisa "Create New"
+    singletonPlugin({ types: ["home", "about"] }),
     visionTool({ defaultApiVersion: apiVersion }),
   ],
 });
