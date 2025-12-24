@@ -26,7 +26,6 @@ export default function Header() {
   return (
     <>
       {/* === TOP BAR (HITAM KEBIRUAN) === */}
-      {/* Menggunakan warna #222244 sesuai CSS target */}
       <div className="bg-[#222244] text-white text-xs py-2.5 transition-all z-50 relative">
         <div className="w-full px-4 md:px-8 flex justify-start md:justify-between items-center gap-4">
            
@@ -36,7 +35,7 @@ export default function Header() {
               <span className="font-medium">{currentDate || "..."}</span>
            </div>
 
-           {/* ICON KONTAK (Mobile & Desktop) */}
+           {/* ICON KONTAK */}
            <div className="flex items-center gap-4 pl-2 md:pl-0 border-l border-gray-600 md:border-none">
               
               {/* TAMPILAN HP: Ikon Saja (Warna Hijau) */}
@@ -64,27 +63,28 @@ export default function Header() {
         </div>
       </div>
 
-      {/* === NAVBAR (PUTIH) === */}
-      <header className="bg-white/90 backdrop-blur-md shadow-sm sticky top-0 z-40 border-b border-gray-100 transition-all">
+      {/* === NAVBAR (EFEK KACA LEBIH TRANSPARAN) === */}
+      {/* bg-white/30 = Transparan 30% */}
+      {/* backdrop-blur-lg = Efek buram kaca kamar mandi */}
+      <header className="bg-white/30 backdrop-blur-lg shadow-sm sticky top-0 z-40 border-b border-white/20 transition-all">
         <div className="w-full px-4 md:px-8 py-2 md:py-4 flex justify-between items-center">
           
-          {/* LOGO (UKURAN DIPERBESAR) */}
+          {/* LOGO */}
           <Link href="/" className="flex items-center">
              <Image 
                src="/logo-solusi.png" 
                alt="Logo" 
                width={300} 
                height={100} 
-               // Mobile: h-12, Desktop: h-20 (Agar terlihat besar dan jelas)
                className="h-12 md:h-20 w-auto object-contain" 
                priority 
              />
           </Link>
           
           {/* MENU DESKTOP */}
-          <nav className="hidden lg:flex items-center text-[13px] font-bold text-gray-700 space-x-1 uppercase tracking-wide">
+          <nav className="hidden lg:flex items-center text-[13px] font-bold text-gray-800 space-x-1 uppercase tracking-wide">
             <Link href="/" className="hover:text-green-600 px-3 py-2">Beranda</Link>
-            <span className="text-gray-300">|</span>
+            <span className="text-gray-400">|</span>
             <div className="relative group">
                 <Link href="/layanan" className="flex items-center hover:text-green-600 px-3 py-2 group-hover:text-green-600 cursor-pointer">
                     Layanan <FaChevronDown className="ml-1 text-[10px] opacity-70" />
@@ -109,7 +109,7 @@ export default function Header() {
                     </div>
                 </div>
             </div>
-            <span className="text-gray-300">|</span>
+            <span className="text-gray-400">|</span>
             <div className="relative group">
                 <Link href="/promo" className="flex items-center hover:text-green-600 px-3 py-2 group-hover:text-green-600 cursor-pointer">
                     Promo <FaChevronDown className="ml-1 text-[10px] opacity-70" />
@@ -123,9 +123,9 @@ export default function Header() {
                     </div>
                 </div>
             </div>
-            <span className="text-gray-300">|</span>
+            <span className="text-gray-400">|</span>
             <Link href="/kontak" className="hover:text-green-600 px-3 py-2">Kontak</Link>
-            <span className="text-gray-300">|</span>
+            <span className="text-gray-400">|</span>
             <div className="relative group">
                 <Link href="/dokumen" className="flex items-center hover:text-green-600 px-3 py-2 group-hover:text-green-600 cursor-pointer">
                     Dokumen <FaChevronDown className="ml-1 text-[10px] opacity-70" />
@@ -137,9 +137,9 @@ export default function Header() {
                     </div>
                 </div>
             </div>
-            <span className="text-gray-300">|</span>
+            <span className="text-gray-400">|</span>
             <Link href="/berita" className="hover:text-green-600 px-3 py-2">Berita</Link>
-            <span className="text-gray-300">|</span>
+            <span className="text-gray-400">|</span>
             <Link href="/testimoni" className="hover:text-green-600 px-3 py-2">Testimoni</Link>
           </nav>
 
