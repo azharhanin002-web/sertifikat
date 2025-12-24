@@ -30,52 +30,63 @@ export default async function Home() {
   return (
     <main className="min-h-screen font-sans bg-white">
       
-      {/* === HERO SECTION === */}
-      <section className="relative h-[600px] md:h-[700px] flex items-start md:items-center overflow-hidden bg-gray-900">
+      {/* === HERO SECTION (PERBAIKAN TOTAL) === */}
+      <section className="relative h-[600px] md:h-[700px] flex items-center overflow-hidden bg-gray-900">
         
-        {/* 1. BACKGROUND IMAGE (POSISI DIUBAH) */}
+        {/* 1. BACKGROUND IMAGE */}
         <div className="absolute inset-0 z-0">
            <Image 
              src="/neo.webp" 
              alt="Hero Background" 
              fill 
-             // Mengubah object-[85%_center] menjadi object-[70%_center] agar fokus geser ke kiri, 
-             // memberi efek orangnya mundur sedikit.
-             className="object-cover object-[70%_center] md:object-right" 
+             // FIX: Geser gambar ke kanan (75%) agar wajah orang tidak tertutup overlay
+             className="object-cover object-[75%_center] md:object-right" 
              priority 
            />
         </div>
 
-        {/* 2. OVERLAY (TETAP 50%) */}
+        {/* 2. OVERLAY DARK BLUE (Sesuai Target: Tebal & Miring Tajam) */}
+        {/* Mobile Clip-Path: 
+            - Titik 1 (Kiri Atas): 0 0
+            - Titik 2 (Kanan Atas): 70% 0 (Miring mulai dari 70% lebar layar)
+            - Titik 3 (Kanan Bawah): 30% 100% (Miring tajam ke dalam)
+            - Titik 4 (Kiri Bawah): 0 100% 
+        */}
         <div 
-          className="absolute inset-0 bg-[#1e2338]/50 z-10 md:hidden" 
-          style={{ clipPath: 'polygon(0 0, 55% 0, 20% 100%, 0% 100%)' }} 
+          className="absolute inset-0 bg-[#1e2338]/90 z-10 md:hidden" 
+          style={{ clipPath: 'polygon(0 0, 70% 0, 30% 100%, 0% 100%)' }} 
         ></div>
         
+        {/* Desktop Overlay */}
         <div 
           className="absolute inset-0 bg-[#1e2338]/95 z-10 hidden md:block" 
-          style={{ clipPath: 'polygon(0 0, 55% 0, 30% 100%, 0% 100%)' }} 
+          style={{ clipPath: 'polygon(0 0, 55% 0, 35% 100%, 0% 100%)' }} 
         ></div>
 
-        {/* 3. KONTEN TEKS (TETAP) */}
-        <div className="relative z-20 max-w-7xl mx-auto px-6 w-full pt-32 md:pt-0 h-full flex items-start md:items-center">
-          <div className="max-w-[70%] sm:max-w-[75%] md:max-w-2xl text-white animate-fade-in-left pr-2">
+        {/* 3. KONTEN TEKS */}
+        {/* FIX: Gunakan items-center agar vertikal di tengah, tapi padding kiri/kanan disesuaikan */}
+        <div className="relative z-20 max-w-7xl mx-auto px-6 w-full h-full flex items-center">
+          
+          {/* Container Teks: Dibatasi lebarnya (max-w) agar tidak menabrak batas overlay miring */}
+          <div className="w-[65%] md:max-w-2xl text-white animate-fade-in-left">
             
-            <p className="text-base md:text-xl font-bold tracking-[0.2em] mb-4 uppercase text-gray-200 drop-shadow-md">
+            {/* Subtitle Kecil */}
+            <p className="text-xs md:text-xl font-bold tracking-[0.15em] mb-3 uppercase text-gray-300 drop-shadow-sm border-l-4 border-white pl-3">
               BUAT PILIHAN TERBAIK
             </p>
             
-            <h1 className="text-5xl sm:text-6xl md:text-7xl font-extrabold leading-[1.1] mb-6 drop-shadow-xl text-white">
-              Kami Adalah 
-              <span className="block mt-1">Yang Terbaik</span>
-              <span className="block mt-1">Saat Ini</span>
+            {/* Judul Utama: 3 Baris Tegas */}
+            <h1 className="text-4xl sm:text-5xl md:text-7xl font-extrabold leading-tight mb-6 drop-shadow-xl text-white">
+              <span className="block">Kami Adalah</span>
+              <span className="block">Yang Terbaik</span>
+              <span className="block">Saat Ini</span>
             </h1>
 
           </div>
         </div>
       </section>
       
-      {/* ... (SISA KONTEN KE BAWAH TIDAK BERUBAH) ... */}
+      {/* ... (BAGIAN BAWAH SAMA SEPERTI ASLINYA - TIDAK DIRUBAH) ... */}
       <section className="bg-gray-100 py-20 px-6 font-sans overflow-hidden">
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12">
           <div className="flex flex-col gap-10">
@@ -113,7 +124,6 @@ export default async function Home() {
         </div>
       </section>      
 
-      {/* STATISTIK */}
       <section className="relative h-[650px] flex items-center bg-gray-900 overflow-hidden font-sans">
         <div className="absolute inset-0 z-0">
           <Image src="/neo.webp" alt="Stats Background" fill className="object-cover" />
@@ -127,7 +137,6 @@ export default async function Home() {
                     <h2 className="text-4xl md:text-5xl font-extrabold mb-12 leading-tight">Anda Masih Ragu?<br />Coba Lihat Ini</h2>
                 </div>
             </ScrollAnimationWrapper>
-            
             <div className="grid grid-cols-3 gap-8 border-t border-white/20 pt-8">
               <div>
                   <div className="text-6xl md:text-7xl lg:text-8xl font-extrabold text-white flex items-baseline">
@@ -152,7 +161,6 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* PRICING SLIDER */}
       <section className="py-20 bg-white overflow-hidden font-sans">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-12">
@@ -163,7 +171,6 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* FAQ */}
       <section className="py-20 bg-[#1e2338] text-white font-sans overflow-hidden">
         <div className="max-w-7xl mx-auto px-6">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -193,30 +200,25 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* PORTOFOLIO / LAYANAN */}
       <section className="py-20 bg-white font-sans">
          <div className="max-w-7xl mx-auto px-6">
             <div className="text-center mb-10">
                <div className="flex items-center justify-center space-x-2 mb-2"><div className="flex -space-x-1"><div className="w-3 h-3 rounded-full bg-slate-600"></div><div className="w-3 h-3 rounded-full bg-slate-400 opacity-50"></div></div><span className="text-sm font-medium text-gray-500">Karya Luar Biasa</span></div>
                <h2 className="text-3xl md:text-4xl font-extrabold text-[#1e2338]">Layanan Kami</h2>
             </div>
-            
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
                {portfolioDisplay.slice(0, 6).map((item: any, index: number) => (
                   <Link href={item.link} key={index} className="group relative h-[300px] rounded-lg overflow-hidden cursor-pointer shadow-sm hover:shadow-lg transition-all border border-gray-100 block">
                       <div className="absolute inset-0 bg-[#3b4363] opacity-0 group-hover:opacity-90 transition-opacity duration-300 z-10"></div>
-                      
                       {item.image ? (
                         <Image src={item.image} alt={item.title} fill className="object-cover" />
                       ) : (
                         <div className="absolute inset-0 bg-gray-200"></div>
                       )}
-
                       <div className="absolute inset-0 flex flex-col items-center justify-center z-20 opacity-0 group-hover:opacity-100 transition duration-300 px-4 text-center">
                         <span className="text-2xl font-bold text-white mb-2">LIHAT</span>
                         <p className="text-white text-xs">{item.desc}</p>
                       </div>
-
                       <div className="absolute bottom-0 left-0 p-6 w-full z-20 bg-gradient-to-t from-black/80 to-transparent">
                         <h3 className="text-white text-lg font-bold leading-tight mb-2 drop-shadow-md">{item.title}</h3>
                         <div className="h-0.5 w-8 bg-gray-400 group-hover:w-16 transition-all duration-300"></div>
@@ -224,7 +226,6 @@ export default async function Home() {
                   </Link>
                ))}
             </div>
-
             <div className="text-center">
                 <Link href="/layanan" className="inline-block px-8 py-3 rounded-full border-2 border-[#1e2338] text-[#1e2338] font-bold hover:bg-[#1e2338] hover:text-white transition duration-300">
                     Lihat Semua Layanan
@@ -233,14 +234,12 @@ export default async function Home() {
          </div>
       </section>
 
-      {/* GALLERY POST */}
       <section className="py-20 bg-white font-sans">
          <div className="max-w-7xl mx-auto px-6">
             <div className="text-center mb-12">
                <div className="flex items-center justify-center space-x-2 mb-2"><div className="flex -space-x-1"><div className="w-3 h-3 rounded-full bg-slate-600"></div><div className="w-3 h-3 rounded-full bg-slate-400 opacity-50"></div></div><span className="text-sm font-medium text-gray-500">Dokumentasi</span></div>
                <h2 className="text-3xl md:text-4xl font-extrabold text-[#1e2338]">Gallery Post</h2>
             </div>
-            
             <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 mb-12">
                {galleryDisplay.slice(0, 6).map((item: any, index: number) => (
                   <div key={index} className="relative h-48 md:h-64 rounded-lg overflow-hidden bg-gray-100 hover:shadow-lg transition cursor-pointer group">
@@ -257,7 +256,6 @@ export default async function Home() {
                   </div>
                ))}
             </div>
-
             <div className="text-center">
                 <Link href="/gallery" className="inline-block px-8 py-3 rounded-full border-2 border-[#1e2338] text-[#1e2338] font-bold hover:bg-[#1e2338] hover:text-white transition duration-300">
                     Lihat Gallery Lengkap
@@ -266,7 +264,6 @@ export default async function Home() {
          </div>
       </section>
 
-      {/* TESTIMONI */}
       <section className="py-24 bg-white font-sans">
          <div className="max-w-7xl mx-auto px-6">
             <div className="text-center mb-16">
@@ -291,7 +288,6 @@ export default async function Home() {
          </div>
       </section>
 
-      {/* UPDATE TERKINI */}
       <section className="py-20 bg-white font-sans">
         <div className="max-w-7xl mx-auto px-6">
             <div className="text-center mb-12">
@@ -330,7 +326,6 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* VIDEO DOKUMENTASI */}
       <section className="py-20 bg-white font-sans">
         <div className="max-w-7xl mx-auto px-6">
             <div className="text-center mb-12">
