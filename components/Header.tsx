@@ -127,7 +127,7 @@ export default function Header() {
             <span className="text-gray-400">|</span>
             <Link href="/berita" className="hover:text-green-600 px-3 py-2">Berita</Link>
             <span className="text-gray-400">|</span>
-            <Link href="/testimoni" className="hover:text-green-600 px-3 py-2">Klien Kami</Link>
+            <Link href="/daftar-klien" className="hover:text-green-600 px-3 py-2">Klien Kami</Link>
           </nav>
 
           {/* SOSMED (Desktop Only) */}

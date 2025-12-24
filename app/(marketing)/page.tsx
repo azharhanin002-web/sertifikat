@@ -141,18 +141,7 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* 4. PRICING SLIDER */}
-      <section className="py-20 bg-white overflow-hidden font-sans">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center mb-12">
-             <h2 className="text-3xl md:text-4xl font-extrabold text-gray-800 mb-4">Pilihan Paket Terbaik</h2>
-             <p className="text-gray-500 max-w-2xl mx-auto text-base">Sesuaikan kebutuhan legalitas perusahaan Anda dengan paket hemat yang kami tawarkan.</p>
-          </div>
-          <PricingSlider />
-        </div>
-      </section>
-
-      {/* 5. FAQ */}
+      {/* 4. FAQ */}
       <section className="py-20 bg-[#1e2338] text-white font-sans overflow-hidden">
         <div className="max-w-7xl mx-auto px-6">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -182,7 +171,7 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* 6. PORTOFOLIO / LAYANAN */}
+      {/* 5. PORTOFOLIO / LAYANAN */}
       <section className="py-20 bg-white font-sans">
          <div className="max-w-7xl mx-auto px-6">
             <div className="text-center mb-10">
@@ -217,7 +206,7 @@ export default async function Home() {
          </div>
       </section>
 
-      {/* 7. GALLERY POST */}
+      {/* 6. GALLERY POST */}
       <section className="py-20 bg-white font-sans">
          <div className="max-w-7xl mx-auto px-6">
             <div className="text-center mb-12">
@@ -248,7 +237,7 @@ export default async function Home() {
          </div>
       </section>
 
-      {/* 8. DAFTAR KLIEN (LOGO BARIS 5 KOLOM) */}
+      {/* 7. DAFTAR KLIEN (LOGO BARIS 6 KOLOM) */}
       <section className="py-24 bg-white font-sans">
          <div className="max-w-7xl mx-auto px-6">
             <div className="text-center mb-12">
@@ -272,7 +261,7 @@ export default async function Home() {
                   ))
                ) : (
                   // PLACEHOLDER
-                  [1, 2, 3, 4, 5].map((_, i) => (
+                  [1, 2, 3, 4, 5, 6].map((_, i) => (
                      <div key={i} className="flex items-center justify-center text-gray-300">
                         <FaBuilding className="text-4xl mb-1" />
                      </div>
@@ -288,7 +277,7 @@ export default async function Home() {
          </div>
       </section>
 
-      {/* 9. UPDATE TERKINI */}
+      {/* 8. UPDATE TERKINI */}
       <section className="py-20 bg-white font-sans">
         <div className="max-w-7xl mx-auto px-6">
             <div className="text-center mb-12">
@@ -327,7 +316,7 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* 10. VIDEO EDUKASI */}
+      {/* 9. VIDEO EDUKASI */}
       <section className="py-20 bg-white font-sans">
         <div className="max-w-7xl mx-auto px-6">
             <div className="text-center mb-12">
