@@ -38,10 +38,10 @@ export default function Footer() {
             <div>
                 <h4 className="text-white font-bold mb-6 text-lg">Layanan Kami</h4> {/* Font Judul Diperbesar */}
                 <ul className="space-y-3 text-sm"> {/* Font Isi Diperbesar */}
-                    <li><a href="#" className="hover:text-white transition block py-1">Pendirian PT & CV</a></li>
-                    <li><a href="#" className="hover:text-white transition block py-1">SBU Konstruksi</a></li>
-                    <li><a href="#" className="hover:text-white transition block py-1">Sertifikasi ISO</a></li>
-                    <li><a href="#" className="hover:text-white transition block py-1">SKUP Migas</a></li>
+                    <li><a href="/layanan/pendirian-pt" className="hover:text-white transition block py-1">Pendirian PT</a></li>
+                    <li><a href="/layanan/sbu-konstruksi" className="hover:text-white transition block py-1">SBU Konstruksi</a></li>
+                    <li><a href="/layanan/sertifikasi-iso" className="hover:text-white transition block py-1">Sertifikasi ISO</a></li>
+                    <li><a href="/layanan/perubahan-akta-pt-atau-cv" className="hover:text-white transition block py-1">Perubahan Akta PT atau CV</a></li>
                 </ul>
             </div>
 
@@ -49,9 +49,9 @@ export default function Footer() {
             <div>
                 <h4 className="text-white font-bold mb-6 text-lg">Tautan Cepat</h4>
                 <ul className="space-y-3 text-sm">
-                    <li><a href="#" className="hover:text-white transition block py-1">Tentang Kami</a></li>
-                    <li><a href="#" className="hover:text-white transition block py-1">Hubungi Kami</a></li>
-                    <li><a href="#" className="hover:text-white transition block py-1">Blog & Berita</a></li>
+                    <li><a href="/tentang-kami" className="hover:text-white transition block py-1">Tentang Kami</a></li>
+                    <li><a href="/kontak" className="hover:text-white transition block py-1">Hubungi Kami</a></li>
+                    <li><a href="/berita" className="hover:text-white transition block py-1">Blog & Berita</a></li>
                 </ul>
             </div>
 
