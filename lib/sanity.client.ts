@@ -19,7 +19,7 @@ import {
   // --- IMPORT QUERY UTAMA ---
   postsQuery,
   PostsQueryResponse,
-  postBySlugQuery, // Query Detail Berita
+  postBySlugQuery, 
   videosQuery,
   VideosQueryResponse,
   galleryQuery,
@@ -29,7 +29,7 @@ import {
   layananDetailQuery, 
   LayananResponse,
   promoQuery,
-  promoDetailQuery,   
+  promoDetailQuery,    
   dokumenQuery,
   dokumenByCategoryQuery,
   DokumenResponse,
@@ -197,4 +197,29 @@ export async function getDokumenByCategory(category: string) {
 // 4. Ambil 1 Berita berdasarkan Slug
 export async function getPostBySlug(slug: string, token?: string) {
   return await sanityClient(token)?.fetch(postBySlugQuery, { slug })
+}
+
+// ==========================================
+// FUNGSI BARU (TESTIMONI & KONTAK)
+// ==========================================
+
+export async function getTestimonials() {
+  return await sanityClient()?.fetch(`*[_type == "testimonial"] | order(_createdAt desc) {
+    name,
+    role,
+    message,
+    "image": photo.asset->url,
+    rating
+  }`);
+}
+
+export async function getContact() {
+  // Mengambil 1 dokumen kontak (terbaru)
+  return await sanityClient()?.fetch(`*[_type == "contact"][0]{
+    title,
+    address,
+    phone,
+    email,
+    mapsUrl
+  }`);
 }

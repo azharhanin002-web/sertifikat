@@ -127,7 +127,7 @@ export default function Header() {
             <span className="text-gray-400">|</span>
             <Link href="/berita" className="hover:text-green-600 px-3 py-2">Berita</Link>
             <span className="text-gray-400">|</span>
-            <Link href="/testimoni" className="hover:text-green-600 px-3 py-2">Testimoni</Link>
+            <Link href="/testimoni" className="hover:text-green-600 px-3 py-2">Klien Kami</Link>
           </nav>
 
           {/* SOSMED (Desktop Only) */}
@@ -161,6 +161,7 @@ export default function Header() {
                     <Link href="/dokumen" onClick={() => setIsMobileMenuOpen(false)} className="border-b border-gray-100 pb-2 hover:text-green-600">DOKUMEN</Link>
                     <Link href="/berita" onClick={() => setIsMobileMenuOpen(false)} className="border-b border-gray-100 pb-2 hover:text-green-600">BERITA</Link>
                     <Link href="/kontak" onClick={() => setIsMobileMenuOpen(false)} className="border-b border-gray-100 pb-2 hover:text-green-600">KONTAK</Link>
+					<Link href="/testimoni" onClick={() => setIsMobileMenuOpen(false)} className="border-b border-gray-100 pb-2 hover:text-green-600">Klien Kami</Link>
                 </div>
             </div>
         )}

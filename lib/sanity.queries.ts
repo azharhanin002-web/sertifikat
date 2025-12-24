@@ -276,7 +276,6 @@ export const DokumenResponse = z.array(z.object({
 })).nullish()
 
 // 2. By Category (For /dokumen/[slug] pages)
-// This query now handles case-insensitivity and ensures categories match regardless of formatting.
 export const dokumenByCategoryQuery = groq`
   *[_type == "dokumen" && lower(category) == lower($category)] | order(_createdAt desc) {
     _id,
@@ -285,3 +284,40 @@ export const dokumenByCategoryQuery = groq`
     "fileUrl": file.asset->url
   }
 `
+
+// --- G. TESTIMONIALS (NEW) ---
+export const testimonialQuery = groq`
+  *[_type == "testimonial"] | order(_createdAt desc) {
+    name,
+    role,
+    message,
+    "image": photo.asset->url,
+    rating
+  }
+`
+export const TestimonialResponse = z.array(z.object({
+  name: z.string().nullish(),
+  role: z.string().nullish(),
+  message: z.string().nullish(),
+  image: z.string().nullish(),
+  rating: z.number().nullish(),
+})).nullish()
+
+
+// --- H. CONTACT (NEW) ---
+export const contactQuery = groq`
+  *[_type == "contact"][0]{
+    title,
+    address,
+    phone,
+    email,
+    mapsUrl
+  }
+`
+export const ContactResponse = z.object({
+  title: z.string().nullish(),
+  address: z.string().nullish(),
+  phone: z.string().nullish(),
+  email: z.string().nullish(),
+  mapsUrl: z.string().nullish(),
+}).nullish()

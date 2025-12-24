@@ -7,13 +7,12 @@ import { singletonPlugin } from "~/plugins/settings"
 // --- 1. IMPORT ICONS ---
 import { 
   FaTachometerAlt, FaThumbtack, FaFileAlt, FaImages, 
-  FaVideo, FaBriefcase, FaBullhorn, FaFilePdf 
+  FaVideo, FaBriefcase, FaBullhorn, FaFilePdf, FaAddressBook, FaQuoteLeft 
 } from 'react-icons/fa'
 
 // --- 2. IMPORT KOMPONEN ---
 import { StudioLogo } from "./components/StudioLogo"
 import { DashboardWelcome } from "./components/DashboardWelcome" 
-// PERBAIKAN PENTING: Import Layout WordPress yang sebelumnya LUPA di-import
 import { WordPressLayout } from "./components/WordPressLayout" 
 
 // --- 3. IMPORT SCHEMA ---
@@ -25,6 +24,8 @@ import gallery from "~/schemas/gallery"
 import layanan from "~/schemas/layanan"
 import promo from "~/schemas/promo"
 import dokumen from "~/schemas/dokumen"
+import contact from "~/schemas/contact" // Schema Baru
+import testimonial from "~/schemas/testimonial" // Schema Baru
 
 const title = "Admin Panel - Solusi Sertifikasi"
 
@@ -38,7 +39,6 @@ export default defineConfig({
   studio: {
     components: {
       logo: StudioLogo,
-      // PERBAIKAN UTAMA: Pasang Layout disini agar sidebar berubah HITAM
       layout: WordPressLayout, 
     },
   },
@@ -52,7 +52,9 @@ export default defineConfig({
       gallery,   
       layanan,   
       promo,     
-      dokumen,   
+      dokumen,
+      contact,     // Tambahkan Contact
+      testimonial, // Tambahkan Testimonial
     ],
   },
 
@@ -62,8 +64,7 @@ export default defineConfig({
         S.list()
           .title('Menu Utama') 
           .items([
-            // 1. DASHBOARD (MENU PERTAMA = DEFAULT PAGE)
-            // Ini akan membuat halaman "Selamat Datang" muncul saat login
+            // 1. DASHBOARD
             S.listItem()
               .title('Dashboard')
               .icon(FaTachometerAlt)
@@ -74,7 +75,7 @@ export default defineConfig({
                   .component(DashboardWelcome)
               ),
 
-            S.divider(), // --- Garis Pemisah ---
+            S.divider(), 
 
             // 2. BERITA & ARTIKEL
             S.documentTypeListItem('post')
@@ -110,29 +111,31 @@ export default defineConfig({
 
             S.divider(), // --- Garis Pemisah ---
 
-            // 6. HALAMAN (PAGES & HOME)
+            // --- MENU BARU (Menggantikan Halaman/Pages) ---
+
+            // 6. DAFTAR KONTAK
+            S.documentTypeListItem('contact')
+              .title('Daftar Kontak')
+              .icon(FaAddressBook),
+
+            // 7. TESTIMONI
+            S.documentTypeListItem('testimonial')
+              .title('Testimoni Klien')
+              .icon(FaQuoteLeft),
+
+            // Opsi: Jika masih ingin akses ke Home Page singleton (tanpa menu Pages yang ribet)
             S.listItem()
-              .title('Halaman (Pages)')
-              .icon(FaFileAlt)
-              .child(
-                S.list()
-                  .title('Struktur Halaman')
-                  .items([
-                    S.listItem()
-                      .title('Home Page')
-                      .icon(FaFileAlt)
-                      .child(
-                        S.document()
-                          .schemaType('home')
-                          .documentId('home')
-                      ),
-                    S.documentTypeListItem('page').title('Halaman Lainnya'),
-                  ])
-              ),
+                .title('Edit Home Page')
+                .icon(FaFileAlt)
+                .child(
+                    S.document()
+                        .schemaType('home')
+                        .documentId('home')
+                ),
           ]),
     }),
     
     singletonPlugin({ types: ["home"] }),
     visionTool({ defaultApiVersion: apiVersion }),
   ],
-})
+});

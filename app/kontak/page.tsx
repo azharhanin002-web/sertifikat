@@ -1,41 +1,52 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { FaWhatsapp, FaMapMarkerAlt, FaPhoneAlt, FaRegEnvelope } from "react-icons/fa";
+import { FaWhatsapp, FaMapMarkerAlt } from "react-icons/fa";
+import { getContact } from "~/lib/sanity.client"; 
 
 export const metadata: Metadata = {
   title: "Kontak Kami | PT Solusi Sertifikasi",
   description: "Hubungi kami untuk konsultasi legalitas dan sertifikasi perusahaan Anda.",
 };
 
-export default function ContactPage() {
+export const revalidate = 10; 
+
+export default async function ContactPage() {
+  const contactData = await getContact();
+
+  const data = {
+    title: contactData?.title || "KABUPATEN ....................",
+    address: contactData?.address || "Jl. Tj. Mas Utama No.44 Blok B1, RT.:002/RW:001/, Tj. Bar., Kec. Jagakarsa, Kota Jakarta Selatan, 12530",
+    phone: contactData?.phone || "+62 895-2786-2303",
+    email: contactData?.email || "ss.sulteng@gmail.com",
+    mapsUrl: contactData?.mapsUrl || "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3965.753678733527!2d106.83786007499097!3d-6.296052993693026!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69f21077755555%3A0x7775555577755555!2sJl.%20Tj.%20Mas%20Utama%20No.44%2C%20RT.2%2FRW.1%2C%20Tj.%20Bar.%2C%20Kec.%20Jagakarsa%2C%20Kota%20Jakarta%20Selatan%2C%20Daerah%20Khusus%20Ibukota%20Jakarta%2012530!5e0!3m2!1sid!2sid!4v1703666666666!5m2!1sid!2sid" 
+  };
+
   return (
     <main className="min-h-screen bg-gray-50 font-sans">
       
-      {/* HEADER BACKGROUND (DIPERTINGGI AGAR ADA RUANG UNTUK OVERLAP) */}
+      {/* HEADER BACKGROUND */}
       <div className="bg-[#1e2338] h-[500px] w-full absolute top-0 left-0 z-0">
         <div className="w-full h-full bg-[#1e2338] opacity-90 absolute top-0 left-0"></div>
-        {/* Pattern Overlay Tipis */}
         <div className="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
       </div>
 
       <div className="relative z-10 max-w-6xl mx-auto px-6 pt-24 pb-20">
         
-        {/* JUDUL HALAMAN (POSISI DIPERBAIKI) */}
-        {/* pt-10 agar tidak terlalu nempel dengan navbar, text-center untuk posisi tengah */}
+        {/* JUDUL HALAMAN */}
         <div className="text-center text-white mb-16 pt-10">
             <h1 className="text-4xl md:text-5xl font-extrabold mb-4 drop-shadow-md">Hubungi Kami</h1>
             <p className="text-gray-300 text-lg max-w-2xl mx-auto">Kami siap membantu kebutuhan legalitas bisnis Anda dengan pelayanan terbaik dan terpercaya.</p>
         </div>
 
-        {/* GRID CONTENT (DITUMPUK KE ATAS BACKGROUND DENGAN NEGATIVE MARGIN) */}
+        {/* GRID CONTENT */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             
-            {/* KARTU INFORMASI (Kiri - Sesuai Gambar) */}
+            {/* KARTU INFORMASI (Kiri) */}
             <div className="lg:col-span-1 bg-white rounded-2xl shadow-2xl p-8 border-t-8 border-[#4ade80] flex flex-col h-full relative z-20">
                 
-                {/* Header Kabupaten */}
+                {/* Header Kabupaten / Judul */}
                 <h2 className="text-xl font-extrabold text-[#1e2338] mb-6 uppercase tracking-wide border-b border-gray-100 pb-4">
-                    KABUPATEN ....................
+                    {data.title}
                 </h2>
 
                 {/* Bagian Alamat */}
@@ -44,11 +55,8 @@ export default function ContactPage() {
                          <FaMapMarkerAlt className="text-[#4ade80] text-lg" />
                          <h3 className="text-lg font-bold">Alamat :</h3>
                     </div>
-                    {/* Teks Alamat */}
-                    <p className="text-gray-600 leading-relaxed text-sm pl-7">
-                        Jl. Tj. Mas Utama No.44 Blok B1, RT.:002/RW:001/,<br/>
-                        Tj. Bar., Kec. Jagakarsa, Kota Jakarta Selatan,<br/>
-                        12530
+                    <p className="text-gray-600 leading-relaxed text-sm pl-7 whitespace-pre-line">
+                        {data.address}
                     </p>
                 </div>
 
@@ -58,7 +66,7 @@ export default function ContactPage() {
                         Hubungi :
                     </h3>
                     <Link 
-                        href="https://wa.me/6289527862303?text=Halo,%20saya%20ingin%20konsultasi%20mengenai%20legalitas."
+                        href={`https://wa.me/${data.phone.replace(/[^0-9]/g, '')}?text=Halo,%20saya%20ingin%20konsultasi%20mengenai%20legalitas.`}
                         target="_blank"
                         className="flex items-center justify-center gap-3 w-full bg-[#25D366] hover:bg-[#128C7E] text-white font-bold py-3.5 px-6 rounded-full shadow-lg transition-all transform hover:-translate-y-1 group"
                     >
@@ -68,10 +76,10 @@ export default function ContactPage() {
                 </div>
             </div>
 
-            {/* PETA LOKASI (Kanan - Maps Embed) */}
-            <div className="lg:col-span-2 bg-white rounded-2xl shadow-2xl overflow-hidden border border-gray-100 h-[450px] lg:h-auto relative z-20">
+            {/* PETA LOKASI (Kanan) */}
+            <div className="lg:col-span-2 bg-white rounded-2xl shadow-2xl overflow-hidden border border-gray-100 h-[450px] lg:h-auto relative z-20 min-h-[400px]">
                 <iframe 
-                    src="https://maps.google.com/maps?q=Jl.+Tj.+Mas+Utama+No.44+Blok+B1,+Tanjung+Barat,+Jagakarsa,+Jakarta+Selatan&t=&z=15&ie=UTF8&iwloc=&output=embed" 
+                    src={data.mapsUrl} 
                     width="100%" 
                     height="100%" 
                     style={{ border: 0 }} 
@@ -82,28 +90,6 @@ export default function ContactPage() {
                 ></iframe>
             </div>
 
-        </div>
-
-        {/* INFO TAMBAHAN (Di Bawah Grid) */}
-        <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-6">
-             <div className="bg-white p-6 rounded-xl flex items-center gap-4 border border-gray-200 shadow-md hover:shadow-lg transition">
-                <div className="bg-blue-50 p-4 rounded-full text-blue-600">
-                    <FaPhoneAlt className="text-xl" />
-                </div>
-                <div>
-                    <h4 className="font-bold text-[#1e2338] text-lg">Telepon Kantor</h4>
-                    <p className="text-gray-500">+62 895-2786-2303</p>
-                </div>
-             </div>
-             <div className="bg-white p-6 rounded-xl flex items-center gap-4 border border-gray-200 shadow-md hover:shadow-lg transition">
-                <div className="bg-green-50 p-4 rounded-full text-green-600">
-                    <FaRegEnvelope className="text-xl" />
-                </div>
-                <div>
-                    <h4 className="font-bold text-[#1e2338] text-lg">Email Resmi</h4>
-                    <p className="text-gray-500">ss.sulteng@gmail.com</p>
-                </div>
-             </div>
         </div>
 
       </div>
