@@ -30,53 +30,51 @@ export default async function Home() {
   return (
     <main className="min-h-screen font-sans bg-white">
       
-      {/* === HERO SECTION (PERBAIKAN TOTAL) === */}
-      <section className="relative h-[600px] md:h-[700px] flex items-center overflow-hidden bg-gray-900">
+      {/* === HERO SECTION === */}
+      <section className="relative h-[480px] md:h-[600px] flex items-center overflow-hidden bg-[#222244]">
         
-        {/* 1. BACKGROUND IMAGE */}
-        <div className="absolute inset-0 z-0">
+        {/* 1. LAYER GAMBAR + ANIMASI FADE */}
+        {/* Dibungkus ScrollAnimationWrapper untuk efek fade saat muncul */}
+        <ScrollAnimationWrapper className="absolute inset-0 z-0 w-full h-full animate-fade-in">
            <Image 
              src="/neo.webp" 
              alt="Hero Background" 
              fill 
-             // FIX: Geser gambar ke kanan (75%) agar wajah orang tidak tertutup overlay
              className="object-cover object-[75%_center] md:object-right" 
              priority 
            />
-        </div>
+        </ScrollAnimationWrapper>
 
-        {/* 2. OVERLAY DARK BLUE (Sesuai Target: Tebal & Miring Tajam) */}
-        {/* Mobile Clip-Path: 
-            - Titik 1 (Kiri Atas): 0 0
-            - Titik 2 (Kanan Atas): 70% 0 (Miring mulai dari 70% lebar layar)
-            - Titik 3 (Kanan Bawah): 30% 100% (Miring tajam ke dalam)
-            - Titik 4 (Kiri Bawah): 0 100% 
-        */}
-        <div 
-          className="absolute inset-0 bg-[#1e2338]/90 z-10 md:hidden" 
-          style={{ clipPath: 'polygon(0 0, 70% 0, 30% 100%, 0% 100%)' }} 
-        ></div>
+        {/* 2. LAYER OVERLAY / SHAPE */}
         
-        {/* Desktop Overlay */}
+        {/* === MOBILE OVERLAY (KETEBALAN JADI 40%) === */}
         <div 
-          className="absolute inset-0 bg-[#1e2338]/95 z-10 hidden md:block" 
-          style={{ clipPath: 'polygon(0 0, 55% 0, 35% 100%, 0% 100%)' }} 
+          className="absolute inset-0 bg-[#222244] opacity-40 z-10 md:hidden" // Ubah opacity-30 jadi opacity-40
+          style={{ 
+             clipPath: 'polygon(0 0, 75% 0, 45% 100%, 0% 100%)' 
+          }} 
         ></div>
 
-        {/* 3. KONTEN TEKS */}
-        {/* FIX: Gunakan items-center agar vertikal di tengah, tapi padding kiri/kanan disesuaikan */}
-        <div className="relative z-20 max-w-7xl mx-auto px-6 w-full h-full flex items-center">
+        {/* === DESKTOP OVERLAY (TETAP SOLID 95%) === */}
+        <div 
+          className="absolute inset-0 bg-[#222244] opacity-95 z-10 hidden md:block" 
+          style={{ 
+             clipPath: 'polygon(0 0, 60% 0, 40% 100%, 0% 100%)' 
+          }} 
+        ></div>
+
+        {/* 3. LAYER KONTEN TEKS */}
+        <div className="relative z-20 max-w-7xl mx-auto px-6 w-full h-full flex items-center pt-8 md:pt-0">
           
-          {/* Container Teks: Dibatasi lebarnya (max-w) agar tidak menabrak batas overlay miring */}
           <div className="w-[65%] md:max-w-2xl text-white animate-fade-in-left">
             
-            {/* Subtitle Kecil */}
-            <p className="text-xs md:text-xl font-bold tracking-[0.15em] mb-3 uppercase text-gray-300 drop-shadow-sm border-l-4 border-white pl-3">
-              BUAT PILIHAN TERBAIK
+            {/* SUBTITLE */}
+            <p className="text-xs md:text-xl font-bold tracking-[0.15em] uppercase text-gray-300 mb-3 md:mb-4">
+               BUAT PILIHAN TERBAIK
             </p>
             
-            {/* Judul Utama: 3 Baris Tegas */}
-            <h1 className="text-4xl sm:text-5xl md:text-7xl font-extrabold leading-tight mb-6 drop-shadow-xl text-white">
+            {/* HEADLINE */}
+            <h1 className="text-3xl sm:text-5xl md:text-7xl font-extrabold leading-tight text-white drop-shadow-xl">
               <span className="block">Kami Adalah</span>
               <span className="block">Yang Terbaik</span>
               <span className="block">Saat Ini</span>
@@ -86,7 +84,7 @@ export default async function Home() {
         </div>
       </section>
       
-      {/* ... (BAGIAN BAWAH SAMA SEPERTI ASLINYA - TIDAK DIRUBAH) ... */}
+      {/* ... (BAGIAN BAWAH SAMA SEPERTI SEBELUMNYA) ... */}
       <section className="bg-gray-100 py-20 px-6 font-sans overflow-hidden">
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12">
           <div className="flex flex-col gap-10">

@@ -25,29 +25,31 @@ export default function Header() {
 
   return (
     <>
-      {/* === TOP BAR (HITAM) === */}
-      <div className="bg-[#1e2338] text-white text-xs py-2 transition-all z-50 relative">
-        <div className="w-full px-4 md:px-8 flex justify-start md:justify-between items-center gap-4 md:gap-0">
+      {/* === TOP BAR (HITAM KEBIRUAN) === */}
+      {/* Menggunakan warna #222244 sesuai CSS target */}
+      <div className="bg-[#222244] text-white text-xs py-2.5 transition-all z-50 relative">
+        <div className="w-full px-4 md:px-8 flex justify-start md:justify-between items-center gap-4">
            
            {/* KIRI: Jam / Tanggal */}
-           <div className="flex items-center space-x-2">
+           <div className="flex items-center space-x-2 shrink-0">
               <FaRegClock className="text-[#fca311]"/>
-              <span className="font-medium truncate">{currentDate || "..."}</span>
+              <span className="font-medium">{currentDate || "..."}</span>
            </div>
 
-           {/* KANAN: Kontak */}
-           <div className="flex items-center gap-3 border-l border-gray-600 pl-4">
-              {/* Mobile: Ikon Hijau */}
-              <div className="flex md:hidden gap-3">
-                  <a href="tel:+6289527862303" className="text-[#4ade80] hover:text-white">
+           {/* ICON KONTAK (Mobile & Desktop) */}
+           <div className="flex items-center gap-4 pl-2 md:pl-0 border-l border-gray-600 md:border-none">
+              
+              {/* TAMPILAN HP: Ikon Saja (Warna Hijau) */}
+              <div className="flex md:hidden gap-4">
+                  <a href="tel:+6289527862303" className="text-[#4ade80] hover:text-white transition">
                     <FaPhoneAlt className="text-sm" />
                   </a>
-                  <a href="mailto:ss.sulteng@gmail.com" className="text-[#4ade80] hover:text-white">
+                  <a href="mailto:ss.sulteng@gmail.com" className="text-[#4ade80] hover:text-white transition">
                     <FaEnvelope className="text-sm" />
                   </a>
               </div>
 
-              {/* Desktop: Teks Lengkap */}
+              {/* TAMPILAN DESKTOP: Teks Lengkap */}
               <div className="hidden md:flex items-center space-x-6">
                   <div className="flex items-center space-x-2">
                     <FaPhoneAlt className="text-[#4ade80]"/>
@@ -62,34 +64,32 @@ export default function Header() {
         </div>
       </div>
 
-      {/* === NAVBAR (PUTIH & EFEK KACA) === */}
-      <header className="bg-white/70 backdrop-blur-md shadow-sm sticky top-0 z-40 border-b border-white/20 transition-all">
-        <div className="w-full px-4 md:px-8 py-3 flex justify-between items-center">
+      {/* === NAVBAR (PUTIH) === */}
+      <header className="bg-white/90 backdrop-blur-md shadow-sm sticky top-0 z-40 border-b border-gray-100 transition-all">
+        <div className="w-full px-4 md:px-8 py-2 md:py-4 flex justify-between items-center">
           
-          {/* LOGO (BESAR) */}
+          {/* LOGO (UKURAN DIPERBESAR) */}
           <Link href="/" className="flex items-center">
              <Image 
                src="/logo-solusi.png" 
                alt="Logo" 
-               width={280} 
-               height={90} 
-               className="h-14 md:h-16 w-auto object-contain" 
+               width={300} 
+               height={100} 
+               // Mobile: h-12, Desktop: h-20 (Agar terlihat besar dan jelas)
+               className="h-12 md:h-20 w-auto object-contain" 
                priority 
              />
           </Link>
           
-          {/* MENU DESKTOP (LENGKAP) */}
+          {/* MENU DESKTOP */}
           <nav className="hidden lg:flex items-center text-[13px] font-bold text-gray-700 space-x-1 uppercase tracking-wide">
             <Link href="/" className="hover:text-green-600 px-3 py-2">Beranda</Link>
             <span className="text-gray-300">|</span>
-            
-            {/* LAYANAN (FULL DROPDOWN DIKEMBALIKAN) */}
             <div className="relative group">
                 <Link href="/layanan" className="flex items-center hover:text-green-600 px-3 py-2 group-hover:text-green-600 cursor-pointer">
                     Layanan <FaChevronDown className="ml-1 text-[10px] opacity-70" />
                 </Link>
-                {/* Dropdown Menu */}
-                <div className="absolute top-full left-0 w-80 bg-[#1e2338] shadow-2xl rounded-b-lg border-t-4 border-green-500 hidden group-hover:block transition-all duration-300 z-50">
+                <div className="absolute top-full left-0 w-80 bg-[#222244] shadow-2xl rounded-b-lg border-t-4 border-green-500 hidden group-hover:block transition-all duration-300 z-50">
                     <div className="px-6 py-4 border-b border-gray-600/50">
                         <span className="text-xs font-extrabold text-[#4ade80] uppercase tracking-widest mb-3 block opacity-80">Pendirian & Perubahan</span>
                         <Link href="/layanan/pendirian-cv" className="block text-white hover:text-[#4ade80] text-sm font-bold py-1.5 transition">Pendirian / Perubahan CV</Link>
@@ -110,13 +110,11 @@ export default function Header() {
                 </div>
             </div>
             <span className="text-gray-300">|</span>
-            
-            {/* PROMO (FULL DROPDOWN DIKEMBALIKAN) */}
             <div className="relative group">
                 <Link href="/promo" className="flex items-center hover:text-green-600 px-3 py-2 group-hover:text-green-600 cursor-pointer">
                     Promo <FaChevronDown className="ml-1 text-[10px] opacity-70" />
                 </Link>
-                <div className="absolute top-full left-0 w-72 bg-[#1e2338] shadow-2xl rounded-b-lg border-t-4 border-green-500 hidden group-hover:block transition-all duration-300 z-50">
+                <div className="absolute top-full left-0 w-72 bg-[#222244] shadow-2xl rounded-b-lg border-t-4 border-green-500 hidden group-hover:block transition-all duration-300 z-50">
                     <div className="py-3">
                         <Link href="/promo/cv-konstruksi" className="block px-6 py-2 text-sm font-bold text-white hover:bg-white/5 hover:text-[#4ade80] border-b border-gray-600/30 transition">Pembuatan CV Konstruksi</Link>
                         <Link href="/promo/npwp" className="block px-6 py-2 text-sm font-bold text-white hover:bg-white/5 hover:text-[#4ade80] border-b border-gray-600/30 transition">Pembuatan NPWP</Link>
@@ -126,16 +124,13 @@ export default function Header() {
                 </div>
             </div>
             <span className="text-gray-300">|</span>
-
             <Link href="/kontak" className="hover:text-green-600 px-3 py-2">Kontak</Link>
             <span className="text-gray-300">|</span>
-
-            {/* DOKUMEN (FULL DROPDOWN DIKEMBALIKAN) */}
             <div className="relative group">
                 <Link href="/dokumen" className="flex items-center hover:text-green-600 px-3 py-2 group-hover:text-green-600 cursor-pointer">
                     Dokumen <FaChevronDown className="ml-1 text-[10px] opacity-70" />
                 </Link>
-                <div className="absolute top-full left-0 w-56 bg-[#1e2338] shadow-2xl rounded-b-lg border-t-4 border-green-500 hidden group-hover:block transition-all duration-300 z-50">
+                <div className="absolute top-full left-0 w-56 bg-[#222244] shadow-2xl rounded-b-lg border-t-4 border-green-500 hidden group-hover:block transition-all duration-300 z-50">
                     <div className="py-3">
                         <Link href="/dokumen/legalitas" className="block px-6 py-2 text-sm font-bold text-white hover:bg-white/5 hover:text-[#4ade80] border-b border-gray-600/30 transition">Legalitas</Link>
                         <Link href="/dokumen/kbli-2020" className="block px-6 py-2 text-sm font-bold text-white hover:bg-white/5 hover:text-[#4ade80] transition">KBLI 2020</Link>
@@ -143,7 +138,6 @@ export default function Header() {
                 </div>
             </div>
             <span className="text-gray-300">|</span>
-
             <Link href="/berita" className="hover:text-green-600 px-3 py-2">Berita</Link>
             <span className="text-gray-300">|</span>
             <Link href="/testimoni" className="hover:text-green-600 px-3 py-2">Testimoni</Link>
@@ -157,13 +151,13 @@ export default function Header() {
           </div>
 
           {/* TOMBOL MOBILE (KANAN) */}
-          <div className="flex items-center gap-2 lg:hidden">
-              <a href="tel:+6289527862303" className="bg-[#1e2338] text-white p-2.5 rounded-md hover:bg-blue-900 transition shadow-sm flex items-center justify-center">
+          <div className="flex items-center gap-3 lg:hidden">
+              <a href="tel:+6289527862303" className="bg-[#222244] text-white p-2.5 rounded-md hover:bg-blue-900 transition shadow-sm flex items-center justify-center">
                   <FaPhoneAlt className="text-sm" />
               </a>
               <button 
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className="bg-[#1e2338] text-white p-2.5 rounded-md hover:bg-blue-900 transition shadow-sm flex items-center justify-center"
+                className="bg-[#222244] text-white p-2.5 rounded-md hover:bg-blue-900 transition shadow-sm flex items-center justify-center"
               >
                   {isMobileMenuOpen ? <FaTimes className="text-lg" /> : <FaBars className="text-lg" />}
               </button>
@@ -173,7 +167,7 @@ export default function Header() {
         {/* MOBILE MENU DROPDOWN */}
         {isMobileMenuOpen && (
             <div className="lg:hidden w-full bg-white shadow-xl border-t border-gray-100 absolute top-full left-0 h-screen overflow-y-auto pb-20 animate-fade-in-down z-50">
-                <div className="flex flex-col p-6 space-y-4 font-bold text-[#1e2338]">
+                <div className="flex flex-col p-6 space-y-4 font-bold text-[#222244]">
                     <Link href="/" onClick={() => setIsMobileMenuOpen(false)} className="border-b border-gray-100 pb-2 hover:text-green-600">BERANDA</Link>
                     <Link href="/layanan" onClick={() => setIsMobileMenuOpen(false)} className="border-b border-gray-100 pb-2 hover:text-green-600">LAYANAN</Link>
                     <Link href="/promo" onClick={() => setIsMobileMenuOpen(false)} className="border-b border-gray-100 pb-2 hover:text-green-600">PROMO</Link>
