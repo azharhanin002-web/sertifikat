@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link'; // Import Link dari Next.js
 import { 
   FaPhoneAlt, FaEnvelope, FaRegClock, FaFacebookF, 
   FaInstagram, FaLinkedinIn, FaYoutube 
@@ -9,39 +10,78 @@ export default function Footer() {
     <footer className="bg-[#1e2338] text-gray-400 py-16 font-sans">
         <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-12">
             
-            {/* KOLOM 1: LOGO & DESKRIPSI */}
+            {/* KOLOM 1: LOGO & DESKRIPSI & MEDSOS */}
             <div>
                 <div className="flex items-center mb-6">
                     <Image 
                        src="/logo-solusi.png" 
                        alt="Workshop Legalitas" 
-                       width={240} // Diperbesar
+                       width={240} 
                        height={80} 
-                       className="h-14 w-auto object-contain brightness-0 invert opacity-90" // Tinggi diperbesar
+                       className="h-14 w-auto object-contain brightness-0 invert opacity-90" 
                     />
                 </div>
                 
-                {/* Font diperbesar jadi text-sm */}
                 <p className="text-sm leading-relaxed mb-6 text-gray-400">
                     Kami adalah mitra terpercaya Anda dalam mengurus segala kebutuhan legalitas dan sertifikasi perusahaan.
                 </p>
                 
+                {/* --- BAGIAN MEDSOS (DISINI LINK DIMASUKKAN) --- */}
                 <div className="flex space-x-3">
-                    <div className="h-10 w-10 bg-[#2d334c] rounded flex items-center justify-center hover:bg-blue-600 hover:text-white transition cursor-pointer"><FaFacebookF className="text-sm"/></div>
-                    <div className="h-10 w-10 bg-[#2d334c] rounded flex items-center justify-center hover:bg-pink-600 hover:text-white transition cursor-pointer"><FaInstagram className="text-sm"/></div>
-                    <div className="h-10 w-10 bg-[#2d334c] rounded flex items-center justify-center hover:bg-blue-800 hover:text-white transition cursor-pointer"><FaLinkedinIn className="text-sm"/></div>
-                    <div className="h-10 w-10 bg-[#2d334c] rounded flex items-center justify-center hover:bg-red-600 hover:text-white transition cursor-pointer"><FaYoutube className="text-sm"/></div>
+                    {/* Facebook */}
+                    <a 
+                      href="https://www.facebook.com/profile.php?id=61584794602126" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="h-10 w-10 bg-[#2d334c] rounded flex items-center justify-center hover:bg-blue-600 hover:text-white transition cursor-pointer"
+                      aria-label="Facebook"
+                    >
+                        <FaFacebookF className="text-sm"/>
+                    </a>
+
+                    {/* Instagram */}
+                    <a 
+                      href="https://instagram.com/namaakun" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="h-10 w-10 bg-[#2d334c] rounded flex items-center justify-center hover:bg-pink-600 hover:text-white transition cursor-pointer"
+                      aria-label="Instagram"
+                    >
+                        <FaInstagram className="text-sm"/>
+                    </a>
+
+                    {/* LinkedIn */}
+                    <a 
+                      href="https://linkedin.com/company/namaperusahaan" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="h-10 w-10 bg-[#2d334c] rounded flex items-center justify-center hover:bg-blue-800 hover:text-white transition cursor-pointer"
+                      aria-label="LinkedIn"
+                    >
+                        <FaLinkedinIn className="text-sm"/>
+                    </a>
+
+                    {/* Youtube */}
+                    <a 
+                      href="https://youtube.com/@namachannel" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="h-10 w-10 bg-[#2d334c] rounded flex items-center justify-center hover:bg-red-600 hover:text-white transition cursor-pointer"
+                      aria-label="Youtube"
+                    >
+                        <FaYoutube className="text-sm"/>
+                    </a>
                 </div>
             </div>
 
             {/* KOLOM 2: LAYANAN */}
             <div>
-                <h4 className="text-white font-bold mb-6 text-lg">Layanan Kami</h4> {/* Font Judul Diperbesar */}
-                <ul className="space-y-3 text-sm"> {/* Font Isi Diperbesar */}
-                    <li><a href="/layanan/pendirian-pt" className="hover:text-white transition block py-1">Pendirian PT</a></li>
-                    <li><a href="/layanan/sbu-konstruksi" className="hover:text-white transition block py-1">SBU Konstruksi</a></li>
-                    <li><a href="/layanan/sertifikasi-iso" className="hover:text-white transition block py-1">Sertifikasi ISO</a></li>
-                    <li><a href="/layanan/perubahan-akta-pt-atau-cv" className="hover:text-white transition block py-1">Perubahan Akta PT atau CV</a></li>
+                <h4 className="text-white font-bold mb-6 text-lg">Layanan Kami</h4>
+                <ul className="space-y-3 text-sm">
+                    <li><Link href="/layanan/pendirian-pt" className="hover:text-white transition block py-1">Pendirian PT</Link></li>
+                    <li><Link href="/layanan/sbu-konstruksi" className="hover:text-white transition block py-1">SBU Konstruksi</Link></li>
+                    <li><Link href="/layanan/sertifikasi-iso" className="hover:text-white transition block py-1">Sertifikasi ISO</Link></li>
+                    <li><Link href="/layanan/perubahan-akta-pt-atau-cv" className="hover:text-white transition block py-1">Perubahan Akta PT atau CV</Link></li>
                 </ul>
             </div>
 
@@ -49,9 +89,11 @@ export default function Footer() {
             <div>
                 <h4 className="text-white font-bold mb-6 text-lg">Tautan Cepat</h4>
                 <ul className="space-y-3 text-sm">
-                    <li><a href="/tentang-kami" className="hover:text-white transition block py-1">Tentang Kami</a></li>
-                    <li><a href="/kontak" className="hover:text-white transition block py-1">Hubungi Kami</a></li>
-                    <li><a href="/berita" className="hover:text-white transition block py-1">Blog & Berita</a></li>
+                    <li><Link href="/tentang-kami" className="hover:text-white transition block py-1">Tentang Kami</Link></li>
+                    <li><Link href="/kontak" className="hover:text-white transition block py-1">Hubungi Kami</Link></li>
+                    <li><Link href="/berita" className="hover:text-white transition block py-1">Blog & Berita</Link></li>
+                    {/* Tambahan Link Daftar Klien */}
+                    <li><Link href="/daftar-klien" className="hover:text-white transition block py-1">Daftar Klien</Link></li>
                 </ul>
             </div>
 
@@ -78,8 +120,8 @@ export default function Footer() {
 
         {/* COPYRIGHT */}
         <div className="max-w-7xl mx-auto px-6 mt-16 pt-8 border-t border-[#2d334c] text-center text-xs text-gray-500">
-            <p>© 2025 www.solusi-sertifikat.com. All Rights Reserved.</p>
+            <p>© {new Date().getFullYear()} www.solusi-sertifikat.com. All Rights Reserved.</p>
         </div>
-      </footer>
+    </footer>
   );
 }

@@ -46,7 +46,7 @@ export default async function Home() {
       {/* 1. HERO SECTION */}
       <section className="relative h-[480px] md:h-[600px] flex items-center overflow-hidden bg-[#222244]">
         <ScrollAnimationWrapper className="absolute inset-0 z-0 w-full h-full animate-fade-in">
-           <Image src="/neo.webp" alt="Hero Background" fill className="object-cover object-[75%_center] md:object-right" priority />
+           <Image src="/neo.jpeg" alt="Hero Background" fill className="object-cover object-[75%_center] md:object-right" priority />
         </ScrollAnimationWrapper>
         <div className="absolute inset-0 bg-[#222244] opacity-40 z-10 md:hidden" style={{ clipPath: 'polygon(0 0, 75% 0, 45% 100%, 0% 100%)' }}></div>
         <div className="absolute inset-0 bg-[#222244] opacity-95 z-10 hidden md:block" style={{ clipPath: 'polygon(0 0, 60% 0, 40% 100%, 0% 100%)' }}></div>

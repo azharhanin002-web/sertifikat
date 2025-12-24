@@ -132,7 +132,7 @@ export default function Header() {
 
           {/* SOSMED (Desktop Only) */}
           <div className="hidden lg:flex items-center space-x-2 ml-4">
-              <a href="#" className="h-8 w-8 bg-gray-100/80 rounded-full flex items-center justify-center text-gray-600 hover:bg-blue-600 hover:text-white transition"><FaFacebookF className="text-xs" /></a>
+              <a href="https://www.facebook.com/profile.php?id=61584794602126" className="h-8 w-8 bg-gray-100/80 rounded-full flex items-center justify-center text-gray-600 hover:bg-blue-600 hover:text-white transition"><FaFacebookF className="text-xs" /></a>
               <a href="#" className="h-8 w-8 bg-gray-100/80 rounded-full flex items-center justify-center text-gray-600 hover:bg-pink-600 hover:text-white transition"><FaInstagram className="text-xs" /></a>
               <a href="#" className="h-8 w-8 bg-gray-100/80 rounded-full flex items-center justify-center text-gray-600 hover:bg-blue-800 hover:text-white transition"><FaLinkedinIn className="text-xs" /></a>
           </div>
