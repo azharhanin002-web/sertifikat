@@ -3,7 +3,8 @@ import { deskTool } from "sanity/desk"
 import { visionTool } from "@sanity/vision"
 import { apiVersion, dataset, projectId, useCdn } from "~/lib/sanity.api"
 import { singletonPlugin } from "~/plugins/settings"
-// 1. IMPORT ORDERABLE DOCUMENT LIST
+
+// 1. IMPORT PLUGIN ORDERABLE
 import { orderableDocumentListDeskItem } from '@sanity/orderable-document-list'
 
 import { 
@@ -62,7 +63,8 @@ export default defineConfig({
 
   plugins: [
     deskTool({
-      structure: (S, context) => // Tambahkan 'context' disini
+      // Tambahkan parameter 'context' di sini
+      structure: (S, context) => 
         S.list()
           .title('Menu Utama') 
           .items([
@@ -100,15 +102,15 @@ export default defineConfig({
 
             S.documentTypeListItem('contact').title('Daftar Kontak').icon(FaAddressBook),
 
-            // --- 2. UBAH BAGIAN INI AGAR BISA DIGESER ---
+            // --- PENTING: GANTI S.documentTypeListItem BIASA DENGAN INI ---
             orderableDocumentListDeskItem({
-                type: 'client',
-                title: 'Daftar Klien (Geser)',
+                type: 'client', // Harus sama dengan name di schema client.ts
+                title: 'Daftar Klien',
                 icon: FaBuilding,
                 S,
                 context
             }),
-            // ---------------------------------------------
+            // ----------------------------------------------------------------
 
             S.divider(),
 
