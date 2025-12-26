@@ -285,8 +285,7 @@ export const dokumenByCategoryQuery = groq`
   }
 `
 
-// --- G. TESTIMONIALS (DEPRECATED/OLD) ---
-// Masih disimpan agar tidak error jika ada kode lama yang memanggil
+// --- G. TESTIMONIALS (DEPRECATED BUT KEPT FOR SAFETY) ---
 export const testimonialQuery = groq`
   *[_type == "testimonial"] | order(_createdAt desc) {
     name,
@@ -306,6 +305,7 @@ export const TestimonialResponse = z.array(z.object({
 
 
 // --- H. CONTACT (NEW) ---
+// Mengambil banyak data (array) untuk grid layout
 export const contactQuery = groq`
   *[_type == "contact"] | order(_createdAt asc) {
     title,
@@ -348,8 +348,10 @@ export const AboutResponse = z.object({
 
 
 // --- J. CLIENTS (NEW: DAFTAR KLIEN) ---
+// UPDATE: Menggunakan order(orderRank asc) agar bisa digeser-geser di dashboard
+// Jika plugin orderable belum diinstall, ganti jadi order(_createdAt desc)
 export const clientQuery = groq`
-  *[_type == "client"] | order(_createdAt desc) {
+  *[_type == "client"] | order(orderRank asc) {
     name,
     "logo": logo.asset->url
   }

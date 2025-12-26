@@ -3,20 +3,19 @@ import { deskTool } from "sanity/desk"
 import { visionTool } from "@sanity/vision"
 import { apiVersion, dataset, projectId, useCdn } from "~/lib/sanity.api"
 import { singletonPlugin } from "~/plugins/settings"
+// 1. IMPORT ORDERABLE DOCUMENT LIST
+import { orderableDocumentListDeskItem } from '@sanity/orderable-document-list'
 
-// --- 1. IMPORT ICONS ---
 import { 
   FaTachometerAlt, FaThumbtack, FaFileAlt, FaImages, 
   FaVideo, FaBriefcase, FaBullhorn, FaFilePdf, 
-  FaAddressBook, FaInfoCircle, FaBuilding // Gunakan FaBuilding untuk ikon Klien
+  FaAddressBook, FaInfoCircle, FaBuilding 
 } from 'react-icons/fa'
 
-// --- 2. IMPORT KOMPONEN ---
 import { StudioLogo } from "./components/StudioLogo"
 import { DashboardWelcome } from "./components/DashboardWelcome" 
 import { WordPressLayout } from "./components/WordPressLayout" 
 
-// --- 3. IMPORT SCHEMA ---
 import page from "~/schemas/documents/page"
 import home from "~/schemas/singletons/home"
 import post from "~/schemas/post"
@@ -26,9 +25,8 @@ import layanan from "~/schemas/layanan"
 import promo from "~/schemas/promo"
 import dokumen from "~/schemas/dokumen"
 import contact from "~/schemas/contact"
-// import testimonial from "~/schemas/testimonial" // Testimoni bisa dihapus/dikomentari
 import about from "~/schemas/about"
-import client from "~/schemas/client" // Pastikan import schema client
+import client from "~/schemas/client" 
 
 const title = "Admin Panel - Solusi Sertifikasi"
 
@@ -58,18 +56,16 @@ export default defineConfig({
       dokumen,
       contact,
       about,
-      client, // Daftarkan schema client
-      // testimonial, // Schema testimonial bisa dihapus jika sudah tidak dipakai
+      client, 
     ],
   },
 
   plugins: [
     deskTool({
-      structure: (S) =>
+      structure: (S, context) => // Tambahkan 'context' disini
         S.list()
           .title('Menu Utama') 
           .items([
-            // 1. DASHBOARD
             S.listItem()
               .title('Dashboard')
               .icon(FaTachometerAlt)
@@ -82,17 +78,9 @@ export default defineConfig({
 
             S.divider(), 
 
-            // 2. BERITA & ARTIKEL
-            S.documentTypeListItem('post')
-              .title('Berita & Artikel')
-              .icon(FaThumbtack),
+            S.documentTypeListItem('post').title('Berita & Artikel').icon(FaThumbtack),
+            S.documentTypeListItem('layanan').title('Layanan Kami').icon(FaBriefcase),
 
-            // 3. LAYANAN
-            S.documentTypeListItem('layanan')
-              .title('Layanan Kami')
-              .icon(FaBriefcase),
-
-            // 4. MEDIA
             S.listItem()
               .title('Media Galeri')
               .icon(FaImages)
@@ -105,46 +93,37 @@ export default defineConfig({
                   ])
               ),
 
-            // 5. PROMO & DOKUMEN
-            S.documentTypeListItem('promo')
-              .title('Promo Spesial')
-              .icon(FaBullhorn),
-
-            S.documentTypeListItem('dokumen')
-              .title('File Download')
-              .icon(FaFilePdf),
+            S.documentTypeListItem('promo').title('Promo Spesial').icon(FaBullhorn),
+            S.documentTypeListItem('dokumen').title('File Download').icon(FaFilePdf),
 
             S.divider(), 
 
-            // 6. KONTAK & KLIEN (PERUBAHAN DISINI)
-            S.documentTypeListItem('contact')
-              .title('Daftar Kontak')
-              .icon(FaAddressBook),
+            S.documentTypeListItem('contact').title('Daftar Kontak').icon(FaAddressBook),
 
-            // GANTI MENU TESTIMONI DENGAN DAFTAR KLIEN
-            S.documentTypeListItem('client')
-              .title('Daftar Klien')
-              .icon(FaBuilding),
+            // --- 2. UBAH BAGIAN INI AGAR BISA DIGESER ---
+            orderableDocumentListDeskItem({
+                type: 'client',
+                title: 'Daftar Klien (Geser)',
+                icon: FaBuilding,
+                S,
+                context
+            }),
+            // ---------------------------------------------
 
             S.divider(),
 
-            // 7. HALAMAN DINAMIS
             S.listItem()
                 .title('Tentang Kami')
                 .icon(FaInfoCircle)
                 .child(
-                    S.document()
-                        .schemaType('about')
-                        .documentId('about')
+                    S.document().schemaType('about').documentId('about')
                 ),
 
             S.listItem()
                 .title('Edit Home Page')
                 .icon(FaFileAlt)
                 .child(
-                    S.document()
-                        .schemaType('home')
-                        .documentId('home')
+                    S.document().schemaType('home').documentId('home')
                 ),
           ]),
     }),
