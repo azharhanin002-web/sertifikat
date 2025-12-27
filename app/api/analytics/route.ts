@@ -1,29 +1,43 @@
 import { BetaAnalyticsDataClient } from '@google-analytics/data';
 import { NextResponse } from 'next/server';
-import path from 'path';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
-// ID Properti Google Analytics
 const PROPERTY_ID = '517655408';
 
-// --- KITA BACA FILE LANGSUNG (ANTI ERROR) ---
-// Kode ini akan mencari file 'ga-keys.json' di folder utama proyek
-const keyFilePath = path.join(process.cwd(), 'ga-keys.json');
+// --- KUNCI RAHASIA (HARDCODED) ---
+// Ini adalah isi file JSON Anda yang ditanam langsung.
+const GOOGLE_KEYS = {
+  "type": "service_account",
+  "project_id": "indexin-6-xnmaz-7953728376189",
+  "private_key_id": "8132fa613ab3c33da58a768f23fbac3b76bc00b0",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQC9hnTs7/EW/WRF\nbgBaC7srPRjud3ojv3ejvTWNMluHVhhJorGAjzPzPZjM7ehrFwzY3LxCPpnl1vEa\nUNcSHHOyqlcaBrWF1DKw2Y9oyU3ix5mCZya21A7nGFGmuGS9ESpiwEGzGETDNj2L\nECWQTHqePai+F4ZKqENzS23ySMNU+uyp4QgsEAuPk07BPnh6qT46zN4evBuQkQM+\nderKygJ0n6hjOrV242Umek0JbVd3fkQAbrdNxhINDoJKqeSb827tYLMr9ASNJemP\nzx0pr3gNhn4+NuRzOix7+Z80hxH7COiUMUb2iBzyZhMMwm/0bG3GzBXljZxgVKRY\nFsyUOh99AgMBAAECggEAEu2XB2PWSvK/HS0FhXi29nRJZWWS0fepGfYHX2ToXb2U\nOuRwAFQs/s3H0S2wgOOCMbVn6uDIK3t6RGPO+vzS9ETNYqjJX8aH0oBD8ZXrPKst\nEmg9ZlSK8XsNCo7PZs+MUWT8msehdHKaFmWkLsNomp2zWNrOG24vIFhn8GLieT3T\nPerF0JBxHFUUz18d0tkNZ4mbbrJqUrIuDK55QtJu6iD3nGHkbHRjF9gtghAGtxbX\nhmL+DqkDojJdxlvywZbjMEcJpMzDDU0qmCRz/LccJ+So3ZgoaIuEPLynZf25MSds\n4kEARgheo3K1b8S5tGV/l8bU1rvHf6fwrkZWDUdw0QKBgQDdpkqBpPg2feacoqPq\nOWOQy8oMX2kOJ+V6wDmtXsQmwT5Fw7fylak5rmCT0IWuf2pMdk6RAm+6tHmbRWje\nXUwV4A37cjJHunHGEOnCc8u7hgMwRSERYQIgBbl4u3ZmzREL8Q1xPDmT0cFBem9N\nCxzJYfH6Vw+rUeiWQFZ1nHFKMQKBgQDa5aqew6EDEG9fMYb2aZoScA6LX1RDmrvV\nWrDqDV+LFndi5xsVAItG8j9a+MJlCUQAkMil0GeHg672TfwEFRJZLDaH0cGCOvV1\n2Cr/oX+dKT/nZpbOnTyko1nzCNZYUytSi042RnXROnvGVmN3ga9PtHpWKfV4OKfx\nQjKD8U1LDQKBgQCpbx7xb9xWO3P4NNO8jtYvr7jqMF0sdw8TALKWdyTWw04JIo4R\nIJrV/xjQpcwrEjd978orS4OBY8i6CxsZMJSi/D10A12wOzQRxogLH12UIeN6GL4o\nfNGVDQs04YinGQd463HtJ66T8voaRa+jY2VEBF1nkvnlap2zjccJ7OclYQKBgDGm\nYEHsm4vHYYuU/0jLASBnfFUOhV1kLnChRnmAGQjCSsgLJXBpFC4+ajJnNCiYpmz+\nahR6JdFuA/RoEd6XLPc++Qtrf1nbp6tYIcCjz/9EyPLiqRgqQAQT7SYb/gpAqxXo\n9Q+Igda4TjTZiWwk5S/N/uWmVMA1EZq+ahjVVbPNAoGBAMQ02RH2rwzz2LtZu4zt\n96S3sTaotnWb0dSvGAtfrJKPuX02CGTI0v5Q+UqVS51Z1fJ7LWwcmqz922w4DDGMc\nrVMGFoJAS+gRLE99Sx+CAk8udSeN0wVhwLS+go80q+oSSlGT8BOlC0xRURnnE2uZ\n5WmyvpPc4i5A1D0KWJ5nPIpz\n-----END PRIVATE KEY-----\n",
+  "client_email": "statistik-sertifikat@indexin-6-xnmaz-7953728376189.iam.gserviceaccount.com",
+  "client_id": "109815514016180632812",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/statistik-sertifikat%40indexin-6-xnmaz-7953728376189.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+};
 
 const analyticsDataClient = new BetaAnalyticsDataClient({
-  keyFilename: keyFilePath, // Ini kuncinya! Kita kasih alamat filenya, bukan teksnya.
+  credentials: {
+    client_email: GOOGLE_KEYS.client_email,
+    private_key: GOOGLE_KEYS.private_key,
+  },
 });
 
 export async function GET() {
   try {
-    // Test ambil data realtime
+    // 1. Ambil Data Realtime
     const [realtimeResponse] = await analyticsDataClient.runRealtimeReport({
       property: `properties/${PROPERTY_ID}`,
       metrics: [{ name: 'activeUsers' }],
     });
 
+    // 2. Ambil Data Historis
     const [basicResponse] = await analyticsDataClient.runReport({
       property: `properties/${PROPERTY_ID}`,
       dateRanges: [
@@ -59,9 +73,6 @@ export async function GET() {
 
   } catch (error: any) {
     console.error('GA4 API Error Detail:', error);
-    return NextResponse.json({ 
-        error: 'Failed', 
-        details: error.message 
-    }, { status: 500 });
+    return NextResponse.json({ error: 'Failed', details: error.message }, { status: 500 });
   }
 }
