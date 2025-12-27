@@ -1,4 +1,5 @@
 import { Inter, Poppins } from "next/font/google"
+import { GoogleAnalytics } from '@next/third-parties/google' // <--- 1. IMPORT GA
 
 import "~/styles/globals.css"
 import { siteConfig } from "~/config/site"
@@ -48,7 +49,8 @@ export const metadata = {
 
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    // Ganti 'en' ke 'id' agar SEO lokal lebih baik
+    <html lang="id" suppressHydrationWarning> 
       <head />
       <body
         className={cn(
@@ -67,6 +69,10 @@ export default function RootLayout({ children }: RootLayoutProps) {
         {/* Indikator Tailwind (Hanya muncul saat Development) */}
         <TailwindIndicator />
       </body>
+
+      {/* --- 2. PASANG GOOGLE ANALYTICS DISINI --- */}
+      {/* Mengambil ID dari .env.local */}
+      <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID || ""} />
     </html>
   )
 }
