@@ -1,12 +1,12 @@
 import { Inter, Poppins } from "next/font/google"
-import { GoogleAnalytics } from '@next/third-parties/google' // <--- 1. IMPORT GA
+import { GoogleAnalytics } from '@next/third-parties/google' // <--- IMPORT GA
 
 import "~/styles/globals.css"
 import { siteConfig } from "~/config/site"
 import { cn } from "lib/utils"
 import { TailwindIndicator } from "~/components/tailwind-indicator"
 
-// --- IMPORT WRAPPER BARU (PENTING) ---
+// --- IMPORT WRAPPER ---
 import LayoutWrapper from "~/components/LayoutWrapper"
 
 const fontSans = Inter({
@@ -49,7 +49,7 @@ export const metadata = {
 
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
-    // Ganti 'en' ke 'id' agar SEO lokal lebih baik
+    // Menggunakan 'id' untuk SEO Indonesia
     <html lang="id" suppressHydrationWarning> 
       <head />
       <body
@@ -59,20 +59,18 @@ export default function RootLayout({ children }: RootLayoutProps) {
           fontHeading.variable
         )}
       >
-        {/* KITA BUNGKUS KONTEN DENGAN LayoutWrapper.
-            Wrapper ini yang akan mikir: "Tampilin Header gak ya?"
-        */}
+        {/* Wrapper Konten Utama */}
         <LayoutWrapper>
             {children}
         </LayoutWrapper>
 
-        {/* Indikator Tailwind (Hanya muncul saat Development) */}
+        {/* Indikator Tailwind (Dev mode only) */}
         <TailwindIndicator />
       </body>
 
-      {/* --- 2. PASANG GOOGLE ANALYTICS DISINI --- */}
-      {/* Mengambil ID dari .env.local */}
-      <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID || ""} />
+      {/* --- GOOGLE ANALYTICS (HARDCODED) --- */}
+      {/* Kita tulis ID langsung agar pasti jalan saat di-deploy/push */}
+      <GoogleAnalytics gaId="G-40LJQMRB2Y" />
     </html>
   )
 }
